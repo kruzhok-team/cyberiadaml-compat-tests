@@ -7,6 +7,7 @@ See the PNST 1044-2025 and PNST 984-2024 Russian national standard documents for
 details.
 
 Copyright (c) Alexey Fedoseev aleksey@fedoseev.net, 2026.
+The code and the documentation were designed using AI participation.
 
 The code is distributed under the GNU Public License (version 3), the documentation -- under
 the GNU Free Documentation License (version 1.3).
