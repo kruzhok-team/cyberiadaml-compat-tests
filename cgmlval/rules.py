@@ -86,7 +86,7 @@ class Context:
 
 def load_checks():
     """Import the check modules so that their rules register."""
-    from cgmlval import xmlload  # noqa: F401
+    from cgmlval import tagtree, xmlload  # noqa: F401
 
 
 def run_layer(ctx, layer):
@@ -99,7 +99,7 @@ def run_layer(ctx, layer):
 
 def run_document(data, filename="<data>"):
     """Run the validation layers over the document bytes; return the context."""
-    from cgmlval import xmlload
+    from cgmlval import tagtree, xmlload
 
     load_checks()
     ctx = Context(Report(), filename)
@@ -107,5 +107,10 @@ def run_document(data, filename="<data>"):
     ctx.parsed = xmlload.load(data, ctx)
     ctx.report.layers_run.append(1)
     if ctx.report.has_errors(layer=1) or ctx.parsed is None:
+        return ctx
+    ctx.layer = 2
+    tagtree.check(ctx)
+    ctx.report.layers_run.append(2)
+    if ctx.report.has_errors(layer=2):
         return ctx
     return ctx
