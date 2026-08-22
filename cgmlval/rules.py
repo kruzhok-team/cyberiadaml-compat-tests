@@ -99,7 +99,7 @@ def run_layer(ctx, layer):
 
 def run_document(data, filename="<data>"):
     """Run the validation layers over the document bytes; return the context."""
-    from cgmlval import tagtree, xmlload
+    from cgmlval import model, tagtree, xmlload
 
     load_checks()
     ctx = Context(Report(), filename)
@@ -113,4 +113,5 @@ def run_document(data, filename="<data>"):
     ctx.report.layers_run.append(2)
     if ctx.report.has_errors(layer=2):
         return ctx
+    ctx.model = model.build(ctx.parsed)
     return ctx
