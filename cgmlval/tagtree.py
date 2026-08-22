@@ -21,6 +21,7 @@
 # -----------------------------------------------------------------------------
 
 from cgmlval.findings import ERROR, INFO, WARNING
+from cgmlval.keys import STANDARD_KEY_IDS
 from cgmlval.rules import declare
 
 GRAPHML_NS = "http://graphml.graphdrawing.org/xmlns"
@@ -151,7 +152,7 @@ def _check_edge(ctx, edge):
         if child.tag == "data":
             datas.append(child)
             key = child.get("key")
-            if key is not None and key not in EDGE_KEYS:
+            if key in STANDARD_KEY_IDS and key not in EDGE_KEYS:
                 ctx.emit("key-usage",
                          "data key %s is not admissible on an edge" % key,
                          elem=child)
@@ -175,7 +176,7 @@ def _check_node(ctx, node):
                          elem=child)
             datas.append(child)
             key = child.get("key")
-            if key is not None and key not in NODE_KEYS:
+            if key in STANDARD_KEY_IDS and key not in NODE_KEYS:
                 ctx.emit("key-usage",
                          "data key %s is not admissible on a node" % key,
                          elem=child)
@@ -211,7 +212,7 @@ def _check_graph(ctx, graph, kind):
             else:
                 datas.append(child)
             key = child.get("key")
-            if key is not None and key not in allowed:
+            if key in STANDARD_KEY_IDS and key not in allowed:
                 ctx.emit("key-usage",
                          "data key %s is not admissible on a %s graph" %
                          (key, "state machine" if kind == "sm" else "region"),
@@ -281,9 +282,10 @@ def check(ctx):
         if child.tag == "data":
             key = child.get("key")
             if key != "gFormat":
-                ctx.emit("key-usage",
-                         "data key %s is not admissible on graphml "
-                         "(only gFormat)" % key, elem=child)
+                if key in STANDARD_KEY_IDS:
+                    ctx.emit("key-usage",
+                             "data key %s is not admissible on graphml "
+                             "(only gFormat)" % key, elem=child)
             else:
                 saw_gformat = True
                 if index > 0:

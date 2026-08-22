@@ -173,6 +173,28 @@ def data_items(elem):
     return [(d.get("key"), d) for d in elem if d.tag == "data"]
 
 
+def iter_nodes(document):
+    """All node model objects of the document, region children included."""
+    def walk(children):
+        for child in children:
+            yield child
+            for region in getattr(child, "regions", ()):
+                yield from walk(region.children)
+    for machine in document.machines:
+        yield from walk(machine.children)
+
+
+def iter_regions(document):
+    """All region model objects of the document."""
+    def walk(children):
+        for child in children:
+            for region in getattr(child, "regions", ()):
+                yield region
+                yield from walk(region.children)
+    for machine in document.machines:
+        yield from walk(machine.children)
+
+
 def data_value(elem, key):
     """The text of the first data tag with the key; None when absent."""
     for name, data in data_items(elem):

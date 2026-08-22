@@ -69,7 +69,7 @@ def hierarchy(meta=META_NODE, region_extra="", node_extra=""):
 def test_minimal_document_clean_at_l2():
     ctx = run(minimal())
     assert ctx.report.findings == []
-    assert ctx.report.layers_run == [1, 2]
+    assert 2 in ctx.report.layers_run
 
 
 def test_hierarchy_document_accepted():

@@ -86,7 +86,7 @@ class Context:
 
 def load_checks():
     """Import the check modules so that their rules register."""
-    from cgmlval import tagtree, xmlload  # noqa: F401
+    from cgmlval import checks_l3, tagtree, xmlload  # noqa: F401
 
 
 def run_layer(ctx, layer):
@@ -114,4 +114,7 @@ def run_document(data, filename="<data>"):
     if ctx.report.has_errors(layer=2):
         return ctx
     ctx.model = model.build(ctx.parsed)
+    run_layer(ctx, 3)
+    if ctx.report.has_errors(layer=3):
+        return ctx
     return ctx
