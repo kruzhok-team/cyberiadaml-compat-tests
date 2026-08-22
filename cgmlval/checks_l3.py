@@ -73,23 +73,7 @@ declare("custom-params", "CGML-6.9-5", 3, INFO,
         note="values are kept in the model")
 
 
-def _elements(root):
-    """All (kind, element) pairs of the graphs, nodes and edges."""
-    def walk_graph(graph):
-        yield "graph", graph
-        for child in graph:
-            if child.tag == "node":
-                yield from walk_node(child)
-            elif child.tag == "edge":
-                yield "edge", child
-    def walk_node(node):
-        yield "node", node
-        for child in node:
-            if child.tag == "graph":
-                yield from walk_graph(child)
-    for child in root:
-        if child.tag == "graph":
-            yield from walk_graph(child)
+_elements = model_mod.iter_elements
 
 
 def _all_data(root):

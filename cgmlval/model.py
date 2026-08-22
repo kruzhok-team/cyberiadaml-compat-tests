@@ -173,6 +173,25 @@ def data_items(elem):
     return [(d.get("key"), d) for d in elem if d.tag == "data"]
 
 
+def iter_elements(root):
+    """All (kind, element) pairs of the graphs, nodes and edges of the tree."""
+    def walk_graph(graph):
+        yield "graph", graph
+        for child in graph:
+            if child.tag == "node":
+                yield from walk_node(child)
+            elif child.tag == "edge":
+                yield "edge", child
+    def walk_node(node):
+        yield "node", node
+        for child in node:
+            if child.tag == "graph":
+                yield from walk_graph(child)
+    for child in root:
+        if child.tag == "graph":
+            yield from walk_graph(child)
+
+
 def iter_nodes(document):
     """All node model objects of the document, region children included."""
     def walk(children):
