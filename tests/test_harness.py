@@ -96,3 +96,16 @@ def test_verdict_mapping():
     assert verdicts.tolerance and "ext/F-B" in verdicts.tolerance[0]
     assert table["CGML-6.2-1"] == vmod.NOT_TESTED
     assert table["CGML-5.1-1"] == vmod.NOT_COVERED
+
+
+def test_crash_headline():
+    dotnet = ("Unhandled exception. System.ArgumentOutOfRangeException: "
+              "length ('-1') must be a non-negative value.\n"
+              "   at System.Foo()\n   at Program.Main(String[] args)\n")
+    assert drv._headline(dotnet, crashed=True).startswith(
+        "Unhandled exception. System.ArgumentOutOfRangeException")
+    python = ("Traceback (most recent call last):\n  File x, line 1\n"
+              "ValueError: bad value\n")
+    assert drv._headline(python, crashed=True) == "ValueError: bad value"
+    assert drv._headline("first\nlast line\n", crashed=False) == "last line"
+    assert drv._headline("", crashed=True) == ""

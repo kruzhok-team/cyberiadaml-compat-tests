@@ -21,6 +21,7 @@
 # -----------------------------------------------------------------------------
 
 import json
+import os
 import pathlib
 import subprocess
 
@@ -31,6 +32,22 @@ REJECTED = "rejected"
 ACCEPTED = "accepted"
 CRASH = "crash"
 TIMEOUT_OUTCOME = "timeout"
+
+# plain tracebacks: no colour escapes in captured diagnostics
+_ENV = dict(os.environ, PYTHON_COLORS="0", NO_COLOR="1")
+
+
+def _headline(stderr, crashed):
+    """The one-line diagnostic: the last stderr line, or for a crash the
+    first line naming an exception or error (the traceback headline)."""
+    lines = [line for line in stderr.strip().splitlines() if line.strip()]
+    if not lines:
+        return ""
+    if crashed:
+        for line in lines:
+            if "Exception" in line or "Error" in line:
+                return line.strip()
+    return lines[-1].strip()
 
 
 class Driver:
@@ -50,7 +67,7 @@ class Driver:
         try:
             proc = subprocess.run([str(self.path), "info"],
                                   capture_output=True, text=True,
-                                  timeout=TIMEOUT)
+                                  timeout=TIMEOUT, env=_ENV)
         except (OSError, subprocess.TimeoutExpired) as err:
             self.error = str(err)
             return
@@ -69,13 +86,13 @@ class Driver:
             proc = subprocess.run([str(self.path), "convert",
                                    str(source), str(target)],
                                   capture_output=True, text=True,
-                                  timeout=TIMEOUT)
+                                  timeout=TIMEOUT, env=_ENV)
         except subprocess.TimeoutExpired:
             return TIMEOUT_OUTCOME, "no result within %d s" % TIMEOUT
         except OSError as err:
             return CRASH, str(err)
-        diagnostic = proc.stderr.strip().splitlines()
-        diagnostic = diagnostic[-1] if diagnostic else ""
+        crashed = proc.returncode not in (0, 2)
+        diagnostic = _headline(proc.stderr, crashed)
         if proc.returncode == 0:
             if not pathlib.Path(target).is_file():
                 return CRASH, "exit 0 but no output file"

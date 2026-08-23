@@ -149,7 +149,7 @@ by a signature:
 | Channel result | Signature |
 |---|---|
 | positive fixture rejected | `reject:<stderr diagnostic>` |
-| positive fixture crashed | `crash:<first diagnostic line>` |
+| positive fixture crashed | `crash:<traceback headline>` — the first stderr line naming an exception or error, else the last line |
 | output validation error | `validate:<cited requirement id>` (one cluster per requirement) |
 | dump difference | `dump:<expected line>|<got line>`, whitespace-stripped, numbers normalized to `#` |
 
