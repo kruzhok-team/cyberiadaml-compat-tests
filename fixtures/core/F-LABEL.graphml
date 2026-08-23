@@ -70,5 +70,8 @@ exit/
     <edge id="n0-n0#1" source="n0" target="n0">
       <data key="dData">TICK [armed]/</data>
     </edge>
+    <edge id="n2-n2#1" source="n2" target="n2">
+      <data key="dData">/ finish()</data>
+    </edge>
   </graph>
 </graphml>

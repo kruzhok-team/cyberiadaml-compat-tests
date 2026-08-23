@@ -38,9 +38,8 @@
     </node>
     <node id="n0">
       <data key="dName">Idle</data>
-    </node>
-    <edge id="init-n0#1" source="init" target="n0">
       <data key="dData">/ act()</data>
-    </edge>
+    </node>
+    <edge id="init-n0#1" source="init" target="n0"/>
   </graph>
 </graphml>
