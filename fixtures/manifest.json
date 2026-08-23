@@ -274,6 +274,14 @@
     },
     "negative/X-6.8-1-empty-event": {
       "reject": "CGML-6.8-1"
+    },
+    "core/F-LABEL": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.8-1",
+        "CGML-6.8-4",
+        "CGML-6.8-5"
+      ]
     }
   },
   "twins": [
