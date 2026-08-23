@@ -20,6 +20,9 @@
 #
 # -----------------------------------------------------------------------------
 
+import json
+import pathlib
+
 from cgmlval import rules
 from cgmlval.findings import ERROR, INFO, WARNING
 from cgmlval.requirements import REQUIREMENTS, VALIDATOR
@@ -59,3 +62,17 @@ def test_rule_metadata_is_well_formed():
         assert rule_obj.layer in (1, 2, 3, 4), rule_obj.name
         assert rule_obj.severity in (ERROR, WARNING, INFO), rule_obj.name
         assert rule_obj.title, rule_obj.name
+
+
+def test_every_validator_requirement_has_a_fixture():
+    root = pathlib.Path(__file__).resolve().parent.parent
+    manifest = json.loads((root / "fixtures" / "manifest.json")
+                          .read_text(encoding="utf-8"))["fixtures"]
+    cited = set()
+    for entry in manifest.values():
+        cited.update(entry.get("requirements", []))
+        if "reject" in entry:
+            cited.add(entry["reject"])
+    uncovered = sorted(req for req, entry in REQUIREMENTS.items()
+                       if entry.scope == VALIDATOR and req not in cited)
+    assert uncovered == []
