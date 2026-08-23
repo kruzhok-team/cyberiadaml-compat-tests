@@ -63,6 +63,28 @@ def _cmd_validate(args):
     return code
 
 
+def _cmd_dump(args):
+    from cgmlval import dump
+    data = _read(args.file)
+    if data is None:
+        return EXIT_USAGE
+    ctx = rules.run_document(data, args.file)
+    report = ctx.report
+    if report.has_errors() or ctx.model is None:
+        if args.json:
+            print(json.dumps([report.to_json(args.file, False)],
+                             ensure_ascii=False, indent=2))
+        else:
+            for line in report.render_text(args.file):
+                print(line)
+            print("%s: %s" % (args.file, report.verdict(False)))
+        return EXIT_FINDINGS
+    for line in report.render_text(args.file):
+        print(line, file=sys.stderr)
+    sys.stdout.write(dump.render(ctx.model))
+    return EXIT_OK
+
+
 def _cmd_rules(args):
     rules.load_checks()
     entries = sorted(rules.REGISTRY.values(), key=lambda r: (r.layer, r.name))
@@ -107,6 +129,13 @@ def main(argv=None):
     p_validate.add_argument("--json", action="store_true",
                             help="emit the reports as JSON")
     p_validate.set_defaults(func=_cmd_validate)
+
+    p_dump = sub.add_parser(
+        "dump", help="print the canonical dump of a valid document")
+    p_dump.add_argument("file", metavar="FILE")
+    p_dump.add_argument("--json", action="store_true",
+                        help="emit the failure report as JSON")
+    p_dump.set_defaults(func=_cmd_dump)
 
     p_rules = sub.add_parser("rules", help="list the registered checks")
     p_rules.add_argument("--json", action="store_true",
