@@ -193,6 +193,6 @@ run. Ids are never renumbered; a fixed defect simply stops matching and drops ou
 ## 8. Scope
 
 Out of scope for this phase: the INTEGRATION-probe channel (a neutral-JSON `read` command
-interrogating the library model), fixes to the libraries under test, drivers beyond the three
-listed (libcyberiadamlpp shares the C writer — its results follow libcyberiadaml's), CI wiring,
-performance measurement.
+interrogating the library model), fixes to the libraries under test, drivers beyond the four
+present — c, py, js and cs (libcyberiadamlpp shares the C writer — its results follow
+libcyberiadaml's), CI wiring, performance measurement.

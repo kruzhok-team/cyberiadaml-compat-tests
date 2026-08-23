@@ -3,3 +3,5 @@ __pycache__/
 .pytest_cache/
 results/
 report.json
+drivers/cs/bin/
+drivers/cs/obj/

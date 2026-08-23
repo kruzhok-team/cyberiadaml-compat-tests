@@ -43,7 +43,9 @@ The `intharness` runner compares the CGML libraries against the fixture corpus i
 The report renders the summary `REPORT.md` and one defect report per library
 into `results/<date>/` (generated, not tracked); the stable defect ids are
 curated in `defects.json`. The cyberiadaml-js driver requires a one-time
-`npm install && npm run build` in the library checkout.
+`npm install && npm run build` in the library checkout; the C# driver a
+user-local .NET SDK 8 (`~/.dotnet`) and a one-time
+`dotnet build -c Release drivers/cs`.
 
 ## Tests
 

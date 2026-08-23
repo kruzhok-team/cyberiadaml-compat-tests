@@ -1,0 +1,51 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+# The CyberiadaML-GraphML standard compatibility tests
+#
+# The cyberiada-logic-unity-pkg (C#) driver
+#
+# Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see https://www.gnu.org/licenses/
+#
+# -----------------------------------------------------------------------------
+
+DIR=$(dirname "$0")
+LIB="${CYBERIADAML_CS:-$HOME/sources/cyberiada-logic-unity-pkg}"
+DOTNET="${DOTNET:-$HOME/.dotnet/dotnet}"
+BIN="$DIR/bin/Release/net8.0/CgmlDriver.dll"
+
+case "$1" in
+info)
+    [ -x "$DOTNET" ] && [ -f "$BIN" ] || {
+        echo "driver not built: run \"$DOTNET\" build -c Release \"$DIR\"" >&2
+        exit 1
+    }
+    VERSION=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' \
+        "$LIB/package.json" 2>/dev/null | head -1)
+    printf '{"name": "cyberiada-logic-unity-pkg", "version": "%s", "profiles": ["CORE"]}\n' \
+        "${VERSION:-unknown}"
+    ;;
+convert)
+    [ -n "$2" ] && [ -n "$3" ] || {
+        echo "usage: driver convert IN.graphml OUT.graphml" >&2
+        exit 64
+    }
+    exec "$DOTNET" "$BIN" "$2" "$3"
+    ;;
+*)
+    echo "usage: driver info | driver convert IN.graphml OUT.graphml" >&2
+    exit 64
+    ;;
+esac

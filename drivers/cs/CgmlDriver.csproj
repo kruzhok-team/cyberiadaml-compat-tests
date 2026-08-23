@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The CyberiadaML-GraphML standard compatibility tests: the C# driver
+       Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>, GPL-3+ -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <!-- the library sources compile in directly; UNITY stays undefined so the
+         package's pure C# fallbacks (Talent.Graphs.Vector2) are active -->
+    <CyberiadaCs Condition="'$(CyberiadaCs)' == ''">$(CYBERIADAML_CS)</CyberiadaCs>
+    <CyberiadaCs Condition="'$(CyberiadaCs)' == ''">$(MSBuildThisFileDirectory)../../../cyberiada-logic-unity-pkg</CyberiadaCs>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="$(CyberiadaCs)/Runtime/CyberiadaGraph/*.cs" />
+    <Compile Include="$(CyberiadaCs)/Runtime/Converter/*.cs" />
+  </ItemGroup>
+</Project>
