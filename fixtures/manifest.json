@@ -134,7 +134,114 @@
     "field/F-FIELD-ros-cycle": {
       "profile": "CORE",
       "requirements": []
+    },
+    "negative/X-10.1-2-bad-formal-name": {
+      "reject": "CGML-10.1-2"
+    },
+    "negative/X-5.4-1-gformat-missing": {
+      "reject": "CGML-5.4-1"
+    },
+    "negative/X-5.4-2-wrong-format": {
+      "reject": "CGML-5.4-2"
+    },
+    "negative/X-5.5-3-data-without-key": {
+      "reject": "CGML-5.5-3"
+    },
+    "negative/X-5.5-4-duplicate-data": {
+      "reject": "CGML-5.5-4"
+    },
+    "negative/X-5.6-2-no-graphs": {
+      "reject": "CGML-5.6-2"
+    },
+    "negative/X-5.8-1-empty-endpoint": {
+      "reject": "CGML-5.8-1"
+    },
+    "negative/X-5.9-1-missing-id": {
+      "reject": "CGML-5.9-1"
+    },
+    "negative/X-5.9-2-bad-id-char": {
+      "reject": "CGML-5.9-2"
+    },
+    "negative/X-5.9-4-duplicate-id": {
+      "reject": "CGML-5.9-4"
+    },
+    "negative/X-6.1-1-no-marker": {
+      "reject": "CGML-6.1-1"
+    },
+    "negative/X-6.1-2-no-name": {
+      "reject": "CGML-6.1-2"
+    },
+    "negative/X-6.3-2-dangling-target": {
+      "reject": "CGML-6.3-2"
+    },
+    "negative/X-6.4-1-vertex-not-first": {
+      "reject": "CGML-6.4-1"
+    },
+    "negative/X-6.4-2-bad-vertex": {
+      "reject": "CGML-6.4-2"
+    },
+    "negative/X-6.4-4-1-two-initials": {
+      "reject": "CGML-6.4-4-1"
+    },
+    "negative/X-6.6-1-bad-note": {
+      "reject": "CGML-6.6-1"
+    },
+    "negative/X-6.7-2-dangling-link": {
+      "reject": "CGML-6.7-2"
+    },
+    "negative/X-6.8-1-missing-slash": {
+      "reject": "CGML-6.8-1"
+    },
+    "negative/X-6.9-1-no-meta": {
+      "reject": "CGML-6.9-1"
+    },
+    "negative/X-6.9-4-5-bad-propagation": {
+      "reject": "CGML-6.9-4-5"
+    },
+    "negative/X-appendix-A-1-foreign-tag": {
+      "reject": "CGML-appendix-A-1"
+    },
+    "negative/X-appendix-B-1-wrong-for": {
+      "reject": "CGML-appendix-B-1"
+    },
+    "core/F-MIN-nokeys": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-5.5-2",
+        "CGML-appendix-B-1"
+      ]
+    },
+    "core/F-MIN-comments": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-5.3-1"
+      ]
+    },
+    "core/F-ESC-ENT": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-5.2-1"
+      ]
+    },
+    "core/F-ESC-RAW": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-5.2-1"
+      ]
     }
   },
-  "twins": []
+  "twins": [
+    [
+      "core/F-MIN",
+      "core/F-MIN-nokeys"
+    ],
+    [
+      "core/F-MIN",
+      "core/F-MIN-comments"
+    ],
+    [
+      "core/F-ESC-RAW",
+      "core/F-ESC-ENT"
+    ]
+  ]
 }
