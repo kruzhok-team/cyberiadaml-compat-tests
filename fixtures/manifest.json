@@ -228,6 +228,44 @@
       "requirements": [
         "CGML-5.2-1"
       ]
+    },
+    "core/F-ELSE": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.3-4",
+        "CGML-6.4-2",
+        "CGML-6.4-4-2",
+        "CGML-6.8-6"
+      ]
+    },
+    "core/F-GRD-ESC": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.8-8"
+      ]
+    },
+    "core/F-META": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.9-4-2",
+        "CGML-6.9-4-3",
+        "CGML-6.9-4-4",
+        "CGML-6.9-5"
+      ]
+    },
+    "core/F-MIN-xmlns": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-5.1-3"
+      ]
+    },
+    "geometry/F-GEO-R": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.5-1",
+        "CGML-7.2-1-4",
+        "CGML-7.2-2"
+      ]
     }
   },
   "twins": [
@@ -242,6 +280,10 @@
     [
       "core/F-ESC-RAW",
       "core/F-ESC-ENT"
+    ],
+    [
+      "core/F-MIN",
+      "core/F-MIN-xmlns"
     ]
   ]
 }
