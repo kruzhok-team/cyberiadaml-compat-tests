@@ -67,3 +67,32 @@ def test_first_diff():
     assert _first_diff("a\nb\n", "a\nb\n") is None
     assert "line 2" in _first_diff("a\nb\n", "a\nc\n")
     assert "length" in _first_diff("a\n", "a\nb\n")
+
+
+def test_verdict_mapping():
+    from intharness import verdicts as vmod
+    manifest = {
+        "core/F-A": {"profile": "CORE",
+                     "requirements": ["CGML-5.4-2", "CGML-6.1-1"]},
+        "ext/F-B": {"profile": "EXT-DISPLAY",
+                    "requirements": ["CGML-9.2-1"]},
+        "negative/X-1": {"reject": "CGML-5.9-4"},
+    }
+    result = {
+        "positive": {
+            "core/F-A": {"outcome": "converted", "validate_errors": [
+                "ERROR CGML-appendix-B-1: bad key"], "dump_equal": False},
+            "ext/F-B": {"outcome": "rejected", "diagnostic": "nope"},
+        },
+        "negative": {"X-1": None},
+    }
+    result["negative"] = {"negative/X-1": {"outcome": "accepted"}}
+    verdicts = vmod.judge_driver(result, manifest, ["CORE"])
+    table = verdicts.table()
+    assert table["CGML-appendix-B-1"] == vmod.FAIL
+    assert table["CGML-5.4-2"] == vmod.BLOCKED
+    assert table["CGML-5.9-4"] == vmod.FAIL
+    assert table["CGML-9.2-1"] == vmod.NOT_CLAIMED
+    assert verdicts.tolerance and "ext/F-B" in verdicts.tolerance[0]
+    assert table["CGML-6.2-1"] == vmod.NOT_TESTED
+    assert table["CGML-5.1-1"] == vmod.NOT_COVERED
