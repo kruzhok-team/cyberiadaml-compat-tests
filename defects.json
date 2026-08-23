@@ -1,0 +1,110 @@
+{
+  "defects": [
+    {
+      "id": "C-1",
+      "driver": "c",
+      "title": "writer declares dRegion with for=\"node\"",
+      "note": "appendix Б requires for=\"graph\"; every produced document is invalid",
+      "signatures": [
+        "validate:CGML-appendix-B-1"
+      ]
+    },
+    {
+      "id": "C-2",
+      "driver": "c",
+      "title": "reader rejects multi-machine and completeness documents",
+      "note": "cybparser exits 2 without a diagnostic; F-MULTI carries two state machines, F-EXT-C submachine/history/entry-exit points",
+      "signatures": [
+        "reject:rejected by libcyberiadaml (cybparser exit 2)"
+      ]
+    },
+    {
+      "id": "PY-1",
+      "driver": "py",
+      "title": "reader requires the optional platform meta parameter",
+      "note": "platform is MAY per §6.9 (CGML-6.9-4-2); every standard document without it is rejected with 'No platform or standardVersion.'",
+      "signatures": [
+        "reject:rejected by cyberiadaml-py: No platform or standardVersion."
+      ]
+    },
+    {
+      "id": "JS-1",
+      "driver": "js",
+      "title": "writer invents default geometry rect 0 0 0 0",
+      "note": "elements carrying no dGeometry gain one on write; breaks the geometry-mode consistency of §7",
+      "signatures": [
+        "dump:'  comment \"nMeta\" formal:'|'    geometry: rect # # # #'",
+        "dump:'  state \"n#\":'|'    geometry: rect # # # #'",
+        "dump:'  state \"n#::n#\":'|'    geometry: rect # # # #'"
+      ]
+    },
+    {
+      "id": "JS-2",
+      "driver": "js",
+      "title": "writer re-emits point geometry as rect with size -1",
+      "signatures": [
+        "dump:'    geometry: point # #'|'    geometry: rect # # # #'"
+      ]
+    },
+    {
+      "id": "JS-3",
+      "driver": "js",
+      "title": "writer appends a trailing blank line to meta comment bodies",
+      "signatures": [
+        "dump:'    body: \"standardVersion/ #\"'|'    body: \"standardVersion/ #\\\\n\\\\n\"'"
+      ]
+    },
+    {
+      "id": "JS-4",
+      "driver": "js",
+      "title": "state machine formal name (dFormalName) dropped on write",
+      "signatures": [
+        "dump:'  formal-name: \"platform_sm\"'|'  comment \"cComp\" formal:'"
+      ]
+    },
+    {
+      "id": "JS-5",
+      "driver": "js",
+      "title": "reader rejects formal comments other than CGML_META and CGML_COMPONENT",
+      "note": "§6.7 admits arbitrary formal comment names",
+      "signatures": [
+        "reject:rejected by cyberiadaml-js: Неизвестный тип мета-информации traceId/ REQ-42. Ожидается CGML_META или CGML_COMPONENT."
+      ]
+    },
+    {
+      "id": "JS-6",
+      "driver": "js",
+      "title": "reader rejects rect-valued transition label geometry",
+      "note": "dLabelGeometry admits rect in full geometry mode (§7)",
+      "signatures": [
+        "reject:rejected by cyberiadaml-js: Нет дочернего <point> у <data> с ключом dLabelGeometry"
+      ]
+    },
+    {
+      "id": "JS-7",
+      "driver": "js",
+      "title": "writer emits a node with an empty id for a multi-machine document",
+      "signatures": [
+        "validate:CGML-5.9-3"
+      ]
+    },
+    {
+      "id": "JS-8",
+      "driver": "js",
+      "title": "region graph id replaced by the parent node id",
+      "note": "duplicates the parent id, violating document-wide id uniqueness (§5.9)",
+      "signatures": [
+        "validate:CGML-5.9-4"
+      ]
+    },
+    {
+      "id": "JS-9",
+      "driver": "js",
+      "title": "writer places dNote after dGeometry on comment nodes",
+      "note": "dNote must be the first data key of a comment node (§6.6)",
+      "signatures": [
+        "validate:CGML-6.6-1"
+      ]
+    }
+  ]
+}
