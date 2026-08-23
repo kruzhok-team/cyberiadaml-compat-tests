@@ -14,6 +14,8 @@ details.
   validation procedure and the test list;
 * `CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` - the document validator specification:
   the `cgmlval` tool and the canonical dump format.
+* `CyberiadaML-GraphML-1.0-HARNESS-SPEC.md` - the compatibility harness specification:
+  the fixture corpus, the library driver contract and the conformance report.
 
 ## Usage
 
