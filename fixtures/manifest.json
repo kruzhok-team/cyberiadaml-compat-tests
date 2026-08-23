@@ -282,6 +282,9 @@
         "CGML-6.8-4",
         "CGML-6.8-5"
       ]
+    },
+    "negative/X-6.8-1-node-no-slash": {
+      "reject": "CGML-6.8-1"
     }
   },
   "twins": [

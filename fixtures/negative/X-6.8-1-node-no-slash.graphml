@@ -27,7 +27,7 @@
   <key id="dFormalName" for="node" attr.name="formalName" attr.type="string"/>
   <graph id="G" edgedefault="directed">
     <data key="dStateMachine"/>
-    <data key="dName">Label forms</data>
+    <data key="dName">Minimal</data>
     <node id="nMeta">
       <data key="dNote">formal</data>
       <data key="dName">CGML_META</data>
@@ -38,37 +38,8 @@
     </node>
     <node id="n0">
       <data key="dName">Idle</data>
-    </node>
-    <node id="n1">
-      <data key="dName">Scan</data>
-      <data key="dData">entry/
-Сенсор.ПоискЦелиПоДистанции(мин)
-
-Сенсор.ЦельПолучена [Счетчик.ТекущееЗначениеСчетчика &gt;= 2]/
-МодульДвижения.ЗадатьКоординатуВверх(34)
-
-exit/
-Сенсор.ОстановкаПоиска</data>
-    </node>
-    <node id="n2">
-      <data key="dName">Done</data>
+      <data key="dData">EV</data>
     </node>
     <edge id="init-n0#1" source="init" target="n0"/>
-    <edge id="n0-n1#1" source="n0" target="n1">
-      <data key="dData">GO</data>
-    </edge>
-    <edge id="n1-n2#1" source="n1" target="n2">
-      <data key="dData">Сенсор.ЦельПолучена
-[Счетчик.ТекущееЗначениеСчетчика &gt;= 2]</data>
-    </edge>
-    <edge id="n1-n0#1" source="n1" target="n0">
-      <data key="dData">STOP [ready] block/ halt()</data>
-    </edge>
-    <edge id="n2-n0#1" source="n2" target="n0">
-      <data key="dData">RESET propagate [count == 0]/</data>
-    </edge>
-    <edge id="n0-n0#1" source="n0" target="n0">
-      <data key="dData">TICK [armed]/</data>
-    </edge>
   </graph>
 </graphml>
