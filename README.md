@@ -58,7 +58,6 @@ coverage audit, and a report-only smoke run over the sample corpora of the
 sibling repositories (skipped when absent).
 
 Copyright (c) Alexey Fedoseev aleksey@fedoseev.net, 2026.
-The code and the documentation were designed using AI participation.
 
 The code is distributed under the GNU Public License (version 3), the documentation -- under
 the GNU Free Documentation License (version 1.3).
