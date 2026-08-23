@@ -40,7 +40,7 @@
       <data key="dName">Idle</data>
     </node>
     <edge id="init-n0#1" source="init" target="n0">
-      <data key="dData">LABEL</data>
+      <data key="dData">/ act()</data>
     </edge>
   </graph>
 </graphml>

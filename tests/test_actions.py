@@ -133,11 +133,53 @@ def test_multiline_behaviour_preserved():
     assert blocks[0].verbatim == text
 
 
-def test_missing_slash_is_an_error():
-    blocks, errors = parse("no separator here")
-    assert len(errors) == 1
-    assert "missing '/'" in errors[0][1]
-    assert blocks[0].trigger == "no separator here"
+def test_event_without_separator():
+    blocks, errors = parse("EV")
+    assert errors == []
+    assert blocks[0].kind == "event"
+    assert blocks[0].trigger == "EV"
+    assert blocks[0].guard is None
+    assert blocks[0].behaviour == []
+
+
+def test_event_with_guard_without_separator():
+    blocks, errors = parse("EV [x > 1]")
+    assert errors == []
+    assert blocks[0].trigger == "EV"
+    assert blocks[0].guard == "x > 1"
+    assert blocks[0].behaviour == []
+
+
+def test_multiline_header_standard_example():
+    text = "Сенсор.ЦельПолучена\n[Счетчик.ТекущееЗначениеСчетчика >= 2]"
+    blocks, errors = parse(text)
+    assert errors == []
+    assert blocks[0].trigger == "Сенсор.ЦельПолучена"
+    assert blocks[0].guard == "Счетчик.ТекущееЗначениеСчетчика >= 2"
+    assert blocks[0].behaviour == []
+    assert blocks[0].verbatim == text
+
+
+def test_separator_on_second_line():
+    blocks, errors = parse("EV\n[g]/ act()\nmore()")
+    assert errors == []
+    assert blocks[0].trigger == "EV"
+    assert blocks[0].guard == "g"
+    assert blocks[0].behaviour == ["act()", "more()"]
+
+
+def test_event_parameter_after_guard():
+    blocks, errors = parse("STOP [ready] block/ halt()")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param, blocks[0].guard) == \
+        ("STOP", "block", "ready")
+
+
+def test_event_parameter_before_guard():
+    blocks, errors = parse("START propagate [g]/")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param, blocks[0].guard) == \
+        ("START", "propagate", "g")
 
 
 def test_empty_event_name_is_an_error():
@@ -147,5 +189,5 @@ def test_empty_event_name_is_an_error():
 
 
 def test_error_line_numbers():
-    _, errors = parse("entry/\na()\n\nbroken line")
-    assert errors == [(3, "missing '/' in the event description")]
+    _, errors = parse("entry/\na()\n\n/ x()")
+    assert errors == [(3, "empty event name in the event description")]

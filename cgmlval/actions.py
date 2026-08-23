@@ -46,40 +46,51 @@ def _escaped(line, idx):
     return idx > 0 and line[idx - 1] == "\\"
 
 
-def _find_separator(line):
-    """The header '/' separator: the first '/' followed by a space or EOL."""
+def _find_separator(text):
+    """The header '/' separator: the first '/' followed by a space, a
+    newline or the end of the text."""
     idx = 0
     while True:
-        idx = line.find("/", idx)
+        idx = text.find("/", idx)
         if idx < 0:
             return -1
-        if idx == len(line) - 1 or line[idx + 1] == " ":
+        if idx == len(text) - 1 or text[idx + 1] in " \n":
             return idx
         idx += 1
 
 
-def _find_guard(line, sep):
-    """The last unescaped [...] pair directly before the '/' separator."""
-    close = sep - 1
-    while close >= 0 and line[close] == " ":
+def _find_guard(text, end):
+    """The last unescaped [...] pair directly before position end."""
+    close = end - 1
+    while close >= 0 and text[close] in " \n\t\r":
         close -= 1
-    if close < 0 or line[close] != "]" or _escaped(line, close):
+    if close < 0 or text[close] != "]" or _escaped(text, close):
         return None
     start = close - 1
     while start >= 0:
-        if line[start] == "[" and not _escaped(line, start):
+        if text[start] == "[" and not _escaped(text, start):
             return start, close
         start -= 1
     return None
+
+
+def _strip_param(head):
+    """Split a trailing event parameter keyword off the header text."""
+    words = head.split()
+    if words and words[-1] in EVENT_PARAMS:
+        return head[:head.rfind(words[-1])].rstrip(), words[-1]
+    return head, None
 
 
 def _resolve_brackets(text):
     return text.replace("\\[", "[").replace("\\]", "]")
 
 
-def _parse_header(line, lineno, errors):
-    """Parse a block header; return (block, inline behaviour or None)."""
-    stripped = line.rstrip()
+def _parse_header(text, lineno, errors):
+    """Parse a block header (possibly several lines up to the '/'
+    separator, or the whole block when there is none); return (block,
+    inline behaviour or None)."""
+    stripped = text.rstrip()
     for keyword in KEYWORDS:
         prefix = keyword + "/"
         if stripped.startswith(prefix):
@@ -89,26 +100,25 @@ def _parse_header(line, lineno, errors):
             return Block(keyword), inline or None
     sep = _find_separator(stripped)
     if sep < 0:
-        errors.append((lineno, "missing '/' in the event description"))
-        return Block(EVENT, trigger=stripped), None
+        head, inline = stripped, None
+    else:
+        head = stripped[:sep].rstrip()
+        inline = stripped[sep + 1:]
+        if inline.startswith(" "):
+            inline = inline[1:]
+    # the event parameter may follow the guard or the event name
+    head, param = _strip_param(head)
     guard = None
-    head = stripped[:sep].rstrip()
-    span = _find_guard(stripped, sep)
+    span = _find_guard(head, len(head))
     if span is not None:
         start, close = span
-        guard = _resolve_brackets(stripped[start + 1:close])
-        head = stripped[:start].rstrip()
-    param = None
-    words = head.split()
-    if words and words[-1] in EVENT_PARAMS:
-        param = words[-1]
-        head = head[:head.rfind(param)].rstrip()
+        guard = _resolve_brackets(head[start + 1:close])
+        head = head[:start].rstrip()
+    if param is None:
+        head, param = _strip_param(head)
     trigger = head
     if not trigger and guard is None:
         errors.append((lineno, "empty event name in the event description"))
-    inline = stripped[sep + 1:]
-    if inline.startswith(" "):
-        inline = inline[1:]
     return Block(EVENT, trigger=trigger, param=param, guard=guard), \
         inline or None
 
@@ -131,11 +141,19 @@ def parse(text):
             continue
         if not run:
             continue
-        header_lineno, header = run[0]
-        block, inline = _parse_header(header, header_lineno, errors)
+        # the header runs up to the first line carrying the separator;
+        # without one the whole block is an event description
+        header_end = len(run) - 1
+        for offset, (_, text_line) in enumerate(run):
+            if _find_separator(text_line.rstrip()) >= 0:
+                header_end = offset
+                break
+        header = "\n".join(text_line for _, text_line in run[:header_end + 1])
+        block, inline = _parse_header(header, run[0][0], errors)
         if inline:
             block.behaviour.append(inline)
-        block.behaviour.extend(text for _, text in run[1:])
+        block.behaviour.extend(text_line for _, text_line in
+                               run[header_end + 1:])
         block.verbatim = "\n".join(text for _, text in run)
         blocks.append(block)
         run = []

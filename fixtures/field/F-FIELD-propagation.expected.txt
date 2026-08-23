@@ -27,7 +27,7 @@ state-machine "G":
     action event "START" propagate:
       do: "run();"
   transition "n1-n2": "n1" -> "n2"
-    action event "STOP [ready]" block:
+    action event "STOP" block guard "ready":
       do: "finish();"
   transition "n2-n0": "n2" -> "n0"
     action event "RESET" defer:

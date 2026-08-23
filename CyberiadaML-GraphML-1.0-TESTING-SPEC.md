@@ -7,7 +7,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.0 (2026-02-04)
+**Document version:** 1.1 (2026-08-24)
 
 ## 1. Purpose
 
@@ -137,11 +137,11 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-6.7-3` MAY: `dChunk` — substring of the subject's aspect being commented. [R/W]
 
 **6.8 Events, guards, behaviour** (`CGML-6.8-*`)
-- `CGML-6.8-1` MUST: `dData` value is text in the HSM diagram standard (ПНСТ 984-2024) trigger syntax: `Trigger [Guard]/` + behaviour lines. The value may be an **empty string**, meaning no behaviour is defined. [R/W]
+- `CGML-6.8-1` MUST: `dData` value is text in the HSM diagram standard (ПНСТ 984-2024) label syntax `Event [Guard]/ Behaviour`: an event description — the event name, optionally followed by a guard in square brackets — optionally followed by the `/` separator and the behaviour lines. Guard and behaviour are optional: a block without `/` is an event description with no behaviour, and the event description may span several lines (event name and guard on separate lines, as in the standard's own §6.8 example). The value may be an **empty string**, meaning no behaviour is defined. [R/W]
 - `CGML-6.8-2` MUST: multiple behaviour/event blocks inside one `dData` are separated by a blank line (double newline); the number of blocks is unlimited. Whitespace inside `dData` is significant to block separation; implementations must preserve block structure round-trip. [R/W]
 - `CGML-6.8-3` MUST: internal-behaviour blocks begin with one of the keywords `entry/`, `exit/`, or `do/` (entry, exit, do behaviour respectively). [R/W]
 - `CGML-6.8-4` MUST: if the string is not empty the event description begins with the event name — a string conforming to the syntax of the target platform language. [R/W]
-- `CGML-6.8-5` MAY: an event description may carry event-handling parameters from ПНСТ 984-2024, given by the keywords `propagate`, `block`, or `defer`. [R/W] **Note:** per-event keywords, distinct from the document-level `eventPropagation` metadata parameter (6.9), which allows only `block`/`propagate`.
+- `CGML-6.8-5` MAY: an event description may carry event-handling parameters from ПНСТ 984-2024, given by the keywords `propagate`, `block`, or `defer`; the keyword may follow the event name or the guard. [R/W] **Note:** per-event keywords, distinct from the document-level `eventPropagation` metadata parameter (6.9), which allows only `block`/`propagate`.
 - `CGML-6.8-6` MAY: a guard block may contain the keyword `else` (see the at-most-one-else constraints in `CGML-6.3-4` and `CGML-6.4-4-2`). [R/W]
 - `CGML-6.8-7` MUST: XML special characters inside `dData` (`<`, `>`, `&`) are escaped per 5.2, as everywhere in the document. [R/W/X]
 - `CGML-6.8-8` MUST: square brackets used **inside a guard's logical expression** are escaped with a backslash — `\[`, `\]` (e.g. `[String.Contains(\[Example\])]`). [R/W]

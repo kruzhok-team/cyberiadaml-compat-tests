@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.0 (2026-08-22)
+**Document version:** 1.1 (2026-08-24)
 
 ## 1. Purpose
 
@@ -140,13 +140,19 @@ Built after L2 passes. Element kinds mirror the standard's Table 2:
 
 An edge whose first data key is `dPivot` is a comment link; any other edge is a transition.
 
-**Behaviour text (§6.8).** `dData` splits into blocks on blank lines; each block's first line is
-either `entry/`, `exit/`, `do/` or `Trigger [Guard]/` where the trigger is preserved verbatim
-(platform syntax is not validated) and may end with one of the event parameters `propagate`,
-`block`, `defer`. The guard is delimited by the last unescaped `[`…`]` pair before the trailing
-`/`; `\[` and `\]` inside it denote literal brackets; the guard `else` is recognized. Remaining
-block lines are behaviour lines, order preserved. An empty `dData` is zero blocks. Resolved
-ambiguity: one optional space is consumed after the header's closing `/`, none is required.
+**Behaviour text (§6.8).** `dData` splits into blocks on blank lines. A block is either an
+internal-behaviour block (`entry/`, `exit/`, `do/`) or an event block `Event [Guard]/ Behaviour`.
+The header of an event block is the block text up to and including the first line carrying the
+`/` separator — the first `/` followed by a space, a newline or the end of the text; when no line
+carries one, the whole block is the header and the block has no behaviour (the standard's own
+§6.8 example: event name on one line, guard on the next). The event name is preserved verbatim
+(platform syntax is not validated). An event parameter `propagate`, `block` or `defer` is
+recognized either directly before the separator/end (after the guard) or directly after the event
+name. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
+`\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name with
+no guard is an error. Remaining block lines are behaviour lines, order preserved. An empty
+`dData` is zero blocks. Resolved ambiguity: one optional space is consumed after the header's
+closing `/`, none is required.
 
 **Metadata text (§6.9).** The `dData` of a formal comment splits into chunks on blank lines;
 each chunk is `name/ value` — the name up to the first `/`, one optional space consumed, the

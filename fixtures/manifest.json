@@ -197,9 +197,6 @@
     "negative/X-6.7-2-dangling-link": {
       "reject": "CGML-6.7-2"
     },
-    "negative/X-6.8-1-missing-slash": {
-      "reject": "CGML-6.8-1"
-    },
     "negative/X-6.9-1-no-meta": {
       "reject": "CGML-6.9-1"
     },
@@ -274,6 +271,9 @@
         "CGML-7.2-1-4",
         "CGML-7.2-2"
       ]
+    },
+    "negative/X-6.8-1-empty-event": {
+      "reject": "CGML-6.8-1"
     }
   },
   "twins": [
