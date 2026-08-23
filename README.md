@@ -32,6 +32,17 @@ on warnings. `dump` prints the canonical dump of a valid document (the golden
 file format of the test catalog); `rules` lists the registered checks with
 their requirement identifiers.
 
+## The compatibility harness
+
+The `intharness` runner compares the CGML libraries against the fixture corpus in
+`fixtures/` through per-library drivers in `drivers/` (see the harness specification):
+
+    python3 -m intharness run            # writes report.json
+    python3 -m intharness report         # renders REPORT.md from it
+
+Conformance report snapshots are committed under `results/`. The cyberiadaml-js
+driver requires a one-time `npm install && npm run build` in the library checkout.
+
 ## Tests
 
 The validator's own test suite runs with pytest:
