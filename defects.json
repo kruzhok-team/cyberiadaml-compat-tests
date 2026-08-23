@@ -162,15 +162,6 @@
       ]
     },
     {
-      "id": "C-4",
-      "driver": "c",
-      "title": "reader requires the '/' separator in event descriptions",
-      "note": "action regexp fails on the standard's own §6.8 example (event name, guard on the next line, no behaviour)",
-      "signatures": [
-        "reject:rejected by libcyberiadaml: node block action text didn't match the regexp"
-      ]
-    },
-    {
       "id": "C-5",
       "driver": "c",
       "title": "reader rejects backslash-escaped brackets in guards",
