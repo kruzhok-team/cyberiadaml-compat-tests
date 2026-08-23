@@ -123,8 +123,10 @@ def _parse_header(text, lineno, errors, transition):
     if param is None:
         head, param = _strip_param(head)
     trigger = head
-    if not trigger and guard is None:
-        errors.append((lineno, "empty event name in the event description"))
+    # a transition without event name is a completion transition
+    if not trigger and guard is None and not transition:
+        errors.append((lineno, "empty event name in the internal event "
+                               "description"))
     return Block(EVENT, trigger=trigger, param=param, guard=guard), \
         inline or None
 

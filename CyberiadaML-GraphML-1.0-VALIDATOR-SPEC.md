@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.2 (2026-08-24)
+**Document version:** 1.3 (2026-08-24)
 
 ## 1. Purpose
 
@@ -151,8 +151,9 @@ example: event name on one line, guard on the next). The event name is preserved
 (platform syntax is not validated). An event parameter `propagate`, `block` or `defer` is
 recognized either directly before the separator/end (after the guard) or directly after the event
 name. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
-`\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name with
-no guard is an error. Remaining block lines are behaviour lines, order preserved. An empty
+`\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name is an
+error in a node block; in a transition it denotes a completion transition (ПНСТ 984-2024 3.31),
+with or without guard and behaviour. Remaining block lines are behaviour lines, order preserved. An empty
 `dData` is zero blocks. Resolved ambiguity: one optional space is consumed after the header's
 closing `/`, none is required.
 

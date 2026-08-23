@@ -7,7 +7,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.2 (2026-08-24)
+**Document version:** 1.3 (2026-08-24)
 
 ## 1. Purpose
 
@@ -137,10 +137,10 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-6.7-3` MAY: `dChunk` — substring of the subject's aspect being commented. [R/W]
 
 **6.8 Events, guards, behaviour** (`CGML-6.8-*`)
-- `CGML-6.8-1` MUST: `dData` value is text in the HSM diagram standard (ПНСТ 984-2024) label syntax `Event [Guard]/ Behaviour`, interpreted by context. In a **node** every block is an internal-behaviour block (`entry/`, `exit/`, `do/`, see 6.8-3) or an internal event `Event [Guard]/ Behaviour` — the `/` separator is mandatory. In an **edge** the block is the transition label: event name, optional guard in square brackets, and an optional `/ Behaviour` part; a label without `/` is an event with no behaviour and may span several lines (event name and guard on separate lines, as in the standard's own §6.8 edge example). The value may be an **empty string**, meaning no behaviour is defined. [R/W/X]
+- `CGML-6.8-1` MUST: `dData` value is text in the HSM diagram standard (ПНСТ 984-2024) label syntax `Event [Guard]/ Behaviour`, interpreted by context. In a **node** every block is an internal-behaviour block (`entry/`, `exit/`, `do/`, see 6.8-3) or an internal event `Event [Guard]/ Behaviour` — the `/` separator is mandatory. In an **edge** the block is the transition label: event name (empty for a completion transition, ПНСТ 984-2024 3.31), optional guard in square brackets, and an optional `/ Behaviour` part; a label without `/` is an event with no behaviour and may span several lines (event name and guard on separate lines, as in the standard's own §6.8 edge example). The value may be an **empty string**, meaning no behaviour is defined. [R/W/X]
 - `CGML-6.8-2` MUST: multiple behaviour/event blocks inside one `dData` are separated by a blank line (double newline); the number of blocks is unlimited. Whitespace inside `dData` is significant to block separation; implementations must preserve block structure round-trip. [R/W]
 - `CGML-6.8-3` MUST: internal-behaviour blocks begin with one of the keywords `entry/`, `exit/`, or `do/` (entry, exit, do behaviour respectively). [R/W]
-- `CGML-6.8-4` MUST: if the string is not empty the event description begins with the event name — a string conforming to the syntax of the target platform language. [R/W]
+- `CGML-6.8-4` MUST: if the string is not empty the event description begins with the event name — a string conforming to the syntax of the target platform language; in a transition label the name may be absent (completion transition), in a node block it is required. [R/W]
 - `CGML-6.8-5` MAY: an event description may carry event-handling parameters from ПНСТ 984-2024, given by the keywords `propagate`, `block`, or `defer`; the keyword may follow the event name or the guard. [R/W] **Note:** per-event keywords, distinct from the document-level `eventPropagation` metadata parameter (6.9), which allows only `block`/`propagate`.
 - `CGML-6.8-6` MAY: a guard block may contain the keyword `else` (see the at-most-one-else constraints in `CGML-6.3-4` and `CGML-6.4-4-2`). [R/W]
 - `CGML-6.8-7` MUST: XML special characters inside `dData` (`<`, `>`, `&`) are escaped per 5.2, as everywhere in the document. [R/W/X]

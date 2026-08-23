@@ -182,10 +182,20 @@ def test_event_parameter_before_guard():
         ("START", "propagate", "g")
 
 
-def test_empty_event_name_is_an_error():
+def test_empty_event_name_in_node_is_an_error():
     blocks, errors = parse("/ x()")
     assert len(errors) == 1
     assert "empty event name" in errors[0][1]
+
+
+def test_completion_transition():
+    for text in ("/ finish()", "/", "[done]/ finish()"):
+        blocks, errors = parse(text, transition=True)
+        assert errors == [], text
+        assert blocks[0].kind == "event"
+        assert blocks[0].trigger == ""
+    assert blocks[0].guard == "done"
+    assert blocks[0].behaviour == ["finish()"]
 
 
 def test_node_block_requires_separator():
@@ -200,5 +210,5 @@ def test_node_block_requires_separator():
 def test_error_line_numbers():
     _, errors = parse("entry/\na()\n\nbroken line")
     assert errors == [(3, "missing '/' in the internal event description")]
-    _, errors = parse("entry/\na()\n\n/ x()", transition=True)
-    assert errors == [(3, "empty event name in the event description")]
+    _, errors = parse("entry/\na()\n\n/ x()")
+    assert errors == [(3, "empty event name in the internal event description")]
