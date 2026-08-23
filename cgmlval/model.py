@@ -316,7 +316,7 @@ def _build_edge(edge):
         return CommentLink(pivot=data_value(edge, "dPivot"),
                            chunk=data_value(edge, "dChunk"), **common)
     text = data_value(edge, "dData")
-    blocks, errors = actions.parse(text)
+    blocks, errors = actions.parse(text, transition=True)
     label = _geometry(edge, "dLabelGeometry")
     source_points = _points(edge, "dSourcePoint")
     target_points = _points(edge, "dTargetPoint")

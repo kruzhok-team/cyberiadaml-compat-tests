@@ -86,10 +86,13 @@ def _resolve_brackets(text):
     return text.replace("\\[", "[").replace("\\]", "]")
 
 
-def _parse_header(text, lineno, errors):
-    """Parse a block header (possibly several lines up to the '/'
-    separator, or the whole block when there is none); return (block,
-    inline behaviour or None)."""
+def _parse_header(text, lineno, errors, transition):
+    """Parse a block header; return (block, inline behaviour or None).
+
+    A transition header may span several lines up to the '/' separator
+    or lack the separator altogether (an event with no behaviour); a node
+    block (internal event) must carry the separator on its first line.
+    """
     stripped = text.rstrip()
     for keyword in KEYWORDS:
         prefix = keyword + "/"
@@ -100,6 +103,9 @@ def _parse_header(text, lineno, errors):
             return Block(keyword), inline or None
     sep = _find_separator(stripped)
     if sep < 0:
+        if not transition:
+            errors.append((lineno, "missing '/' in the internal event "
+                                   "description"))
         head, inline = stripped, None
     else:
         head = stripped[:sep].rstrip()
@@ -123,11 +129,13 @@ def _parse_header(text, lineno, errors):
         inline or None
 
 
-def parse(text):
+def parse(text, transition=False):
     """Parse a dData behaviour value; return (blocks, errors).
 
     Blocks are separated by blank lines; an empty value is zero blocks.
-    Errors are (line index, message) pairs for the L3 checks.
+    Errors are (line index, message) pairs for the L3 checks. The
+    transition flag selects the label grammar of edges (separator
+    optional) over the node grammar (separator mandatory).
     """
     blocks = []
     errors = []
@@ -141,15 +149,18 @@ def parse(text):
             continue
         if not run:
             continue
-        # the header runs up to the first line carrying the separator;
-        # without one the whole block is an event description
-        header_end = len(run) - 1
-        for offset, (_, text_line) in enumerate(run):
-            if _find_separator(text_line.rstrip()) >= 0:
-                header_end = offset
-                break
+        # a transition header runs up to the first line carrying the
+        # separator (without one the whole block is the event); a node
+        # block header is its first line
+        header_end = 0
+        if transition:
+            header_end = len(run) - 1
+            for offset, (_, text_line) in enumerate(run):
+                if _find_separator(text_line.rstrip()) >= 0:
+                    header_end = offset
+                    break
         header = "\n".join(text_line for _, text_line in run[:header_end + 1])
-        block, inline = _parse_header(header, run[0][0], errors)
+        block, inline = _parse_header(header, run[0][0], errors, transition)
         if inline:
             block.behaviour.append(inline)
         block.behaviour.extend(text_line for _, text_line in

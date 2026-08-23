@@ -134,7 +134,7 @@ def test_multiline_behaviour_preserved():
 
 
 def test_event_without_separator():
-    blocks, errors = parse("EV")
+    blocks, errors = parse("EV", transition=True)
     assert errors == []
     assert blocks[0].kind == "event"
     assert blocks[0].trigger == "EV"
@@ -143,7 +143,7 @@ def test_event_without_separator():
 
 
 def test_event_with_guard_without_separator():
-    blocks, errors = parse("EV [x > 1]")
+    blocks, errors = parse("EV [x > 1]", transition=True)
     assert errors == []
     assert blocks[0].trigger == "EV"
     assert blocks[0].guard == "x > 1"
@@ -152,7 +152,7 @@ def test_event_with_guard_without_separator():
 
 def test_multiline_header_standard_example():
     text = "Сенсор.ЦельПолучена\n[Счетчик.ТекущееЗначениеСчетчика >= 2]"
-    blocks, errors = parse(text)
+    blocks, errors = parse(text, transition=True)
     assert errors == []
     assert blocks[0].trigger == "Сенсор.ЦельПолучена"
     assert blocks[0].guard == "Счетчик.ТекущееЗначениеСчетчика >= 2"
@@ -161,7 +161,7 @@ def test_multiline_header_standard_example():
 
 
 def test_separator_on_second_line():
-    blocks, errors = parse("EV\n[g]/ act()\nmore()")
+    blocks, errors = parse("EV\n[g]/ act()\nmore()", transition=True)
     assert errors == []
     assert blocks[0].trigger == "EV"
     assert blocks[0].guard == "g"
@@ -188,6 +188,17 @@ def test_empty_event_name_is_an_error():
     assert "empty event name" in errors[0][1]
 
 
+def test_node_block_requires_separator():
+    blocks, errors = parse("EV")
+    assert errors == [(0, "missing '/' in the internal event description")]
+    blocks, errors = parse("EV\n[g]")
+    assert len(errors) == 1
+    assert blocks[0].trigger == "EV"
+    assert blocks[0].behaviour == ["[g]"]
+
+
 def test_error_line_numbers():
-    _, errors = parse("entry/\na()\n\n/ x()")
+    _, errors = parse("entry/\na()\n\nbroken line")
+    assert errors == [(3, "missing '/' in the internal event description")]
+    _, errors = parse("entry/\na()\n\n/ x()", transition=True)
     assert errors == [(3, "empty event name in the event description")]

@@ -112,7 +112,7 @@ REQUIREMENTS = {
     "CGML-6.7-2": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.7-3": Req(MAY, "RW", CORE, INTEGRATION),
     # 6.8 Events, guards, behaviour
-    "CGML-6.8-1": Req(MUST, "RW", CORE, VALIDATOR),
+    "CGML-6.8-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.8-2": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-6.8-3": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-6.8-4": Req(MUST, "RW", CORE, VALIDATOR),

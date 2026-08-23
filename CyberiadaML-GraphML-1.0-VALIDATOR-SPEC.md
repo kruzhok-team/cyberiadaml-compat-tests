@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.1 (2026-08-24)
+**Document version:** 1.2 (2026-08-24)
 
 ## 1. Purpose
 
@@ -142,10 +142,12 @@ An edge whose first data key is `dPivot` is a comment link; any other edge is a 
 
 **Behaviour text (§6.8).** `dData` splits into blocks on blank lines. A block is either an
 internal-behaviour block (`entry/`, `exit/`, `do/`) or an event block `Event [Guard]/ Behaviour`.
-The header of an event block is the block text up to and including the first line carrying the
-`/` separator — the first `/` followed by a space, a newline or the end of the text; when no line
-carries one, the whole block is the header and the block has no behaviour (the standard's own
-§6.8 example: event name on one line, guard on the next). The event name is preserved verbatim
+The grammar depends on the owner: in a **node** the header is the block's first line and must
+carry the `/` separator — the first `/` followed by a space or the end of the line — otherwise
+the block is reported (internal event without behaviour); in a **transition** the header is the
+block text up to and including the first line carrying the separator, and when no line carries
+one the whole block is the header and the label has no behaviour (the standard's own §6.8 edge
+example: event name on one line, guard on the next). The event name is preserved verbatim
 (platform syntax is not validated). An event parameter `propagate`, `block` or `defer` is
 recognized either directly before the separator/end (after the guard) or directly after the event
 name. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and

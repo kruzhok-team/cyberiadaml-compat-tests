@@ -256,12 +256,20 @@ def test_behaviour_parse_error_rejected():
     assert "behaviour-syntax" in errors(ctx)
 
 
-def test_behaviour_without_separator_accepted():
+def test_transition_label_without_separator_accepted():
+    doc = minimal().replace(b'<edge id="init-n0#1" source="init" target="n0"/>',
+                            b'<edge id="init-n0#1" source="init" target="n0">'
+                            b'<data key="dData">EV\n[x &gt; 1]</data></edge>')
+    ctx = run(doc)
+    assert "behaviour-syntax" not in errors(ctx)
+
+
+def test_node_block_without_separator_rejected():
     doc = minimal().replace(b'      <data key="dName">Idle</data>',
                             b'      <data key="dName">Idle</data>\n'
                             b'      <data key="dData">EV\n[x &gt; 1]</data>')
     ctx = run(doc)
-    assert "behaviour-syntax" not in errors(ctx)
+    assert "behaviour-syntax" in errors(ctx)
 
 
 def test_meta_param_name_reported():
