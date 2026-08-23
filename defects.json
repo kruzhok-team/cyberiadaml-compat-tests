@@ -105,6 +105,43 @@
       "signatures": [
         "validate:CGML-6.6-1"
       ]
+    },
+    {
+      "id": "CS-1",
+      "driver": "cs",
+      "title": "reader drops nodes without dName, leaving dangling transitions",
+      "note": "vertices and comments carry no dName and are skipped on read while their edges survive; 15 of 19 outputs are invalid",
+      "signatures": [
+        "validate:CGML-6.3-2"
+      ]
+    },
+    {
+      "id": "CS-2",
+      "driver": "cs",
+      "title": "writer renames the meta comment node to 'coreMeta'",
+      "signatures": [
+        "dump:'  comment \"nMeta\" formal:'|'  comment \"coreMeta\" formal:'"
+      ]
+    },
+    {
+      "id": "CS-3",
+      "driver": "cs",
+      "title": "meta parameters beyond standardVersion/platform dropped on write",
+      "note": "the converter serializes only the standard pair; name, eventPropagation and other §6.9 parameters are lost",
+      "signatures": [
+        "dump:'  param \"eventPropagation\": \"block\"'|'state-machine \"G\":'",
+        "dump:'  param \"name\": \"actions\"'|'state-machine \"G\":'",
+        "dump:'  param \"name\": \"cycle_composite\"'|'state-machine \"G\":'"
+      ]
+    },
+    {
+      "id": "CS-4",
+      "driver": "cs",
+      "title": "comment link to a transition re-written without dPivot",
+      "note": "the edge then reads as a plain transition targeting an edge id (§8.5)",
+      "signatures": [
+        "validate:CGML-8.5-2"
+      ]
     }
   ]
 }
