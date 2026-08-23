@@ -40,9 +40,9 @@ The `intharness` runner compares the CGML libraries against the fixture corpus i
     python3 -m intharness run                              # writes report.json
     python3 -m intharness report --out-dir results/<date>  # summary + per-library defect reports
 
-Conformance report snapshots are committed under `results/<date>/`: the summary
-`REPORT.md` and one defect report per library, with stable defect ids curated in
-`defects.json`. The cyberiadaml-js driver requires a one-time
+The report renders the summary `REPORT.md` and one defect report per library
+into `results/<date>/` (generated, not tracked); the stable defect ids are
+curated in `defects.json`. The cyberiadaml-js driver requires a one-time
 `npm install && npm run build` in the library checkout.
 
 ## Tests

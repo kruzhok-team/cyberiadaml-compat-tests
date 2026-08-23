@@ -44,7 +44,7 @@ they only convert.
         v
    REPORT.md + report.json          scoreboard, matrix, defect references
    <driver>.md per library          defect records for the developers
-   results/<date>/                  committed snapshots
+   results/<date>/                  generated snapshots (not tracked)
 ```
 
 ## 3. Fixture corpus
@@ -128,7 +128,8 @@ sense [X] by channel 3.
 `python3 -m intharness run` executes the matrix and writes `report.json`;
 `python3 -m intharness report --out-dir results/<date>/` renders the Markdown reports from it:
 the summary `REPORT.md` plus one defect report `<driver>.md` per available library (§7).
-The directory is committed as the certification evidence trail; `report.json` is not committed.
+Reports are generated artifacts and stay out of the tree; only `defects.json` — the curated
+defect knowledge — is versioned.
 
 `REPORT.md` contains:
 
