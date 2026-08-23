@@ -163,3 +163,51 @@ def test_registry_file_integrity():
             seen_signatures.add(key)
     registry = defects.load_registry(ROOT / "defects.json")
     assert len(registry) == len(seen_signatures)
+
+
+def test_render_all_files():
+    from intharness import report as report_mod
+    report = {
+        "drivers": {"d": {"available": True, "error": None,
+                          "info": {"name": "lib-d", "version": "1.0",
+                                   "profiles": ["CORE"]}}},
+        "results": {"d": {"positive": {
+            "core/F-A": {"outcome": "rejected", "diagnostic": "no platform"},
+            "core/F-B": {"outcome": "converted", "validate_errors": [],
+                         "dump_equal": True}},
+            "negative": {"negative/X-1": {"outcome": "accepted"},
+                         "negative/X-2": {"outcome": "accepted"},
+                         "negative/X-3": {"outcome": "rejected"}},
+            "twins": []}},
+        "interop": {}}
+    registry = {("d", "reject:no platform"):
+                {"id": "D-1", "driver": "d", "title": "mandatory platform",
+                 "signatures": ["reject:no platform"]}}
+    files = report_mod.render_all(report, MANIFEST, registry,
+                                  "2026-08-23", "abc1234")
+    assert set(files) == {"REPORT.md", "d.md"}
+    page = files["d.md"]
+    assert "## D-1 — mandatory platform" in page
+    assert "unregistered" not in page
+    assert "drivers/d/driver convert fixtures/core/F-A.graphml" in page
+    assert "exits 2 (rejected)" in page
+    assert "| `negative/X-1` | `CGML-5.4-2` | MUST | accepted |" in page
+    summary = files["REPORT.md"]
+    assert "defect report [`d.md`](d.md)" in summary
+    assert "- `CGML-5.4-2` — D-1" in summary
+    assert "- `CGML-5.9-1` — missing rejection" in summary
+
+
+def test_render_unregistered_marker():
+    from intharness import report as report_mod
+    report = {
+        "drivers": {"d": {"available": True, "error": None,
+                          "info": {"name": "lib-d", "version": "1.0",
+                                   "profiles": ["CORE"]}}},
+        "results": {"d": {"positive": {
+            "core/F-A": {"outcome": "rejected", "diagnostic": "boom"}},
+            "negative": {}, "twins": []}},
+        "interop": {}}
+    files = report_mod.render_all(report, MANIFEST, {}, "2026-08-23", "rev")
+    assert "## D-NEW-1 — boom *(unregistered — add to defects.json)*" \
+        in files["d.md"]

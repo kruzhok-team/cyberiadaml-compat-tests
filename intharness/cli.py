@@ -46,22 +46,27 @@ def _cmd_run(args):
 def _cmd_report(args):
     import datetime
     import subprocess
+    from intharness import defects as defects_mod
     from intharness import report as report_mod
     data = json.loads(pathlib.Path(args.infile).read_text(encoding="utf-8"))
     manifest = json.loads(
         (pathlib.Path(args.fixtures) / "manifest.json")
         .read_text(encoding="utf-8"))["fixtures"]
+    registry = defects_mod.load_registry(args.registry)
     try:
         rev = subprocess.run(["git", "rev-parse", "--short", "HEAD"],
                              capture_output=True, text=True,
                              cwd=ROOT).stdout.strip() or "unknown"
     except OSError:
         rev = "unknown"
-    text = report_mod.render(data, manifest,
-                             args.date or datetime.date.today().isoformat(),
-                             rev)
-    pathlib.Path(args.out).write_text(text, encoding="utf-8")
-    print("report rendered to %s" % args.out)
+    files = report_mod.render_all(
+        data, manifest, registry,
+        args.date or datetime.date.today().isoformat(), rev)
+    out_dir = pathlib.Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name in sorted(files):
+        (out_dir / name).write_text(files[name], encoding="utf-8")
+        print("rendered %s" % (out_dir / name))
     return 0
 
 
@@ -81,11 +86,13 @@ def main(argv=None):
     p_run.add_argument("--out", default="report.json")
     p_run.set_defaults(func=_cmd_run)
 
-    p_report = sub.add_parser("report", help="render REPORT.md")
+    p_report = sub.add_parser(
+        "report", help="render the summary and per-library defect reports")
     p_report.add_argument("--in", dest="infile", default="report.json")
     p_report.add_argument("--fixtures", default=str(ROOT / "fixtures"))
+    p_report.add_argument("--registry", default=str(ROOT / "defects.json"))
     p_report.add_argument("--date", help="override the report date stamp")
-    p_report.add_argument("--out", default="REPORT.md")
+    p_report.add_argument("--out-dir", default="reports")
     p_report.set_defaults(func=_cmd_report)
 
     args = parser.parse_args(argv)

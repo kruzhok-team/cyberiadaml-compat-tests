@@ -153,13 +153,15 @@ def _merge(record, cluster):
     if record["evidence_fixture"] is None:
         record["evidence_fixture"] = cluster["evidence_fixture"]
         record["evidence"] = cluster["evidence"]
+        record["evidence_channel"] = cluster["channel"]
 
 
 def _record(identifier, title, note, registered):
     return {"id": identifier, "title": title, "note": note,
             "registered": registered, "signatures": [], "channels": set(),
             "kinds": set(), "fixtures": [], "requirements": set(),
-            "blocked": set(), "evidence_fixture": None, "evidence": []}
+            "blocked": set(), "evidence_fixture": None, "evidence": [],
+            "evidence_channel": None}
 
 
 def assign(driver, clusters, registry):
