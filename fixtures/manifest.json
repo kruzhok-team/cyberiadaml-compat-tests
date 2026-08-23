@@ -1,0 +1,40 @@
+{
+  "fixtures": {
+    "core/F-MIN": {
+      "profile": "CORE",
+      "requirements": ["CGML-5.1-1", "CGML-5.1-2", "CGML-5.4-1", "CGML-5.4-2",
+                       "CGML-5.5-1", "CGML-5.6-1", "CGML-5.6-2", "CGML-5.6-3",
+                       "CGML-5.7-1", "CGML-5.8-1", "CGML-5.9-1", "CGML-6.1-1",
+                       "CGML-6.1-2", "CGML-6.1-4", "CGML-6.4-1", "CGML-6.4-2",
+                       "CGML-6.9-1", "CGML-6.9-2", "CGML-6.9-3",
+                       "CGML-appendix-A-1", "CGML-appendix-B-1"]
+    },
+    "core/F-EMPTY-SM": {
+      "profile": "CORE",
+      "requirements": ["CGML-6.1-2", "CGML-6.9-1", "CGML-6.9-2", "CGML-6.9-3"]
+    },
+    "core/F-TWO": {
+      "profile": "CORE",
+      "requirements": ["CGML-5.2-1", "CGML-6.2-3", "CGML-6.8-1", "CGML-6.8-2",
+                       "CGML-6.8-3", "CGML-6.8-4", "CGML-6.8-7"]
+    },
+    "core/F-HIER": {
+      "profile": "CORE",
+      "requirements": ["CGML-5.7-2", "CGML-6.2-3", "CGML-6.5-1", "CGML-6.5-2",
+                       "CGML-6.5-4"]
+    },
+    "core/F-MULTI": {
+      "profile": "CORE",
+      "requirements": ["CGML-5.6-2", "CGML-5.9-4", "CGML-6.1-2", "CGML-6.9-1"]
+    },
+    "core/F-FLAT": {
+      "profile": "CORE",
+      "requirements": ["CGML-5.8-2", "CGML-5.9-2", "CGML-5.9-3"]
+    },
+    "core/F-CMT": {
+      "profile": "CORE",
+      "requirements": ["CGML-6.6-1", "CGML-6.7-1", "CGML-6.7-2"]
+    }
+  },
+  "twins": []
+}
