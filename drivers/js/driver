@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+// ---------------------------------------------------------------------------
+// The CyberiadaML-GraphML standard compatibility tests
+//
+// The cyberiadaml-js driver
+//
+// Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
+//
+// This program is free software: you can redistribute it and/or
+// modify it under the terms of the GNU General Public License as
+// published by the Free Software Foundation, either version 3 of the
+// License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see https://www.gnu.org/licenses/
+//
+// ---------------------------------------------------------------------------
+
+const fs = require("fs");
+const path = require("path");
+
+const LIB = process.env.CYBERIADAML_JS ||
+    path.join(process.env.HOME, "sources/cyberiadaml-js");
+
+function loadLibrary() {
+    return require(path.join(LIB, "dist/index.js"));
+}
+
+function info() {
+    let lib;
+    try {
+        lib = loadLibrary();
+    } catch (err) {
+        process.stderr.write("cyberiadaml-js unavailable (build it with " +
+            "npm install && npm run build): " + err.message + "\n");
+        return 1;
+    }
+    let version = "unknown";
+    try {
+        version = JSON.parse(
+            fs.readFileSync(path.join(LIB, "package.json"), "utf8")).version;
+    } catch (err) {}
+    process.stdout.write(JSON.stringify(
+        {name: "cyberiadaml-js", version: version, profiles: ["CORE"]}) + "\n");
+    return 0;
+}
+
+function convert(src, dst) {
+    const lib = loadLibrary();
+    const text = fs.readFileSync(src, "utf8");
+    let output;
+    try {
+        output = lib.exportGraphml(lib.parseCGML(text));
+    } catch (err) {
+        process.stderr.write("rejected by cyberiadaml-js: " +
+            err.message + "\n");
+        return 2;
+    }
+    fs.writeFileSync(dst, output, "utf8");
+    return 0;
+}
+
+const argv = process.argv.slice(2);
+if (argv[0] === "info") {
+    process.exit(info());
+} else if (argv[0] === "convert" && argv.length >= 3) {
+    process.exit(convert(argv[1], argv[2]));
+} else {
+    process.stderr.write(
+        "usage: driver info | driver convert IN.graphml OUT.graphml\n");
+    process.exit(64);
+}

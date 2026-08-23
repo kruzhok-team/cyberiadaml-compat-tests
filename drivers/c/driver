@@ -1,0 +1,54 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+# The CyberiadaML-GraphML standard compatibility tests
+#
+# The libcyberiadaml driver (wraps the cybparser tool)
+#
+# Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see https://www.gnu.org/licenses/
+#
+# -----------------------------------------------------------------------------
+
+CYBPARSER="${CYBPARSER:-$HOME/sources/libcyberiadaml/build/parser/cybparser}"
+
+case "$1" in
+info)
+    [ -x "$CYBPARSER" ] || {
+        echo "cybparser not found: $CYBPARSER" >&2
+        exit 1
+    }
+    VERSION=$(git -C "$(dirname "$CYBPARSER")/../.." \
+        describe --tags --always 2>/dev/null || echo unknown)
+    printf '{"name": "libcyberiadaml", "version": "%s", "profiles": ["CORE", "EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM"]}\n' \
+        "$VERSION"
+    ;;
+convert)
+    [ -n "$2" ] && [ -n "$3" ] || {
+        echo "usage: driver convert IN.graphml OUT.graphml" >&2
+        exit 64
+    }
+    "$CYBPARSER" convert -s -f cyberiada -t cyberiada -g "$2" -o "$3"
+    RC=$?
+    [ "$RC" -eq 0 ] && exit 0
+    # signal deaths (126+) are crashes; other failures are rejections
+    [ "$RC" -ge 126 ] && exit 1
+    echo "rejected by libcyberiadaml (cybparser exit $RC)" >&2
+    exit 2
+    ;;
+*)
+    echo "usage: driver info | driver convert IN.graphml OUT.graphml" >&2
+    exit 64
+    ;;
+esac
