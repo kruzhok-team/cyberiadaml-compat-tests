@@ -12,10 +12,10 @@
     {
       "id": "C-2",
       "driver": "c",
-      "title": "reader rejects multi-machine and completeness documents",
-      "note": "cybparser exits 2 without a diagnostic; F-MULTI carries two state machines, F-EXT-C submachine/history/entry-exit points",
+      "title": "reader rejects a document with two state machines",
+      "note": "cybparser: 'bad data key attribute stateMachine' on the second dStateMachine graph (F-MULTI)",
       "signatures": [
-        "reject:rejected by libcyberiadaml (cybparser exit 2)"
+        "reject:rejected by libcyberiadaml: bad data key attribute stateMachine"
       ]
     },
     {
@@ -149,7 +149,52 @@
       "title": "reader crashes on an additional namespace attribute of graphml",
       "note": "the extra xmlns:* attribute reaches a pydantic model as an unexpected keyword argument; §5.1 (CGML-5.1-3) tolerates such attributes",
       "signatures": [
-        "crash:    For further information visit https://errors.pydantic.dev/2.13/v/unexpected_keyword_argument\u001b[0m"
+        "crash:pydantic_core._pydantic_core.ValidationError: 1 validation error for CGML"
+      ]
+    },
+    {
+      "id": "C-3",
+      "driver": "c",
+      "title": "reader rejects dCollapsed on a composite state",
+      "note": "cybparser: 'Trying to set collapsed flag for non-state node c0' (F-EXT-C)",
+      "signatures": [
+        "reject:rejected by libcyberiadaml: Trying to set collapsed flag for non-state node c0"
+      ]
+    },
+    {
+      "id": "C-4",
+      "driver": "c",
+      "title": "reader requires the '/' separator in event descriptions",
+      "note": "action regexp fails on the standard's own §6.8 example (event name, guard on the next line, no behaviour)",
+      "signatures": [
+        "reject:rejected by libcyberiadaml: node block action text didn't match the regexp"
+      ]
+    },
+    {
+      "id": "C-5",
+      "driver": "c",
+      "title": "reader rejects backslash-escaped brackets in guards",
+      "note": "§6.8 (CGML-6.8-8) mandates \\\\[ \\\\] inside guard expressions",
+      "signatures": [
+        "reject:rejected by libcyberiadaml: edge action text didn't match the regexp"
+      ]
+    },
+    {
+      "id": "CS-5",
+      "driver": "cs",
+      "title": "reader crashes on an event description without '/'",
+      "note": "line[..line.IndexOf('/')] with IndexOf returning -1 (CyberiadaGraphMLConverter.cs)",
+      "signatures": [
+        "crash:Unhandled exception. System.ArgumentOutOfRangeException: length ('-1') must be a non-negative value. (Parameter 'length')"
+      ]
+    },
+    {
+      "id": "JS-10",
+      "driver": "js",
+      "title": "reader fails on an event description without '/'",
+      "note": "TypeError 'Cannot read properties of undefined (reading trim)' surfaced as a rejection",
+      "signatures": [
+        "reject:rejected by cyberiadaml-js: Cannot read properties of undefined (reading 'trim')"
       ]
     }
   ]
