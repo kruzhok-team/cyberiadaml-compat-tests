@@ -37,11 +37,13 @@ their requirement identifiers.
 The `intharness` runner compares the CGML libraries against the fixture corpus in
 `fixtures/` through per-library drivers in `drivers/` (see the harness specification):
 
-    python3 -m intharness run            # writes report.json
-    python3 -m intharness report         # renders REPORT.md from it
+    python3 -m intharness run                              # writes report.json
+    python3 -m intharness report --out-dir results/<date>  # summary + per-library defect reports
 
-Conformance report snapshots are committed under `results/`. The cyberiadaml-js
-driver requires a one-time `npm install && npm run build` in the library checkout.
+Conformance report snapshots are committed under `results/<date>/`: the summary
+`REPORT.md` and one defect report per library, with stable defect ids curated in
+`defects.json`. The cyberiadaml-js driver requires a one-time
+`npm install && npm run build` in the library checkout.
 
 ## Tests
 

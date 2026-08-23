@@ -6,7 +6,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0),
 the implementation driver contract and the `intharness` runner that compares the CGML libraries
 against the standard and against each other.
 
-**Document version:** 1.0 (2026-08-23)
+**Document version:** 1.1 (2026-08-23)
 
 ## 1. Purpose
 
@@ -42,8 +42,9 @@ they only convert.
    +---------------------------------------------+
         |
         v
-   REPORT.md + report.json          scoreboard, matrix, findings
-   results/<date>.md                committed snapshots
+   REPORT.md + report.json          scoreboard, matrix, defect references
+   <driver>.md per library          defect records for the developers
+   results/<date>/                  committed snapshots
 ```
 
 ## 3. Fixture corpus
@@ -125,19 +126,70 @@ sense [X] by channel 3.
 ## 6. Report
 
 `python3 -m intharness run` executes the matrix and writes `report.json`;
-`python3 -m intharness report` renders `REPORT.md` from it. The Markdown report contains:
+`python3 -m intharness report --out-dir results/<date>/` renders the Markdown reports from it:
+the summary `REPORT.md` plus one defect report `<driver>.md` per available library (§7).
+The directory is committed as the certification evidence trail; `report.json` is not committed.
+
+`REPORT.md` contains:
 
 1. the run header — date, driver versions, fixture corpus revision;
-2. per-library scoreboard — requirements by profile: passed / failed / not-claimed /
-   not-tested counts, and the failed requirement list with fixture references;
-3. the interop matrix — writers × readers, per-cell: fixtures exchanged cleanly / total;
-4. the finding appendix — per failure: fixture, channel, diagnostic (cgmlval finding lines
-   or the first dump difference).
+2. per-library scoreboard — requirements by profile: passed / failed / blocked / not-claimed /
+   not-covered / not-tested counts;
+3. the failed requirement list — `CGML-<clause>-<n> — <defect id>`, each failure referencing
+   the defect record that explains it;
+4. the interop matrix — writers × readers, per-cell: fixtures exchanged cleanly / total.
 
-Snapshots are committed under `results/<date>.md` as the certification evidence trail;
-`report.json` is not committed.
+## 7. Defect reports
 
-## 7. Scope
+The per-requirement view of §5 is the certification view; developers need the inverse: one
+record per root cause. The renderer folds a driver's channel results into **clusters** keyed
+by a signature:
+
+| Channel result | Signature |
+|---|---|
+| positive fixture rejected | `reject:<stderr diagnostic>` |
+| positive fixture crashed | `crash:<first diagnostic line>` |
+| output validation error | `validate:<cited requirement id>` (one cluster per requirement) |
+| dump difference | `dump:<expected line>|<got line>`, whitespace-stripped, numbers normalized to `#` |
+
+Rejections with byte-identical diagnostics are indistinguishable to the harness and form one
+cluster listing all affected fixtures. The dump signature is approximate by design — one root
+cause can surface as several signatures; the registry below merges them. Accepted negative
+fixtures are not clustered: they collapse into a single per-driver *missing rejections* table
+(fixture, requirement, level).
+
+**Registry.** `defects.json` at the repository root maps signatures to stable, hand-curated
+records:
+
+```json
+{"defects": [
+  {"id": "C-1", "driver": "c",
+   "title": "writer declares dRegion with for=\"node\"",
+   "note": "optional pointer for the developers",
+   "signatures": ["validate:CGML-appendix-B-1"]}
+]}
+```
+
+A cluster whose signature is listed takes the record's id and title; several signatures may
+share one record. An unmatched cluster gets the provisional id `<DRIVER>-NEW-<n>` and is
+flagged `unregistered` in the report — curating it into `defects.json` is part of accepting a
+run. Ids are never renumbered; a fixed defect simply stops matching and drops out.
+
+**Record.** Each defect record in `<driver>.md` carries:
+
+- id and title;
+- kind — `write` (dump difference or invalid output), `read` (a valid document rejected),
+  `robustness` (crash);
+- severity — from the highest violated requirement level: MUST → major, SHOULD → minor,
+  MAY → info;
+- the violated requirements with level, profile and the standard clause derived from the id;
+- the channel, the affected fixtures, and the impact (requirements blocked by invalid output,
+  the driver's interop rows);
+- evidence — the cgmlval finding lines or the expected/got dump pair from one representative
+  fixture;
+- a reproduction command sequence using only the committed driver and fixtures.
+
+## 8. Scope
 
 Out of scope for this phase: the INTEGRATION-probe channel (a neutral-JSON `read` command
 interrogating the library model), fixes to the libraries under test, drivers beyond the three
