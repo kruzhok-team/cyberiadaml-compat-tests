@@ -65,13 +65,17 @@ exit/
       <data key="dData">STOP [ready] block/ halt()</data>
     </edge>
     <edge id="n2-n0#1" source="n2" target="n0">
-      <data key="dData">RESET propagate [count == 0]/</data>
+      <data key="dData">RESET [count == 0] propagate/</data>
     </edge>
     <edge id="n0-n0#1" source="n0" target="n0">
       <data key="dData">TICK [armed]/</data>
     </edge>
     <edge id="n2-n2#1" source="n2" target="n2">
       <data key="dData">/ finish()</data>
+    </edge>
+    <edge id="n2-n1#1" source="n2" target="n1">
+      <data key="dData">TIMEOUT [armed]/ defer
+rearm()</data>
     </edge>
   </graph>
 </graphml>

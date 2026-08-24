@@ -35,6 +35,9 @@ state-machine "G":
     action event "Сенсор.ЦельПолучена" guard "Счетчик.ТекущееЗначениеСчетчика >= 2":
   transition "n2-n0#1": "n2" -> "n0"
     action event "RESET" propagate guard "count == 0":
+  transition "n2-n1#1": "n2" -> "n1"
+    action event "TIMEOUT" defer guard "armed":
+      do: "rearm()"
   transition "n2-n2#1": "n2" -> "n2"
     action event "":
       do: "finish()"

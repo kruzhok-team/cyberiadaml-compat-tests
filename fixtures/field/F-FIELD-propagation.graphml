@@ -30,7 +30,7 @@ eventPropagation/ block
       <data key="dData">entry/
 prepare();
 
-TICK defer/
+TICK/ defer
 count();
 </data>
     </node>
@@ -52,7 +52,7 @@ finish();
 </data>
     </edge>
     <edge id="n2-n0" source="n2" target="n0">
-      <data key="dData">RESET defer/</data>
+      <data key="dData">RESET/ defer</data>
     </edge>
   </graph>
 </graphml>
