@@ -196,6 +196,60 @@
       "signatures": [
         "dump:'    action event \"TICK\" defer:'|'    action event \"TICK\":'"
       ]
+    },
+    {
+      "id": "C-6",
+      "driver": "c",
+      "title": "writer alters polyline point coordinates",
+      "note": "F-GEO-F polyline point 270,30 re-emitted as 270,30.38 in full geometry mode",
+      "signatures": [
+        "dump:'    polyline: point # # point # # point # #'|'    polyline: point # # point # # point # #'"
+      ]
+    },
+    {
+      "id": "C-7",
+      "driver": "c",
+      "title": "writer trims the trailing space of a formal comment name",
+      "note": "the standard's Г.3 example names its components ' CGML_COMPONENT ' with spaces; the name is verbatim text (§6.6)",
+      "signatures": [
+        "dump:'    name: \" CGML_COMPONENT \"'|'    name: \" CGML_COMPONENT\"'"
+      ]
+    },
+    {
+      "id": "PY-3",
+      "driver": "py",
+      "title": "writer places data keys after the region subgraph of a node",
+      "note": "appendix А order: the node's data keys precede its region graph elements",
+      "signatures": [
+        "validate:CGML-appendix-A-1"
+      ]
+    },
+    {
+      "id": "PY-4",
+      "driver": "py",
+      "title": "writer trims the whitespace of a formal comment name",
+      "note": "' CGML_COMPONENT ' (standard Г.3) re-emitted as 'CGML_COMPONENT'",
+      "signatures": [
+        "dump:'    name: \" CGML_COMPONENT \"'|'    name: \"CGML_COMPONENT\"'"
+      ]
+    },
+    {
+      "id": "CS-6",
+      "driver": "cs",
+      "title": "component comments re-written as same-named states",
+      "note": "the two CGML_COMPONENT comments of Г.3 lose dNote and collide on their name (CGML-6.2-3)",
+      "signatures": [
+        "validate:CGML-6.2-3"
+      ]
+    },
+    {
+      "id": "JS-12",
+      "driver": "js",
+      "title": "reader rejects a completion transition",
+      "note": "'No reg!' on F-LABEL's trigger-less '/ finish()' transition",
+      "signatures": [
+        "reject:rejected by cyberiadaml-js: No reg!"
+      ]
     }
   ]
 }
