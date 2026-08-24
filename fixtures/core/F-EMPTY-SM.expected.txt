@@ -9,4 +9,3 @@ state-machine "G":
   name: "Empty machine"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"

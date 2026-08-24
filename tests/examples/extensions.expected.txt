@@ -16,7 +16,6 @@ state-machine "M1":
   vertex "init" initial:
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\nmarkupLanguage/ html"
   state "s0":
     name: "Wait"
     formal-name: "wait_state"

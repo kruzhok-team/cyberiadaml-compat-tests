@@ -25,7 +25,6 @@ state-machine "M1":
     name: "Idle"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   submachine "sub0" ref "M2":
     name: "Nested job"
   vertex "xp0" exitPoint:

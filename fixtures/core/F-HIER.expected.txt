@@ -18,7 +18,6 @@ state-machine "G":
   vertex "init" initial:
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "ch1-ch2#1": "ch1" -> "ch2"
     action event "NEXT":
       do: "advance()"

@@ -12,5 +12,4 @@ state-machine "G":
     name: "Idle > Ready"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "init-n0#1": "init" -> "n0"

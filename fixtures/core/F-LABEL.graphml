@@ -52,6 +52,7 @@ exit/
     </node>
     <node id="n2">
       <data key="dName">Done</data>
+      <data key="dData">/ act()</data>
     </node>
     <edge id="init-n0#1" source="init" target="n0"/>
     <edge id="n0-n1#1" source="n0" target="n1">

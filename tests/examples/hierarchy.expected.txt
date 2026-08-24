@@ -32,7 +32,6 @@ state-machine "G":
         geometry: point 60.00 70.00
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\ngeometry/ full"
   transition "init-n0#1": "init" -> "n0"
   transition "n1-n2#1": "n1" -> "n2"
     action event "TICK" guard "red_done":

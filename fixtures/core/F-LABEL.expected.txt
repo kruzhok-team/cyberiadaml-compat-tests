@@ -20,9 +20,10 @@ state-machine "G":
       do: "Сенсор.ОстановкаПоиска"
   state "n2":
     name: "Done"
+    action event "":
+      do: "act()"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "init-n0#1": "init" -> "n0"
   transition "n0-n0#1": "n0" -> "n0"
     action event "TICK" guard "armed":

@@ -165,7 +165,7 @@ respect, named in its test row.
 | T-6.8-1.3 | CGML-6.8-1 | A | trigger with guard and empty behavior list; `entry/` with empty body (2 fixtures) → accepted |
 | T-6.8-1.4 | CGML-6.8-1 | A | transition label without `/` (no behavior) → accepted, no behavior |
 | T-6.8-1.5 | CGML-6.8-1 | A | transition label with event name and guard on separate lines (the standard's §6.8 edge example) → guard recognized |
-| T-6.8-1.6 | CGML-6.8-1 | X | `/ act()` in a node block — empty event name → rejected |
+| T-6.8-1.6 | CGML-6.8-1 | A | `/ act()` in a node block — empty event name → accepted |
 | T-6.8-1.7 | CGML-6.8-1 | X | node block with behaviour lines but no `/` → rejected; a single-line `EV` block → accepted |
 | T-6.8-1.8 | CGML-6.8-1 | A | completion transition `/ act()` (no event name, no guard) → accepted |
 | T-6.8-2.1 | CGML-6.8-2 | A | two blocks split by blank line → two behavior entries |

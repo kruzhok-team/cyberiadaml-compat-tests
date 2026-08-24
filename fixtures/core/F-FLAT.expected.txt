@@ -16,7 +16,6 @@ state-machine "G":
     name: "Inner two"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "init-n0#1": "init" -> "n0"
   transition "n0-n0::n1#1": "n0" -> "n0::n1"
   transition "n0::n1-n0::n2#1": "n0::n1" -> "n0::n2"

@@ -21,7 +21,6 @@ state-machine "G":
     name: "Done"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\neventPropagation/ block\n\n"
   transition "init-n0": "init" -> "n0"
   transition "n0-n1": "n0" -> "n1"
     action event "START" propagate:

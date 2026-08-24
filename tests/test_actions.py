@@ -210,10 +210,11 @@ def test_defer_before_separator_stays_in_the_event_name():
     assert (blocks[0].trigger, blocks[0].param) == ("TICK defer", None)
 
 
-def test_empty_event_name_in_node_is_an_error():
+def test_empty_event_name_in_node_is_accepted():
     blocks, errors = parse("/ x()")
-    assert len(errors) == 1
-    assert "empty event name" in errors[0][1]
+    assert errors == []
+    assert blocks[0].trigger == ""
+    assert blocks[0].behaviour == ["x()"]
 
 
 def test_completion_transition():
@@ -244,4 +245,4 @@ def test_error_line_numbers():
     _, errors = parse("entry/\na()\n\nbroken\nlines")
     assert errors == [(3, "missing '/' before the behaviour lines")]
     _, errors = parse("entry/\na()\n\n/ x()")
-    assert errors == [(3, "empty event name in the internal event description")]
+    assert errors == []

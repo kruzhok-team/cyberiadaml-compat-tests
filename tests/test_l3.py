@@ -251,9 +251,16 @@ def test_formal_names():
 def test_behaviour_parse_error_rejected():
     doc = minimal().replace(b'      <data key="dName">Idle</data>',
                             b'      <data key="dName">Idle</data>\n'
-                            b'      <data key="dData">/ act()</data>')
+                            b'      <data key="dData">EV\n[guard]</data>')
     ctx = run(doc)
     assert "behaviour-syntax" in errors(ctx)
+
+
+def test_empty_event_name_node_block_accepted():
+    doc = minimal().replace(b'      <data key="dName">Idle</data>',
+                            b'      <data key="dName">Idle</data>\n'
+                            b'      <data key="dData">/ act()</data>')
+    assert errors(run(doc)) == []
 
 
 def test_transition_label_without_separator_accepted():
