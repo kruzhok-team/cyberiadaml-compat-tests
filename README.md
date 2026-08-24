@@ -4,7 +4,7 @@ This repository contains the set of specifications and tools for checking
 CyberiadaML GraphML standard compatibilty of libraries and tools.
 
 See the PNST 1044-2025 and PNST 984-2024 Russian national standard documents for
-details.
+details. The standard document is stated in the `docs/PNST_1044-2025.md` file.
 
 ## Documentation
 
@@ -13,7 +13,7 @@ details.
 * `CyberiadaML-GraphML-1.0-TEST-CATALOG.md` - the conformance test catalog: the layered
   validation procedure and the test list;
 * `CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` - the document validator specification:
-  the `cgmlval` tool and the canonical dump format.
+  the `cgmlval` tool and the canonical dump format;
 * `CyberiadaML-GraphML-1.0-HARNESS-SPEC.md` - the compatibility harness specification:
   the fixture corpus, the library driver contract and the conformance report.
 
