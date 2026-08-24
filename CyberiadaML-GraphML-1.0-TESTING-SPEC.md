@@ -2,12 +2,14 @@
 
 **Standard under test:** ПНСТ 1044-2025 "Системы киберфизические. Национальная киберфизическая платформа. Часть 4. Программирование расширенных иерархических машин состояний. Формат документа описания диаграмм машин состояний" — the Cyberiada-GraphML (CGML) format for HSM (ПРИМС) diagrams serialization.
 
+**Source text:** `docs/PNST_1044-2025.md` — the Markdown mirror of the standard maintained in this repository is the authoritative text for the testing system; the PDF is consulted for layout questions only. The requirement rows below cite its clause numbers.
+
 **Related standards:**
 - ПНСТ 984-2024 "Системы киберфизические. Национальная киберфизическая платформа. Часть 3. Программирование расширенных иерархических машин состояний" — the HSM (ПРИМС) diagram semantics;
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.4 (2026-08-24)
+**Document version:** 1.5 (2026-08-25)
 
 ## 1. Purpose
 
