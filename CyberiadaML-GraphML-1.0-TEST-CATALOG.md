@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.5 (2026-08-24)
+**Document version:** 1.6 (2026-08-24)
 
 ## 1. Testing layers
 
@@ -166,13 +166,14 @@ respect, named in its test row.
 | T-6.8-1.4 | CGML-6.8-1 | A | transition label without `/` (no behavior) → accepted, no behavior |
 | T-6.8-1.5 | CGML-6.8-1 | A | transition label with event name and guard on separate lines (the standard's §6.8 edge example) → guard recognized |
 | T-6.8-1.6 | CGML-6.8-1 | X | `/ act()` in a node block — empty event name → rejected |
-| T-6.8-1.7 | CGML-6.8-1 | X | internal event block in a node without `/` → rejected |
+| T-6.8-1.7 | CGML-6.8-1 | X | node block with behaviour lines but no `/` → rejected; a single-line `EV` block → accepted |
 | T-6.8-1.8 | CGML-6.8-1 | A | completion transition `/ act()` (no event name, no guard) → accepted |
 | T-6.8-2.1 | CGML-6.8-2 | A | two blocks split by blank line → two behavior entries |
 | T-6.8-3.1 | CGML-6.8-3 | A | `entry/`, `exit/`, `do/` blocks → recognized as the three behavior kinds |
 | T-6.8-3.2 | CGML-6.8-3 | A | multiple `entry/` + event + `exit/` blocks in one state (order preserved) → parsed |
 | T-6.8-4.1 | CGML-6.8-4 | A | exotic event names (dots, arguments `EVENT(b)`, Unicode) → preserved verbatim, not validated |
-| T-6.8-5.1 | CGML-6.8-5 | A | events with `propagate` / `block` / `defer`, keyword after the event name or after the guard → parameters preserved |
+| T-6.8-5.1 | CGML-6.8-5 | A | `propagate` / `block` directly before the `/` (after the guard when present) → parameters preserved |
+| T-6.8-5.2 | CGML-6.8-5 | A | `Event [Guard]/ defer` with behaviour lines → defer recognized |
 | T-6.8-6.1 | CGML-6.8-6 | A | `[else]` guard → recognized |
 | T-6.8-8.1 | CGML-6.8-8 | RT | guard `[Строка.Содержит(\[Пример\])]` → backslash-escaped brackets preserved |
 | T-6.9-2.1 | CGML-6.9-2 | A | multi-line parameter value (`description` = three lines); blank-line separation → parsed to pairs |

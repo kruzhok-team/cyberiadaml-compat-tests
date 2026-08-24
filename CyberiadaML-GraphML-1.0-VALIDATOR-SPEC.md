@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.3 (2026-08-24)
+**Document version:** 1.4 (2026-08-24)
 
 ## 1. Purpose
 
@@ -142,15 +142,14 @@ An edge whose first data key is `dPivot` is a comment link; any other edge is a 
 
 **Behaviour text (§6.8).** `dData` splits into blocks on blank lines. A block is either an
 internal-behaviour block (`entry/`, `exit/`, `do/`) or an event block `Event [Guard]/ Behaviour`.
-The grammar depends on the owner: in a **node** the header is the block's first line and must
-carry the `/` separator — the first `/` followed by a space or the end of the line — otherwise
-the block is reported (internal event without behaviour); in a **transition** the header is the
-block text up to and including the first line carrying the separator, and when no line carries
-one the whole block is the header and the label has no behaviour (the standard's own §6.8 edge
-example: event name on one line, guard on the next). The event name is preserved verbatim
-(platform syntax is not validated). An event parameter `propagate`, `block` or `defer` is
-recognized either directly before the separator/end (after the guard) or directly after the event
-name. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
+The `/` separator — the first `/` followed by a space, a newline or the end of the text — may be
+omitted only when the block has no behaviour lines. In a **node** the header is the block's first
+line; behaviour lines without the separator on it are reported. In a **transition** the header is
+the block text up to and including the first line carrying the separator, and when no line
+carries one the whole block is the header and the label has no behaviour (the standard's own §6.8
+edge example: event name on one line, guard on the next). The event name is preserved verbatim
+(platform syntax is not validated). The event parameters `propagate` and `block` are recognized
+directly before the separator (after the guard when present); `defer` directly after it. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
 `\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name is an
 error in a node block; in a transition it denotes a completion transition (ПНСТ 984-2024 3.31),
 with or without guard and behaviour. Remaining block lines are behaviour lines, order preserved. An empty

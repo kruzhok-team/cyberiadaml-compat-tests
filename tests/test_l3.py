@@ -264,6 +264,14 @@ def test_transition_label_without_separator_accepted():
     assert "behaviour-syntax" not in errors(ctx)
 
 
+def test_node_event_without_behaviour_accepted():
+    doc = minimal().replace(b'      <data key="dName">Idle</data>',
+                            b'      <data key="dName">Idle</data>\n'
+                            b'      <data key="dData">EV</data>')
+    ctx = run(doc)
+    assert "behaviour-syntax" not in errors(ctx)
+
+
 def test_node_block_without_separator_rejected():
     doc = minimal().replace(b'      <data key="dName">Idle</data>',
                             b'      <data key="dName">Idle</data>\n'

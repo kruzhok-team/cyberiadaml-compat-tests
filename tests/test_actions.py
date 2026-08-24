@@ -85,15 +85,18 @@ def test_trigger_with_guard_and_empty_behaviour():
 
 
 def test_event_parameters():
-    for param in ("propagate", "block", "defer"):
+    for param in ("propagate", "block"):
         blocks, errors = parse("TIMER %s/ x()" % param)
         assert errors == []
         assert blocks[0].trigger == "TIMER"
         assert blocks[0].param == param
+    blocks, errors = parse("TIMER/ defer\nx()")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param) == ("TIMER", "defer")
 
 
 def test_parameter_with_guard():
-    blocks, _ = parse("TIMER propagate [cnt > 0]/ x()")
+    blocks, _ = parse("TIMER [cnt > 0] propagate/ x()")
     assert blocks[0].trigger == "TIMER"
     assert blocks[0].param == "propagate"
     assert blocks[0].guard == "cnt > 0"
@@ -175,11 +178,36 @@ def test_event_parameter_after_guard():
         ("STOP", "block", "ready")
 
 
-def test_event_parameter_before_guard():
+def test_keyword_before_guard_stays_in_the_event_name():
     blocks, errors = parse("START propagate [g]/")
     assert errors == []
     assert (blocks[0].trigger, blocks[0].param, blocks[0].guard) == \
-        ("START", "propagate", "g")
+        ("START propagate", None, "g")
+
+
+def test_pre_separator_parameter_without_guard():
+    blocks, errors = parse("START propagate/")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param) == ("START", "propagate")
+
+
+def test_defer_after_separator():
+    blocks, errors = parse("TICK/ defer")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param) == ("TICK", "defer")
+    assert blocks[0].behaviour == []
+    blocks, _ = parse("TICK [g]/ defer\nact()")
+    assert (blocks[0].param, blocks[0].guard) == ("defer", "g")
+    assert blocks[0].behaviour == ["act()"]
+    blocks, _ = parse("TICK/ deferred()")
+    assert blocks[0].param is None
+    assert blocks[0].behaviour == ["deferred()"]
+
+
+def test_defer_before_separator_stays_in_the_event_name():
+    blocks, errors = parse("TICK defer/")
+    assert errors == []
+    assert (blocks[0].trigger, blocks[0].param) == ("TICK defer", None)
 
 
 def test_empty_event_name_in_node_is_an_error():
@@ -198,17 +226,22 @@ def test_completion_transition():
     assert blocks[0].behaviour == ["finish()"]
 
 
-def test_node_block_requires_separator():
+def test_node_event_without_behaviour_accepted():
     blocks, errors = parse("EV")
-    assert errors == [(0, "missing '/' in the internal event description")]
+    assert errors == []
+    assert blocks[0].trigger == "EV"
+    assert blocks[0].behaviour == []
+
+
+def test_node_behaviour_lines_require_separator():
     blocks, errors = parse("EV\n[g]")
-    assert len(errors) == 1
+    assert errors == [(0, "missing '/' before the behaviour lines")]
     assert blocks[0].trigger == "EV"
     assert blocks[0].behaviour == ["[g]"]
 
 
 def test_error_line_numbers():
-    _, errors = parse("entry/\na()\n\nbroken line")
-    assert errors == [(3, "missing '/' in the internal event description")]
+    _, errors = parse("entry/\na()\n\nbroken\nlines")
+    assert errors == [(3, "missing '/' before the behaviour lines")]
     _, errors = parse("entry/\na()\n\n/ x()")
     assert errors == [(3, "empty event name in the internal event description")]

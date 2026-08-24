@@ -30,6 +30,8 @@ EVENT = "event"
 
 KEYWORDS = (ENTRY, EXIT, DO)
 EVENT_PARAMS = ("propagate", "block", "defer")
+PRE_PARAMS = ("propagate", "block")   # directly before the '/' separator
+DEFER = "defer"                       # directly after the '/' separator
 
 
 @dataclass
@@ -75,9 +77,9 @@ def _find_guard(text, end):
 
 
 def _strip_param(head):
-    """Split a trailing event parameter keyword off the header text."""
+    """Split a trailing propagate/block keyword off the header text."""
     words = head.split()
-    if words and words[-1] in EVENT_PARAMS:
+    if words and words[-1] in PRE_PARAMS:
         return head[:head.rfind(words[-1])].rstrip(), words[-1]
     return head, None
 
@@ -89,9 +91,9 @@ def _resolve_brackets(text):
 def _parse_header(text, lineno, errors, transition):
     """Parse a block header; return (block, inline behaviour or None).
 
-    A transition header may span several lines up to the '/' separator
-    or lack the separator altogether (an event with no behaviour); a node
-    block (internal event) must carry the separator on its first line.
+    In both contexts the separator may be omitted when no behaviour
+    follows; a transition header may additionally span several lines up
+    to the separator.
     """
     stripped = text.rstrip()
     for keyword in KEYWORDS:
@@ -103,16 +105,13 @@ def _parse_header(text, lineno, errors, transition):
             return Block(keyword), inline or None
     sep = _find_separator(stripped)
     if sep < 0:
-        if not transition:
-            errors.append((lineno, "missing '/' in the internal event "
-                                   "description"))
         head, inline = stripped, None
     else:
         head = stripped[:sep].rstrip()
         inline = stripped[sep + 1:]
         if inline.startswith(" "):
             inline = inline[1:]
-    # the event parameter may follow the guard or the event name
+    # propagate/block sit directly before the separator, after the guard
     head, param = _strip_param(head)
     guard = None
     span = _find_guard(head, len(head))
@@ -120,8 +119,11 @@ def _parse_header(text, lineno, errors, transition):
         start, close = span
         guard = _resolve_brackets(head[start + 1:close])
         head = head[:start].rstrip()
-    if param is None:
-        head, param = _strip_param(head)
+    # defer sits directly after the separator
+    if inline is not None and param is None and \
+            (inline == DEFER or inline.startswith(DEFER + " ")):
+        param = DEFER
+        inline = inline[len(DEFER):].lstrip()
     trigger = head
     # a transition without event name is a completion transition
     if not trigger and guard is None and not transition:
@@ -153,7 +155,8 @@ def parse(text, transition=False):
             continue
         # a transition header runs up to the first line carrying the
         # separator (without one the whole block is the event); a node
-        # block header is its first line
+        # block header is its first line, and behaviour lines demand the
+        # separator on it
         header_end = 0
         if transition:
             header_end = len(run) - 1
@@ -161,6 +164,9 @@ def parse(text, transition=False):
                 if _find_separator(text_line.rstrip()) >= 0:
                     header_end = offset
                     break
+        elif len(run) > 1 and _find_separator(run[0][1].rstrip()) < 0:
+            errors.append((run[0][0],
+                           "missing '/' before the behaviour lines"))
         header = "\n".join(text_line for _, text_line in run[:header_end + 1])
         block, inline = _parse_header(header, run[0][0], errors, transition)
         if inline:
