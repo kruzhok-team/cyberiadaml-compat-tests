@@ -187,6 +187,15 @@
       "signatures": [
         "reject:rejected by cyberiadaml-js: Cannot read properties of undefined (reading 'trim')"
       ]
+    },
+    {
+      "id": "JS-11",
+      "driver": "js",
+      "title": "reader drops the defer event parameter",
+      "note": "defer placed after the '/' separator (§6.8.1) is lost on round-trip",
+      "signatures": [
+        "dump:'    action event \"TICK\" defer:'|'    action event \"TICK\":'"
+      ]
     }
   ]
 }
