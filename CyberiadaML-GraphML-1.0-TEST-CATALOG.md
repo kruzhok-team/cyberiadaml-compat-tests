@@ -18,7 +18,7 @@ top of the four document layers and reuses their fixtures.
 | Layer | Name | What is checked | Tooling |
 |---|---|---|---|
 | **L1** | XML compatibility | well-formed XML; UTF-8 encoding and declaration; character escaping; XML comments tolerance | any standard XML parser (`xmllint --noout`, expat, libxml2, `fast-xml-parser`, `xml.etree`) |
-| **L2** | Document structure | GraphML skeleton; the CGML tag tree (spec 2.8.1): admissible tags, their nesting and order; geometry sub-tags | GraphML XML Schema + a CGML structural schema (XSD or RelaxNG) generated from the tag tree; `xmllint --schema` |
+| **L2** | Document structure | GraphML skeleton; the CGML tag tree (spec 2.8.1): admissible tags, their nesting and order; geometry sub-tags | the `cgmlval` tag tree walker (validator spec §2), cross-checked by the RELAX NG schema `schema/cgml-1.0.rnc` covering the whole layer (`jing -c`) |
 | **L3** | Attributes and values | key declarations (spec 2.8.2); attribute presence and formats; enumerated values (`gFormat`, `dVertex`, `dNote`, geometry mode, colors, markup); identifier and formal-name syntax; `dData` and metadata text syntax | rule-based validation over the parsed tree: Schematron / XPath assertions / small rule scripts |
 | **L4** | Document integrity | cross-element consistency: identifier uniqueness, edge endpoint resolution, name uniqueness, element-count constraints, metadata presence, geometry-mode consistency, reference resolution | custom integrity checker (graph analysis over the parsed document) |
 | **INT** | Integration | implementations under test: parse (A), reject (X), write (W), round-trip (RT) against the layered fixtures and golden models | test harness driving the implementations |

@@ -58,6 +58,33 @@ the next specification revision — nothing here has been applied yet.
 - **CGML-10.1-2 formal-name character set**: §10.1.1 = `[A-Za-z_][A-Za-z0-9_]*`, non-empty; case sensitivity implied, cited as inferred.
 - **§2.8.1 tag tree vs appendix А**: region subtree placement matches (`graph*` under `node*`, no edges inside regions, edges only under the SM graph); only the `[…]` extension markers were dropped.
 
-## 4. Suggested handling
+## 4. Findings from the RELAX NG schema (2026-08-27)
+
+Transcribing the document structure into `schema/cgml-1.0.rnc` directly from the standard put
+several rows of §1 to a practical test and added the following.
+
+- **`cgmlval/requirements.py` disagrees with the specification about §6.5.** The specification
+  now defines `CGML-6.5-1`…`CGML-6.5-8`; the requirement table stops at `CGML-6.5-4` and binds
+  that identifier to the `region-no-edges` rule, which implements what the specification calls
+  `CGML-6.5-8`. The specification's own `CGML-6.5-4` is a different, MAY-level row. `CGML-6.5-5`,
+  `-6` and `-7` are absent. The registry coverage audit cannot detect this, because the table it
+  audits against is the stale artefact. Correct the identifiers together with the v2.0 pass.
+- **Item 2 and item 8 are now executable.** `schema/examples/S-attr-type.graphml` redeclares
+  `dName` with `attr.type="int"` and `schema/examples/S-two-regions.graphml` omits `dRegion` from
+  one of two regions; `cgmlval` reports **no finding at all** on either, while the strict schema
+  profile rejects both. The two rows are unimplemented, not merely unwritten.
+- **Item 33 is settled by the standard.** §10.3 now puts the component identifier in `dName`
+  (`CGML_COMPONENT LED1`) and leaves `type` as the only mandatory parameter, so the
+  self-inconsistency the row reported is gone and its proposed correction no longer applies.
+  `CyberiadaML-GraphML-1.0-TESTING-SPEC.md:292` and `CyberiadaML-GraphML-1.0-TEST-CATALOG.md:276`
+  still describe the old `id/ type/ name/` body.
+- **Two standard defects of §2 are fixed and their fixtures are behind.**
+  `tests/test_standard_examples.py::test_standard_fixture_mirrors_the_text` now fails for Г.1
+  (the standard declares `dName for="graph"`; `fixtures/standard/F-STD-G1.graphml` does not) and
+  for Г.3 (the component encoding above). The `defects.json` entries recorded from the
+  ` CGML_COMPONENT ` spacing and from the two components colliding on their name need
+  re-evaluation, since Г.3 now names them `CGML_COMPONENT LED1` and `CGML_COMPONENT timer1`.
+
+## 5. Suggested handling
 
 Revise the testing specification to v2.0 in one pass: adjust the levels (items 3, 8, 9, 12, 20, 30), add the missing rows (2, 5, 10, 16, 17, 21, 22, 24, 29, 31), mark the ПНСТ 984-derived rules (7, 14, 25), and update `cgmlval/requirements.py`, the rules and the catalog accordingly; fix the standard text defects of §2 in `docs/PNST_1044-2025.md` first, since several rows depend on which encoding the standard settles on (items 23, 33).

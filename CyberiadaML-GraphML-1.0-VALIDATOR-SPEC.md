@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.4 (2026-08-24)
+**Document version:** 1.5 (2026-08-27)
 
 ## 1. Purpose
 
@@ -23,12 +23,16 @@ This document closes two open items of the test catalog (§5):
 - **L2 tooling.** The catalog assumed an XSD/`xmllint` stack. XSD 1.0 cannot express the
   key-dependent content of the CGML tag tree (`data` content depends on its `key` attribute), and
   the validator must not require external tooling. L2 is therefore implemented as an internal
-  walker over declarative tables transcribing the testing specification §2.8.1 tag tree. A schema
-  export may be generated from the same tables later.
+  walker over declarative tables transcribing the testing specification §2.8.1 tag tree. A RELAX
+  NG schema of the same structure now exists in `schema/`: RELAX NG has no Unique Particle
+  Attribution rule and does express key-dependent content. It is a reference artefact
+  transcribed from the standard, not generated from these tables, and `cgmlval` does not read
+  it. It covers all 22 rules of L2 and 49 of the 83 rules overall; `schema/README.md` carries
+  the measurement and the reasons for the rest.
 - **Canonical dump format.** Defined normatively in §7 below.
 
 Out of scope (later phases): the test corpus F-MIN…F-FIELD-* and its reference dumps, the
-integration harness and implementation drivers, per-profile certification reports, schema export.
+integration harness and implementation drivers, per-profile certification reports.
 
 ## 2. Architecture
 

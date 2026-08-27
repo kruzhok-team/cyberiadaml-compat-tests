@@ -1,0 +1,308 @@
+# -----------------------------------------------------------------------------
+# The CyberiadaML-GraphML standard compatibility tests
+#
+# The RELAX NG schema of the CGML document tag tree (base profile)
+#
+# Copyright (C) 2026 Alexey Fedoseev <aleksey@fedoseev.net>
+#
+# This program is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see https://www.gnu.org/licenses/
+#
+# -----------------------------------------------------------------------------
+#
+# Transcribed from ПНСТ 1044-2025 (docs/PNST_1044-2025.md): appendix А for the
+# tag tree, appendix Б for the key declarations, appendix В for the element
+# geometry, clauses 5-10 for the values.  Tags marked [...] in appendix А
+# belong to a format extension; the profile is noted on each production.
+#
+# This is the base profile: it encodes only the constraints cgmlval reports as
+# an error, so that
+#
+#     base schema rejects D   =>   cgmlval reports an ERROR on D
+#
+# The advisory constraints live in cgml-1.0-strict.rnc.
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+default namespace = "http://graphml.graphdrawing.org/xmlns"
+
+start = cgml.graphml
+
+# === values (5.4, 5.9, 10.1.1) ==============================================
+
+# 5.9: ASCII 33..126, non-empty, at most 256 characters, excluding the codes
+# 34, 39, 96 (the quotes) and 92 (the backslash) -- written as the surviving
+# ranges 33, 35..38, 40..91, 93..95, 97..126.
+cgml.id =
+  xsd:string { minLength = "1" maxLength = "256" pattern = "[!#-&(-\[\]-_a-~]+" }
+
+# 10.1.1: a latin identifier.
+cgml.formalName = xsd:string { pattern = "[A-Za-z_][A-Za-z0-9_]*" }
+
+cgml.nonEmpty = xsd:string { minLength = "1" }
+
+# 6.5-2 requires an empty marker value; cgmlval only reports a deviation,
+# so the base profile accepts any content and the strict profile pins it.
+cgml.marker = text
+
+# 5.8: the endpoints are ids, but resolution is an integrity check (L4).
+cgml.endpoint = cgml.nonEmpty
+
+# === geometry (7.2) =========================================================
+
+cgml.point =
+  element point { attribute x { xsd:decimal }, attribute y { xsd:decimal } }
+
+cgml.rect =
+  element rect {
+    attribute x { xsd:decimal },
+    attribute y { xsd:decimal },
+    attribute width { xsd:decimal },
+    attribute height { xsd:decimal }
+  }
+
+# === document (5.1, 5.4, 5.5) ===============================================
+
+# The xmlns declarations of 5.1-2 and 5.1-3 are not attributes in the XML
+# infoset, so the default namespace above is the whole of that requirement.
+cgml.graphml =
+  element graphml {
+    d.gFormat,
+    cgml.key*,
+    cgml.stateMachine+
+  }
+
+d.gFormat =
+  element data { attribute key { "gFormat" }, "Cyberiada-GraphML-1.0" }
+
+# --- appendix Б key declarations --------------------------------------------
+#
+# attr.type is left free here and pinned in the strict profile: 5.5(3) forbids
+# changing it, but does not require the declaration to carry it.
+
+cgml.key = cgml.key.standard | cgml.key.custom
+
+cgml.key.attrType = attribute attr.type { text }?
+
+cgml.key.standard = element key { cgml.key.binding, cgml.key.attrType }
+
+cgml.key.binding =
+    ( attribute id { "gFormat" }, attribute for { "graphml" },
+      attribute attr.name { "format" } )
+  | ( attribute id { "dName" }, attribute for { "graph" | "node" },
+      attribute attr.name { "name" } )
+  | ( attribute id { "dStateMachine" }, attribute for { "graph" },
+      attribute attr.name { "stateMachine" } )
+  | ( attribute id { "dRegion" }, attribute for { "graph" },
+      attribute attr.name { "region" } )
+  | ( attribute id { "dSubmachineState" }, attribute for { "node" },
+      attribute attr.name { "submachineState" } )
+  | ( attribute id { "dGeometry" }, attribute for { "graph" | "node" | "edge" },
+      attribute attr.name { "geometry" } )
+  | ( attribute id { "dSourcePoint" }, attribute for { "edge" },
+      attribute attr.name { "sourcePoint" } )
+  | ( attribute id { "dTargetPoint" }, attribute for { "edge" },
+      attribute attr.name { "targetPoint" } )
+  | ( attribute id { "dLabelGeometry" }, attribute for { "edge" },
+      attribute attr.name { "labelGeometry" } )
+  | ( attribute id { "dNote" }, attribute for { "node" },
+      attribute attr.name { "note" } )
+  | ( attribute id { "dVertex" }, attribute for { "node" },
+      attribute attr.name { "vertex" } )
+  | ( attribute id { "dData" }, attribute for { "node" | "edge" },
+      attribute attr.name { "data" } )
+  | ( attribute id { "dPivot" }, attribute for { "edge" },
+      attribute attr.name { "pivot" } )
+  | ( attribute id { "dChunk" }, attribute for { "edge" },
+      attribute attr.name { "chunk" } )
+  | ( attribute id { "dCollapsed" }, attribute for { "node" },
+      attribute attr.name { "collapsed" } )
+  | ( attribute id { "dMarkup" }, attribute for { "node" },
+      attribute attr.name { "markup" } )
+  | ( attribute id { "dColor" }, attribute for { "node" | "edge" },
+      attribute attr.name { "color" } )
+  | ( attribute id { "dFormalName" }, attribute for { "graph" | "node" },
+      attribute attr.name { "formalName" } )
+
+# 5.5(3): applications may add their own keys, which must be declared.  The
+# datatype "except" keeps a standard id out of this branch, so that a standard
+# key redeclared with the wrong attr.name cannot slip through as a custom one.
+cgml.key.custom =
+  element key {
+    attribute id {
+      xsd:string - ( "gFormat" | "dName" | "dStateMachine" | "dRegion"
+                   | "dSubmachineState" | "dGeometry" | "dSourcePoint"
+                   | "dTargetPoint" | "dLabelGeometry" | "dNote" | "dVertex"
+                   | "dData" | "dPivot" | "dChunk" | "dCollapsed" | "dMarkup"
+                   | "dColor" | "dFormalName" )
+    },
+    attribute for { text },
+    attribute attr.name { text }?,
+    attribute attr.type { text }?
+  }
+
+# === state machine graph (5.6, 6.1) =========================================
+#
+# 6.1-1: dStateMachine is present and is the first data key of a top level
+# graph.  5.6-3/6.1-4: the children are ordered data keys, nodes, edges.
+
+cgml.stateMachine =
+  element graph {
+    cgml.graph.attributes,
+    d.dStateMachine,
+    cgml.graph.key*, d.dName.required, cgml.graph.key*,
+    cgml.graph.content
+  }
+
+cgml.graph.attributes =
+  attribute id { cgml.id },
+  attribute edgedefault { text }?
+
+# 5.8-3 puts the edges in one trailing block, which cgmlval reports rather than
+# rejects; the base profile therefore lets them interleave with the nodes.
+cgml.graph.content = ( cgml.nodes & cgml.edge* )
+
+# 5.6-1 asks every graph for edgedefault="directed"; cgmlval requires it on a
+# state machine and only checks an explicit value on a region, so the two
+# attribute groups are kept apart for the strict profile to pin separately.
+cgml.region.attributes = cgml.graph.attributes
+
+d.dStateMachine =
+  element data { attribute key { "dStateMachine" }, empty }
+
+cgml.graph.key =
+    d.dName
+  | d.dGeometry.graph
+  | d.dFormalName          # [EXT-PLATFORM]
+
+# === region subgraph (6.5) ==================================================
+#
+# 6.5-4 lets a single region omit dRegion, and 6.5-2 requires it first when
+# present; cgmlval checks neither, so the base profile keeps dRegion free and
+# the strict profile pins it.
+
+cgml.region =
+  element graph {
+    cgml.region.attributes,
+    ( d.dRegion | cgml.graph.key )*,
+    cgml.nodes
+  }
+
+d.dRegion = element data { attribute key { "dRegion" }, cgml.marker }
+
+# === node (5.7, 6.2, 6.4, 6.6) ==============================================
+#
+# The leading data key selects the kind of node, and a node of one kind must
+# not carry the marker of another.  This three way branch on a sibling data
+# key is the construct XSD 1.0 cannot express: all three alternatives start
+# with the same element name and differ only in an attribute value.
+
+# CGML-6.4-4-1 (ПНСТ 984-2024 semantics, not stated in this standard): only
+# one initial pseudostate is allowed on a hierarchy level.  Counting competing
+# siblings of the same element name is a plain regular expression here; XSD 1.0
+# cannot express it, as node would need two types in one content model.
+cgml.nodes = cgml.node.plain*, ( cgml.node.initial, cgml.node.plain* )?
+
+cgml.node.initial =
+  element node {
+    attribute id { cgml.id },
+    d.dVertex.initial, cgml.node.key*,
+    cgml.region*
+  }
+
+cgml.node.plain =
+  element node {
+    attribute id { cgml.id },
+    ( cgml.node.vertex | cgml.node.comment | cgml.node.state ),
+    cgml.region*
+  }
+
+cgml.node.vertex  = d.dVertex, cgml.node.key*
+cgml.node.comment = d.dNote, cgml.node.key*
+cgml.node.state   = cgml.node.key*
+
+cgml.node.key =
+    d.dName
+  | d.dGeometry.node
+  | d.dData
+  | d.dSubmachineState     # [EXT-COMPLETENESS]
+  | d.dFormalName          # [EXT-PLATFORM]
+  | d.dCollapsed           # [EXT-COMPLETENESS]
+  | d.dColor               # [EXT-DISPLAY]
+  | d.dMarkup              # [EXT-DISPLAY]
+
+# 6.4, table 3.  fork and join are reserved for future versions and are
+# tolerated on read, so they stay in the base profile.
+d.dVertex.initial = element data { attribute key { "dVertex" }, "initial" }
+d.dVertex = element data { attribute key { "dVertex" }, cgml.vertex.kind }
+
+cgml.vertex.kind =
+    "final" | "choice" | "terminate"
+  | "shallowHistory" | "deepHistory"     # [EXT-COMPLETENESS]
+  | "entryPoint" | "exitPoint"           # [EXT-COMPLETENESS]
+  | "fork" | "join"                      # reserved
+
+# 6.6
+d.dNote = element data { attribute key { "dNote" }, ( "informal" | "formal" ) }
+
+d.dName = element data { attribute key { "dName" }, text }
+d.dName.required =
+  element data { attribute key { "dName" }, cgml.nonEmpty }
+d.dData = element data { attribute key { "dData" }, text }
+d.dSubmachineState =
+  element data { attribute key { "dSubmachineState" }, text }
+d.dFormalName =
+  element data { attribute key { "dFormalName" }, cgml.formalName }
+d.dCollapsed = element data { attribute key { "dCollapsed" }, cgml.marker }
+d.dColor = element data { attribute key { "dColor" }, text }
+d.dMarkup = element data { attribute key { "dMarkup" }, text }
+
+d.dGeometry.graph =
+  element data { attribute key { "dGeometry" }, cgml.rect }
+d.dGeometry.node =
+  element data { attribute key { "dGeometry" }, ( cgml.point | cgml.rect ) }
+
+# === edge (5.8, 6.3, 6.7) ===================================================
+#
+# 6.7-1: an edge whose first data key is dPivot is a comment link; any other
+# edge is a transition.  The same attribute value branch as for a node.
+
+cgml.edge =
+  element edge {
+    attribute id { cgml.id },
+    attribute source { cgml.endpoint },
+    attribute target { cgml.endpoint },
+    ( cgml.edge.link | cgml.edge.transition )
+  }
+
+cgml.edge.link       = d.dPivot, d.dChunk?, cgml.edge.key*
+cgml.edge.transition = cgml.edge.key*
+
+cgml.edge.key =
+    d.dData
+  | d.dLabelGeometry
+  | d.dGeometry.edge       # [EXT-DISPLAY]
+  | d.dSourcePoint         # [EXT-DISPLAY]
+  | d.dTargetPoint         # [EXT-DISPLAY]
+  | d.dColor               # [EXT-DISPLAY]
+
+d.dPivot = element data { attribute key { "dPivot" }, text }
+d.dChunk = element data { attribute key { "dChunk" }, text }
+
+d.dLabelGeometry =
+  element data { attribute key { "dLabelGeometry" }, ( cgml.point | cgml.rect ) }
+d.dGeometry.edge =
+  element data { attribute key { "dGeometry" }, cgml.point+ }
+d.dSourcePoint =
+  element data { attribute key { "dSourcePoint" }, cgml.point }
+d.dTargetPoint =
+  element data { attribute key { "dTargetPoint" }, cgml.point }

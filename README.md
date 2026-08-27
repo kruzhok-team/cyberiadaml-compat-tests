@@ -16,6 +16,8 @@ details. The standard document is stated in the `docs/PNST_1044-2025.md` file.
   the `cgmlval` tool and the canonical dump format;
 * `CyberiadaML-GraphML-1.0-HARNESS-SPEC.md` - the compatibility harness specification:
   the fixture corpus, the library driver contract and the conformance report.
+* `schema/README.md` - the RELAX NG schema of the document structure and the
+  measurement of how much of the standard a schema can carry.
 
 ## Usage
 
