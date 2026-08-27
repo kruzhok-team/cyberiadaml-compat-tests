@@ -11,7 +11,6 @@ state-machine "G":
   vertex "nInit" initial:
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\nname/ cycle_composite\n"
   comment "nModules" informal:
     markup: "plain"
     body: "ROS2 HSM Modules\n\nDebug\nTimer"

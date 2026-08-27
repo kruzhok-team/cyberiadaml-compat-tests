@@ -23,7 +23,6 @@ state-machine "G":
         geometry: point 30.00 40.50
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\ngeometry/ short"
     geometry: rect 10.00 10.00 120.00 40.00
   transition "init-n0#1": "init" -> "n0"
   transition "rinit-r0#1": "rinit" -> "r0"

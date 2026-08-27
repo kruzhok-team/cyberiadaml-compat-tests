@@ -12,7 +12,6 @@ state-machine "M1":
     name: "Idle"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "m1i-m1s#1": "m1i" -> "m1s"
 state-machine "M2":
   name: "Second machine"

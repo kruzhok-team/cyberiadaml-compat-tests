@@ -20,8 +20,8 @@
 #
 # -----------------------------------------------------------------------------
 
-from cgmlval.model import (Comment, Point, Rect, State, SubmachineState,
-                           Vertex)
+from cgmlval.model import (META_NAME, Comment, Point, Rect, State,
+                           SubmachineState, Vertex)
 
 HEADER = "cgml-canonical-dump 1"
 INDENT = "  "
@@ -131,7 +131,9 @@ def _put_node(out, depth, document, node):
         if node.kind == "informal":
             out.put(depth + 1, "markup: %s" %
                     _quote(node.markup or document.markup_language()))
-        if node.body is not None:
+        if node.body is not None and \
+                not (node.kind == "formal" and node.name == META_NAME):
+            # the metadata parameters are rendered by the meta section
             out.put(depth + 1, "body: %s" % _quote(node.body))
         _put_trailer(out, depth + 1, node)
     elif isinstance(node, Vertex):
@@ -197,7 +199,8 @@ def render(document):
     out.put(0, "event-propagation: %s" % document.event_propagation())
     if document.meta_params:
         out.put(0, "meta:")
-        for par in document.meta_params:
+        for par in sorted(document.meta_params,
+                          key=lambda p: (p.name != "standardVersion", p.name)):
             out.put(1, "param %s: %s" % (_quote(par.name), _quote(par.value)))
     for machine in _sorted(document.machines):
         out.put(0, "state-machine %s:" % _quote(machine.id or ""))

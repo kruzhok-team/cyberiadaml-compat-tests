@@ -19,7 +19,6 @@ state-machine "G":
     name: "Stopped"
   comment "nMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0"
   transition "ch-n1#1": "ch" -> "n1"
     action event "" guard "speed > 100":
       do: "fast()"

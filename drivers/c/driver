@@ -40,7 +40,7 @@ convert)
         exit 64
     }
     # cybparser reports its diagnostics on stdout
-    OUTPUT=$("$CYBPARSER" convert -s -f cyberiada -t cyberiada -g "$2" -o "$3" 2>&1)
+    OUTPUT=$("$CYBPARSER" convert -s -x -f cyberiada -t cyberiada -g "$2" -o "$3" 2>&1)
     RC=$?
     [ "$RC" -eq 0 ] && exit 0
     # signal deaths (126+) are crashes; other failures are rejections

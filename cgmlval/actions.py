@@ -125,10 +125,7 @@ def _parse_header(text, lineno, errors, transition):
         param = DEFER
         inline = inline[len(DEFER):].lstrip()
     trigger = head
-    # a transition without event name is a completion transition
-    if not trigger and guard is None and not transition:
-        errors.append((lineno, "empty event name in the internal event "
-                               "description"))
+    # an event description without the event name is a completion transition
     return Block(EVENT, trigger=trigger, param=param, guard=guard), \
         inline or None
 

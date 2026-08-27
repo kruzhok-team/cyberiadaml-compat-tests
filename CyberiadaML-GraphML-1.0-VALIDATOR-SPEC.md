@@ -150,9 +150,9 @@ carries one the whole block is the header and the label has no behaviour (the st
 edge example: event name on one line, guard on the next). The event name is preserved verbatim
 (platform syntax is not validated). The event parameters `propagate` and `block` are recognized
 directly before the separator (after the guard when present); `defer` directly after it. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
-`\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name is an
-error in a node block; in a transition it denotes a completion transition (ПНСТ 984-2024 3.31),
-with or without guard and behaviour. Remaining block lines are behaviour lines, order preserved. An empty
+`\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name is
+accepted both in a node block and in a transition, where it denotes a completion transition
+(ПНСТ 984-2024 3.31), with or without guard and behaviour. Remaining block lines are behaviour lines, order preserved. An empty
 `dData` is zero blocks. Resolved ambiguity: one optional space is consumed after the header's
 closing `/`, none is required.
 
