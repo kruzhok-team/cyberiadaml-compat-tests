@@ -39,19 +39,22 @@ def test_every_rule_cites_a_known_requirement():
             assert rule_obj.req is None
         else:
             assert rule_obj.req in REQUIREMENTS, rule_obj.name
+        for req in rule_obj.also:
+            assert req in REQUIREMENTS, rule_obj.name
 
 
 def test_no_rule_cites_an_out_of_scope_requirement():
     for rule_obj in rules.REGISTRY.values():
-        if rule_obj.req is None:
-            continue
-        assert REQUIREMENTS[rule_obj.req].scope == VALIDATOR, \
-            "%s cites the %s requirement %s" % \
-            (rule_obj.name, REQUIREMENTS[rule_obj.req].scope, rule_obj.req)
+        for req in (rule_obj.req,) + rule_obj.also:
+            if req is None:
+                continue
+            assert REQUIREMENTS[req].scope == VALIDATOR, \
+                "%s cites the %s requirement %s" % \
+                (rule_obj.name, REQUIREMENTS[req].scope, req)
 
 
 def test_every_validator_requirement_has_a_rule():
-    cited = {r.req for r in rules.REGISTRY.values() if r.req is not None}
+    cited = rules.cited()
     uncovered = sorted(req for req, entry in REQUIREMENTS.items()
                        if entry.scope == VALIDATOR and req not in cited)
     assert uncovered == []

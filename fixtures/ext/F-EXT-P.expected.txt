@@ -9,8 +9,8 @@ state-machine "G":
   name: "Platform"
   formal-name: "platform_sm"
   comment "cComp" formal:
-    name: "CGML_COMPONENT"
-    body: "id/ led1\n\ntype/ LED\n\nname/ Main indicator\n\npin/ 13"
+    name: "CGML_COMPONENT led1"
+    body: "type/ LED\n\nname/ Main indicator\n\npin/ 13"
   vertex "init" initial:
   state "n0":
     name: "Idle"

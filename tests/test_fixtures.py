@@ -60,7 +60,11 @@ def test_positive_fixture_matches_frozen_dump(name):
 def test_negative_fixture_rejected_for_its_requirement(name):
     ctx = run(name)
     expected = MANIFEST["fixtures"][name]["reject"]
-    found = {f.req for f in ctx.report.findings if f.severity == "ERROR"}
+    found = set()
+    for finding in ctx.report.findings:
+        if finding.severity == "ERROR":
+            found.add(finding.req)
+            found.update(rules.REGISTRY[finding.rule].also)
     assert expected in found, (expected, sorted(found))
 
 

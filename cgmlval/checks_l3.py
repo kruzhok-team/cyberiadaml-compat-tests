@@ -25,10 +25,11 @@ import re
 
 from cgmlval import model as model_mod
 from cgmlval.findings import ERROR, INFO, WARNING
-from cgmlval.keys import (EVENT_PROPAGATIONS, GEOMETRY_MODES, NOTE_KINDS,
-                          STANDARD_BINDINGS, STANDARD_KEY_IDS,
-                          TRANSITION_ORDERS, VERTEX_CORE, VERTEX_EXT,
-                          VERTEX_RESERVED)
+from cgmlval.keys import (CSS_COLOR_NAMES, EVENT_PROPAGATIONS, GEOMETRY_MODES,
+                          NOTE_KINDS, STANDARD_BINDINGS, STANDARD_KEY_IDS,
+                          TRANSITION_ORDERS, UNTYPED_KEYS, VERTEX_CORE,
+                          VERTEX_EXT, VERTEX_RESERVED)
+from cgmlval import meta
 from cgmlval.rules import declare, rule
 
 FORMAT_VALUE = "Cyberiada-GraphML-1.0"
@@ -39,7 +40,9 @@ ID_MAX_LENGTH = 256
 FORMAL_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z_0-9]*$")
 LATIN_NAME_RE = re.compile(r"^[A-Za-z]+$")
 HEX_COLOR_RE = re.compile(r"^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$")
-EDGE_ID_RE = re.compile(r"^.+-.+#[0-9]+$")
+EDGE_ID_RE = re.compile(r"^.+-.+(#[0-9]+)?$")
+PIVOT_VALUES = ("dName", "dData", "")
+COMPONENT_PREFIX = model_mod.COMPONENT_NAME + " "
 
 declare("key-defaults", "CGML-5.5-2", 3, INFO,
         "the appendix B defaults apply when the key block is absent",
@@ -119,6 +122,23 @@ def key_declarations(ctx):
             ctx.emit("key-declarations",
                      "data key %s is neither standard nor declared" % key,
                      elem=data)
+
+
+@rule("key-type", "CGML-5.5-5", 3, ERROR,
+      "standard key declarations keep the appendix B attr.type")
+def key_type(ctx):
+    for decl in ctx.model.keys:
+        if decl.id not in STANDARD_KEY_IDS or decl.attr_type is None:
+            continue
+        if decl.id in UNTYPED_KEYS:
+            ctx.emit("key-type",
+                     "standard key %s declared with attr.type %r; appendix B "
+                     "declares no type" % (decl.id, decl.attr_type),
+                     elem=decl.elem)
+        elif decl.attr_type != "string":
+            ctx.emit("key-type",
+                     "standard key %s declared with attr.type %r, expected "
+                     "\"string\"" % (decl.id, decl.attr_type), elem=decl.elem)
 
 
 @rule("data-key-attr", "CGML-5.5-3", 3, ERROR,
@@ -201,7 +221,7 @@ def edge_endpoints(ctx):
 
 
 @rule("edge-id-template", "CGML-5.8-2", 3, INFO,
-      "edge ids follow the source-target#N template")
+      "edge ids follow the source-target or source-target#N template")
 def edge_id_template(ctx):
     for kind, elem in _elements(ctx.model.root):
         if kind != "edge":
@@ -209,7 +229,7 @@ def edge_id_template(ctx):
         value = elem.get("id")
         if value and not EDGE_ID_RE.match(value):
             ctx.emit("edge-id-template",
-                     "edge id %r does not follow the source-target#N "
+                     "edge id %r does not follow the source-target[#N] "
                      "template" % value, elem=elem)
 
 
@@ -267,8 +287,9 @@ def note_value(ctx):
                      elem=node.elem)
 
 
-@rule("color-value", "CGML-9.2-1", 3, WARNING,
-      "dColor values are non-empty color strings")
+@rule("color-value", "CGML-9.2-2", 3, ERROR,
+      "dColor values are #RRGGBB, #RRGGBBAA or a CSS colour name",
+      also=("CGML-9.2-1", "CGML-9.2-3"))
 def color_value(ctx):
     for data in _all_data(ctx.model.root):
         if data.get("key") != "dColor":
@@ -276,14 +297,20 @@ def color_value(ctx):
         value = (data.text or "").strip()
         if not value:
             ctx.emit("color-value", "empty dColor value", elem=data)
-        elif value.startswith("#") and not HEX_COLOR_RE.match(value):
+        elif value.startswith("#"):
+            if not HEX_COLOR_RE.match(value):
+                ctx.emit("color-value",
+                         "dColor value %r is not a #RRGGBB or #RRGGBBAA "
+                         "color" % value, elem=data)
+        elif value.lower() not in CSS_COLOR_NAMES:
             ctx.emit("color-value",
-                     "dColor value %r is not a #RRGGBB or #RRGGBBAA color" %
-                     value, elem=data)
+                     "dColor value %r is neither a #RRGGBB[AA] color nor a "
+                     "CSS colour name" % value, elem=data)
 
 
-@rule("markup-usage", "CGML-9.3-1", 3, WARNING,
-      "dMarkup appears on informal comments with a non-empty value")
+@rule("markup-usage", "CGML-9.3-2", 3, ERROR,
+      "dMarkup appears on informal comments with a non-empty value",
+      also=("CGML-9.3-1",))
 def markup_usage(ctx):
     for node in model_mod.iter_nodes(ctx.model):
         markup = model_mod.data_value(node.elem, "dMarkup")
@@ -309,6 +336,76 @@ def formal_name_syntax(ctx):
             ctx.emit("formal-name-syntax",
                      "formal name %r does not match the identifier syntax" %
                      value, elem=data)
+
+
+@rule("pivot-value", "CGML-6.7-1", 3, ERROR,
+      "dPivot names dName, dData or is empty")
+def pivot_value(ctx):
+    for machine in ctx.model.machines:
+        for link in machine.links:
+            if (link.pivot or "").strip() not in PIVOT_VALUES:
+                ctx.emit("pivot-value",
+                         "dPivot value %r is not admissible" % link.pivot,
+                         elem=link.elem)
+
+
+@rule("chunk-required", "CGML-6.7-3", 3, ERROR,
+      "a dName or dData link carries a non-empty dChunk")
+def chunk_required(ctx):
+    for machine in ctx.model.machines:
+        for link in machine.links:
+            if (link.pivot or "").strip() in ("dName", "dData") \
+                    and not (link.chunk or "").strip():
+                ctx.emit("chunk-required",
+                         "comment link with dPivot %r carries no non-empty "
+                         "dChunk" % link.pivot, elem=link.elem)
+
+
+@rule("chunk-no-target-point", "CGML-9.1-1-3-4", 3, ERROR,
+      "a link to a subject aspect carries no dTargetPoint")
+def chunk_no_target_point(ctx):
+    for machine in ctx.model.machines:
+        for link in machine.links:
+            if link.chunk is not None and \
+                    model_mod.data_value(link.elem, "dTargetPoint") is not None:
+                ctx.emit("chunk-no-target-point",
+                         "comment link with dChunk carries a dTargetPoint",
+                         elem=link.elem)
+
+
+@rule("component-syntax", "CGML-10.3-1", 3, ERROR,
+      "CGML_COMPONENT comments name a unique component and its type")
+def component_syntax(ctx):
+    seen = {}
+    for node in model_mod.iter_nodes(ctx.model):
+        if not isinstance(node, model_mod.Comment) \
+                or (node.kind or "").strip() != "formal":
+            continue
+        name = node.name or ""
+        if name != model_mod.COMPONENT_NAME \
+                and not name.startswith(COMPONENT_PREFIX):
+            continue
+        ident = name[len(COMPONENT_PREFIX):]
+        if not FORMAL_NAME_RE.match(ident):
+            ctx.emit("component-syntax",
+                     "component comment name %r is not CGML_COMPONENT, one "
+                     "space and a formal identifier" % name, elem=node.elem)
+        elif ident in seen:
+            ctx.emit("component-syntax",
+                     "component %r is defined twice (%r and %r)" %
+                     (ident, seen[ident], node.id), elem=node.elem)
+        else:
+            seen[ident] = node.id
+        params, errors = meta.parse(node.body)
+        for line, message in errors:
+            ctx.emit("component-syntax",
+                     "%s (value line %d)" % (message, line + 1),
+                     elem=node.elem)
+        types = [p.value.strip() for p in params if p.name == "type"]
+        if not types or not types[0]:
+            ctx.emit("component-syntax",
+                     "component %r has no non-empty type parameter" % ident,
+                     elem=node.elem)
 
 
 @rule("behaviour-syntax", "CGML-6.8-1", 3, ERROR,
@@ -338,7 +435,7 @@ def meta_syntax(ctx):
                  elem=doc.meta_comment.elem)
 
 
-@rule("meta-params", "CGML-6.9-2", 3, WARNING,
+@rule("meta-params", "CGML-6.9-2", 3, ERROR,
       "metadata parameter names are latin letters, not repeated")
 def meta_params(ctx):
     doc = ctx.model

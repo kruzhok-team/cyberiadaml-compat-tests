@@ -34,7 +34,7 @@ state-machine "M1":
   transition "init-n0#1": "init" -> "n0"
   transition "n0-c0#1": "n0" -> "c0"
     action event "WORK":
-  comment-link "cN-t#1": "cN" -> "n0-c0#1" pivot "dData"
+  comment-link "cN-t#1": "cN" -> "n0-c0#1" pivot "dData" chunk "WORK"
 state-machine "M2":
   name: "Worker"
   vertex "m2i" initial:

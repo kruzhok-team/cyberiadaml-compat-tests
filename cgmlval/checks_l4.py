@@ -81,7 +81,7 @@ def top_level_graphs(ctx):
 
 
 @rule("unique-ids", "CGML-5.9-4", 4, ERROR,
-      "ids are unique across the whole document")
+      "ids are unique across the whole document", also=("CGML-5.7-1",))
 def unique_ids(ctx):
     seen = {}
     for kind, elem in iter_elements(ctx.model.root):
@@ -232,9 +232,13 @@ def link_endpoints(ctx):
                          "comment link source %r does not name a node of "
                          "this state machine" % source, elem=link.elem)
             elif source and source not in comment_ids:
-                ctx.emit("link-endpoints",
+                ctx.emit("link-source",
                          "comment link source %r is not a comment node" %
                          source, elem=link.elem)
+            if source and source == link.target:
+                ctx.emit("link-source",
+                         "comment link %r is a self-loop" % link.id,
+                         elem=link.elem)
             target = link.target
             if target and target not in node_ids and target not in edge_ids:
                 ctx.emit("link-endpoints",
@@ -243,7 +247,23 @@ def link_endpoints(ctx):
                          elem=link.elem)
 
 
-@rule("single-else", "CGML-6.3-4", 4, WARNING,
+declare("link-source", "CGML-6.7-4", 4, ERROR,
+        "a comment link leaves a comment node and is not a self-loop")
+
+
+@rule("link-target-kind", "CGML-8.5-2", 4, ERROR,
+      "a comment link targeting an edge targets a transition")
+def link_target_kind(ctx):
+    for machine in ctx.model.machines:
+        link_ids = {l.id for l in machine.links if l.id is not None}
+        for link in machine.links:
+            if link.target in link_ids:
+                ctx.emit("link-target-kind",
+                         "comment link target %r is a comment link, not a "
+                         "transition" % link.target, elem=link.elem)
+
+
+@rule("single-else", "CGML-6.3-4", 4, ERROR,
       "at most one else transition leaves a node")
 def single_else(ctx):
     for machine in ctx.model.machines:
@@ -269,7 +289,7 @@ def single_else(ctx):
                          elem=transitions[1].elem)
 
 
-declare("choice-single-else", "CGML-6.3-4", 4, WARNING,
+declare("choice-single-else", "CGML-6.3-4", 4, ERROR,
         "at most one else transition leaves a choice")
 
 
@@ -293,6 +313,35 @@ def meta_presence(ctx):
         ctx.emit("meta-presence",
                  "no CGML_META formal comment in the first state machine",
                  elem=doc.machines[0].elem)
+
+
+@rule("meta-single", "CGML-6.9-1", 4, ERROR,
+      "the CGML_META comment is unique and is not linked")
+def meta_single(ctx):
+    doc = ctx.model
+    metas = [n for n in model_mod.iter_nodes(doc)
+             if isinstance(n, Comment) and (n.kind or "").strip() == "formal"
+             and n.name == model_mod.META_NAME]
+    for extra in metas[1:]:
+        ctx.emit("meta-single", "a second CGML_META comment %r" % extra.id,
+                 elem=extra.elem)
+    meta_ids = {m.id for m in metas if m.id is not None}
+    for machine in doc.machines:
+        for link in machine.links:
+            if link.source in meta_ids or link.target in meta_ids:
+                ctx.emit("meta-single",
+                         "comment link %r attached to the CGML_META comment" %
+                         link.id, elem=link.elem)
+
+
+@rule("collapsed-needs-regions", "CGML-8.4-2", 4, ERROR,
+      "a collapsed state keeps its region subgraphs")
+def collapsed_needs_regions(ctx):
+    for node in model_mod.iter_nodes(ctx.model):
+        if isinstance(node, State) and node.collapsed and not node.regions:
+            ctx.emit("collapsed-needs-regions",
+                     "collapsed state %r has no region subgraph" % node.id,
+                     elem=node.elem)
 
 
 @rule("edge-geometry-mode", "CGML-7.2-1-5", 4, WARNING,

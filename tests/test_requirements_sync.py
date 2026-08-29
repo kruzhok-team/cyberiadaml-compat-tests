@@ -55,7 +55,7 @@ def test_the_table_scopes_are_known():
 
 
 def test_a_pending_requirement_has_no_rule_yet():
-    cited = {r.req for r in rules.REGISTRY.values() if r.req is not None}
+    cited = rules.cited()
     stale = sorted(ident for ident, entry in REQUIREMENTS.items()
                    if entry.scope == PENDING and ident in cited)
     assert stale == []

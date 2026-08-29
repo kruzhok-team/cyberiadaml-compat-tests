@@ -62,9 +62,9 @@ def test_no_space_after_slash():
     assert pairs(params) == [("name", "value")]
 
 
-def test_only_first_space_consumed():
-    params, _ = parse("name/  double space")
-    assert pairs(params) == [("name", " double space")]
+def test_whitespace_around_the_slash_is_trimmed():
+    params, _ = parse("name \t/ \t double space ")
+    assert pairs(params) == [("name", "double space ")]
 
 
 def test_missing_slash_is_an_error():

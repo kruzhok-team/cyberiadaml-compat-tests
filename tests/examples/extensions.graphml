@@ -37,6 +37,12 @@ markupLanguage/ html</data>
       <data key="dName">Wait</data>
       <data key="dFormalName">wait_state</data>
       <data key="dCollapsed"/>
+      <graph id="s0:" edgedefault="directed">
+        <data key="dRegion"/>
+        <node id="s0w">
+          <data key="dName">Inner</data>
+        </node>
+      </graph>
     </node>
     <node id="ch0">
       <data key="dVertex">choice</data>

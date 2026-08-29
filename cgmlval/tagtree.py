@@ -35,7 +35,7 @@ declare("gformat-first", "CGML-5.4-1", 2, ERROR,
 declare("key-placement", "CGML-5.5-1", 2, ERROR,
         "key declarations precede the graph structure")
 declare("graph-in-graph", "CGML-5.6-3", 2, ERROR,
-        "subgraphs nest only inside nodes")
+        "subgraphs nest only inside nodes", also=("CGML-6.1-6",))
 declare("graph-child-order", "CGML-5.6-3", 2, ERROR,
         "graph children are ordered keys, nodes, edges")
 declare("node-placement", "CGML-5.7-2", 2, ERROR,
@@ -49,8 +49,16 @@ declare("sm-first-key", "CGML-6.1-1", 2, ERROR,
         "dStateMachine is the first key of a state machine graph")
 declare("sm-child-order", "CGML-6.1-4", 2, ERROR,
         "state machine children are ordered keys, nodes, edges")
+declare("node-marker", "CGML-5.7-4", 2, ERROR,
+        "a node carries at most one marker key")
 declare("vertex-first-key", "CGML-6.4-1", 2, ERROR,
         "dVertex is the first key of a vertex node")
+declare("submachine-first-key", "CGML-8.1-1", 2, ERROR,
+        "dSubmachineState is the first key of a submachine state node")
+declare("submachine-subgraph", "CGML-8.1-2", 2, ERROR,
+        "a submachine subgraph holds entry/exit points only, without keys")
+declare("region-marker-required", "CGML-6.5-5", 2, ERROR,
+        "each of two or more regions starts with the dRegion key")
 declare("composite-children", "CGML-6.5-1", 2, ERROR,
         "composite state children live in region subgraphs")
 declare("region-no-edges", "CGML-6.5-8", 2, ERROR,
@@ -64,7 +72,8 @@ declare("geometry-shape", "CGML-7.2-2", 2, ERROR,
 declare("tag-tree", "CGML-appendix-A-1", 2, ERROR,
         "tag placement follows the admissible tag tree")
 declare("key-usage", "CGML-appendix-A-1", 2, ERROR,
-        "data keys appear on their admissible element kinds")
+        "data keys appear on their admissible element kinds",
+        also=("CGML-9.2-4",))
 
 GRAPH_KEYS = ("dStateMachine", "dName", "dGeometry", "dFormalName")
 REGION_KEYS = ("dRegion", "dName", "dGeometry", "dFormalName")
@@ -83,6 +92,8 @@ GEOMETRY_CONTENT = {
     ("edge", "dTargetPoint"): (("point",), 1, 1),
 }
 
+MARKER_KEYS = ("dNote", "dVertex", "dSubmachineState")
+ENTRY_EXIT = ("entryPoint", "exitPoint")
 RECT_ATTRS = ("x", "y", "width", "height")
 POINT_ATTRS = ("x", "y")
 
@@ -165,8 +176,26 @@ def _check_edge(ctx, edge):
         _first_key_check(ctx, "pivot-first-key", "dPivot", datas)
 
 
+def _check_submachine_subgraph(ctx, graph):
+    """8.1-2: no data keys, only entry/exit point vertex nodes."""
+    for child in graph:
+        if child.tag == "data":
+            ctx.emit("submachine-subgraph",
+                     "data key %s inside a submachine subgraph" %
+                     child.get("key"), elem=child)
+        elif child.tag == "node":
+            keys = [(d.get("key"), (d.text or "").strip())
+                    for d in child if d.tag == "data"]
+            if not keys or keys[0][0] != "dVertex" \
+                    or keys[0][1] not in ENTRY_EXIT:
+                ctx.emit("submachine-subgraph",
+                         "node %r inside a submachine subgraph is not an "
+                         "entry or exit point" % child.get("id"), elem=child)
+
+
 def _check_node(ctx, node):
     datas = []
+    graphs = []
     seen_graph = False
     for child in node:
         if child.tag == "data":
@@ -183,6 +212,7 @@ def _check_node(ctx, node):
             _check_data_content(ctx, "node", child)
         elif child.tag == "graph":
             seen_graph = True
+            graphs.append(child)
             _check_graph(ctx, child, "region")
         elif child.tag == "node":
             ctx.emit("composite-children",
@@ -192,9 +222,33 @@ def _check_node(ctx, node):
             ctx.emit("tag-tree",
                      "tag %s is not admissible inside a node" % child.tag,
                      elem=child)
+    keys = [d.get("key") for d in datas]
+    markers = [k for k in keys if k in MARKER_KEYS]
+    if len(markers) > 1:
+        ctx.emit("node-marker",
+                 "node carries the marker keys %s" % " and ".join(markers),
+                 elem=datas[keys.index(markers[1])])
     if datas:
         _first_key_check(ctx, "vertex-first-key", "dVertex", datas)
         _first_key_check(ctx, "note-first-key", "dNote", datas)
+        _first_key_check(ctx, "submachine-first-key", "dSubmachineState",
+                         datas)
+    if "dSubmachineState" in keys:
+        if len(graphs) > 1:
+            ctx.emit("submachine-subgraph",
+                     "submachine state with %d subgraphs; at most one "
+                     "holds the entry/exit points" % len(graphs),
+                     elem=graphs[1])
+        for graph in graphs:
+            _check_submachine_subgraph(ctx, graph)
+    elif len(graphs) > 1:
+        for graph in graphs:
+            first = [d.get("key") for d in graph if d.tag == "data"][:1]
+            if first != ["dRegion"]:
+                ctx.emit("region-marker-required",
+                         "region %r of a state with %d regions does not "
+                         "start with the dRegion key" %
+                         (graph.get("id"), len(graphs)), elem=graph)
 
 
 def _check_graph(ctx, graph, kind):

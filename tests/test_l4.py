@@ -179,9 +179,13 @@ def test_plain_transition_targeting_edge_rejected():
 
 def test_comment_link_accepted_and_resolved():
     doc = minimal().replace(
+        b'    <edge id="init-n0#1"',
+        b'    <node id="c0">\n      <data key="dNote">informal</data>\n'
+        b'    </node>\n    <edge id="init-n0#1"').replace(
         b"  </graph>",
-        b'    <edge id="nMeta-n0#1" source="nMeta" target="n0">\n'
+        b'    <edge id="c0-n0#1" source="c0" target="n0">\n'
         b'      <data key="dPivot">dName</data>\n'
+        b'      <data key="dChunk">Idle</data>\n'
         b'    </edge>\n  </graph>')
     ctx = run(doc)
     assert ctx.report.findings == []
@@ -192,6 +196,7 @@ def test_comment_link_to_missing_node_rejected():
         b"  </graph>",
         b'    <edge id="nMeta-x#1" source="nMeta" target="nowhere">\n'
         b'      <data key="dPivot">dName</data>\n'
+        b'      <data key="dChunk">Idle</data>\n'
         b'    </edge>\n  </graph>')
     assert "link-endpoints" in errors(run(doc))
 
@@ -199,10 +204,11 @@ def test_comment_link_to_missing_node_rejected():
 def test_comment_link_from_non_comment_rejected():
     doc = minimal().replace(
         b"  </graph>",
-        b'    <edge id="n0-m#1" source="n0" target="nMeta">\n'
+        b'    <edge id="n0-m#1" source="n0" target="init">\n'
         b'      <data key="dPivot">dName</data>\n'
+        b'      <data key="dChunk">Idle</data>\n'
         b'    </edge>\n  </graph>')
-    assert "link-endpoints" in errors(run(doc))
+    assert "link-source" in errors(run(doc))
 
 
 def test_double_else_from_state_reported():
@@ -215,8 +221,7 @@ def test_double_else_from_state_reported():
         b'      <data key="dData">[else]/ b()</data>\n'
         b'    </edge>\n  </graph>')
     ctx = run(doc)
-    assert "single-else" in warnings(ctx)
-    assert not ctx.report.has_errors()
+    assert "single-else" in errors(ctx)
 
 
 def test_double_else_from_choice_reported():
@@ -241,7 +246,7 @@ def test_double_else_from_choice_reported():
         b'      <data key="dData">[else]/ b()</data>\n'
         b'    </edge>')
     ctx = run(doc)
-    assert "choice-single-else" in warnings(ctx)
+    assert "choice-single-else" in errors(ctx)
 
 
 def test_two_initials_on_one_level_rejected():
