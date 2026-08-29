@@ -39,7 +39,7 @@ checks and cgmlval does not*.
 
 ## What the schema carries
 
-Measured on the repository corpus with `jing` 20241231+repack (OpenJDK 25); `cgmlval` registers
+Measured on the repository corpus with `jing` 20241231 (OpenJDK 25); `cgmlval` registers
 96 rules (66 ERROR, 11 WARNING, 19 INFO).
 
 | Corpus | Documents | Base profile | Strict profile |

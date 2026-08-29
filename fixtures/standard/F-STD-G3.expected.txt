@@ -13,8 +13,8 @@ meta:
 state-machine "G":
   name: "Arduino Blinker"
   comment "cLED1" formal:
-    name: " CGML_COMPONENT "
-    body: "id/ LED1\n\ntype/ LED\n\nname/ Светодиод\n\ndescription/ Встроенный в плату светодиод, чтобы им мигать\n\npin/ 12\n"
+    name: "CGML_COMPONENT LED1"
+    body: "type/ LED\n\nname/ Светодиод\n\ndescription/ Встроенный в плату светодиод, чтобы им мигать\n\npin/ 12\n"
   comment "commentX" informal:
     markup: "plain"
     body: "Включение и выключение лампочки по таймеру!"
@@ -22,8 +22,8 @@ state-machine "G":
   comment "coreMeta" formal:
     name: "CGML_META"
   comment "ctimer1" formal:
-    name: " CGML_COMPONENT "
-    body: "id/ timer1\n\ntype/ Timer\n\nname/ Таймер\n\ndescription/ Программный таймер.\n"
+    name: "CGML_COMPONENT timer1"
+    body: "type/ Timer\n\nname/ Таймер\n\ndescription/ Программный таймер.\n"
   state "diod1":
     name: "Включен"
     action entry:

@@ -67,10 +67,19 @@ def fragment(marker):
 
 
 def behaviour_text(block):
-    """The dData value of a fragment with the ↳ marks turned into the
-    blank lines they stand for and XML entities resolved."""
+    """The dData value of a fragment with the ↳ marks resolved (↳ at the
+    end of a line is the line break itself, ↳↳ an empty line) and XML
+    entities unescaped."""
     match = _DATA.search(block)
     value = match.group(1) if match else block
-    lines = ["" if line.strip() == "↳" else line
-             for line in value.split("\n")]
+    lines = []
+    for line in value.split("\n"):
+        text = line.rstrip("↳")
+        marks = len(line) - len(text)
+        if not text.strip() and marks:
+            lines.append("")
+            continue
+        lines.append(text)
+        if marks > 1:
+            lines.append("")
     return html.unescape("\n".join(lines))
