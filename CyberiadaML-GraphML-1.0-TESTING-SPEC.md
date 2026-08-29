@@ -122,7 +122,7 @@ Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateM
 
 **6.2 Simple state** (`CGML-6.2-*`)
 
-- `CGML-6.2-1` Default node type: a `node` without `dVertex`/`dNote`/`dSubmachineState` is a state. [R]
+- `CGML-6.2-1` MUST: Default node type: a `node` without `dVertex`/`dNote`/`dSubmachineState` is a state. [R]
 - `CGML-6.2-2` MAY: `dName` — the state name; optional; empty value ≡ unnamed state; multiple unnamed siblings allowed. [R/W/X]
 - `CGML-6.2-3` MUST: sibling elements (states, pseudostates, and comments) on the same hierarchy level must have unique names. [R/W/X]
 - `CGML-6.2-4` MAY: `dData` — behaviour/internal transitions text (per 6.8). [R/W]
@@ -195,7 +195,7 @@ Composite states admit all simple-state requirements (see 6.2).
   - `CGML-6.9-4-4` `transitionOrder` — `actionFirst` (default) | `exitFirst`;
   - `CGML-6.9-4-5` `eventPropagation` — `block` (default) | `propagate`;
   - `CGML-6.9-4-6` `markupLanguage` — default markup of informal comments, a text string (see 9.3).
-- `CGML-6.9-5`: MAY: any number of additional parameters. [R]
+- `CGML-6.9-5` MAY: any number of additional parameters. [R]
 
 ### 2.4 §7 — Geometry (base format)
 
@@ -224,7 +224,7 @@ Composite states admit all simple-state requirements (see 6.2).
 **8.1 Submachine state** (`CGML-8.1-*`)
 
 - `CGML-8.1-1` MUST: node with the marker key `dSubmachineState` as its **first** data key (see `CGML-5.7-4`); value = reference to a state machine — external (`file://…`, a URI) or within the document (the referenced SM `id`). Resolution of internal references (the SM id) and tolerance of unresolvable external references must be tested. [R/W/X]
-- `CGML-8.1-2` MUST: if a submachine state has entry/exit points then a single subgraph must be used for the entry/exit points specification; the subgraph may have no `dData` keys. [R/W]
+- `CGML-8.1-2` MUST: a submachine state has a nested `graph` only to hold its entry/exit points (8.3) — a single subgraph containing nothing but such `node` tags; that subgraph carries **no data keys at all** (not even `dRegion`). [R/W/X]
 
 **8.2 History pseudostates** (`CGML-8.2-*`)
 
@@ -244,7 +244,7 @@ Composite states admit all simple-state requirements (see 6.2).
 
 **8.5 Comment link to a transition** (`CGML-8.5-*`)
 
-- `CGML-8.5-1` MAY: An edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present).
+- `CGML-8.5-1` MAY: An edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present). [R/W]
 - `CGML-8.5-2` MUST: The `target` edge must be a transition, not a comment link. [R/W/X]
 - `CGML-8.5-3` MUST: Non-comment link edges targeting edges remain invalid. [X]
 
@@ -259,8 +259,8 @@ Inherits base format (2.4).
   - `CGML-9.1-1-2` MUST: `dSourcePoint` keys for all edge endpoint attachment; coordinates relative to the left-top point of the source element;
   - `CGML-9.1-1-3` `dTargetPoint` keys for all edge endpoint attachment:
     - `CGML-9.1-1-3-1` MUST: if transition edges - coordinates relative to the left-top point of the target element; [R/W]
-	- `CGML-9.1-1-3-2` MUST: if comment link to an element edges - coordinates relative to the left-top point of the target element; [R/W]
-	- `CGML-9.1-1-3-3` MUST: if comment link to a transision edges- coordinates relative to the left-top point of the source element of the transition; [R/W]
+    - `CGML-9.1-1-3-2` MUST: if comment link to an element edges - coordinates relative to the left-top point of the target element; [R/W]
+    - `CGML-9.1-1-3-3` MUST: if comment link to a transision edges - coordinates relative to the left-top point of the source element of the transition; [R/W]
     - `CGML-9.1-1-3-4` MUST: if comment link to a subject aspect's (`dChunk`) - **no target point** allowed; [R/W/X]
 - `CGML-9.1-1-4` MAY: label geometry may be a rect. [R/W]
 - `CGML-9.1-1-5` MUST: if label geometry described as a rect it must have valid `width` and `height`. [R/W]
@@ -354,24 +354,24 @@ Inherits base format (2.4).
 
 `CGML-appendix-B-1` MUST: a `key` declaration of a standard key binds the `id` to the element kinds, `attr.name` and `attr.type` given in appendix Б (Table below); a declaration with a different `for`, `attr.name` or `attr.type` for a standard `id`, and a `data` tag whose key is not declared (explicitly or by the appendix Б defaults), are invalid. [R/W/X]
 
-| Key | for | attr.name | Profile |
-|---|---|---|---|
-| `gFormat` | `graphml` | `format` | CORE |
-| `dName` | `graph`, `node` | `name` | CORE |
-| `dStateMachine` | `graph` | `stateMachine` | CORE |
-| `dRegion` | `graph` | `region` | CORE |
-| `dSubmachineState` | `node` | `submachineState` | EXT-COMPLETENESS |
-| `dGeometry` | `graph`, `node`, `edge` | `geometry` | CORE (edge: EXT-DISPLAY) |
-| `dSourcePoint`, `dTargetPoint` | `edge` | `sourcePoint`, `targetPoint` | EXT-DISPLAY |
-| `dLabelGeometry` | `edge` | `labelGeometry` | CORE |
-| `dNote` | `node` | `note` | CORE |
-| `dVertex` | `node` | `vertex` | CORE |
-| `dData` | `node`, `edge` | `data` | CORE |
-| `dPivot`, `dChunk` | `edge` | `pivot`, `chunk` | CORE |
-| `dCollapsed` | `node` | `collapsed` | EXT-COMPLETENESS |
-| `dMarkup` | `node` | `markup` | EXT-DISPLAY |
-| `dColor` | `node`, `edge` | `color` | EXT-DISPLAY |
-| `dFormalName` | `graph`, `node` | `formalName` | EXT-PLATFORM |
+| Key | for | attr.name | attr.type | Profile |
+|---|---|---|---|---|
+| `gFormat` | `graphml` | `format` | string | CORE |
+| `dName` | `graph`, `node` | `name` | string | CORE |
+| `dStateMachine` | `graph` | `stateMachine` | string | CORE |
+| `dRegion` | `graph` | `region` | string | CORE |
+| `dSubmachineState` | `node` | `submachineState` | string | EXT-COMPLETENESS |
+| `dGeometry` | `graph`, `node`, `edge` | `geometry` | - | CORE (edge: EXT-DISPLAY) |
+| `dSourcePoint`, `dTargetPoint` | `edge` | `sourcePoint`, `targetPoint` | - | EXT-DISPLAY |
+| `dLabelGeometry` | `edge` | `labelGeometry` | - | CORE |
+| `dNote` | `node` | `note` | string | CORE |
+| `dVertex` | `node` | `vertex` | string | CORE |
+| `dData` | `node`, `edge` | `data` | string | CORE |
+| `dPivot`, `dChunk` | `edge` | `pivot`, `chunk` | string | CORE |
+| `dCollapsed` | `node` | `collapsed` | string | EXT-COMPLETENESS |
+| `dMarkup` | `node` | `markup` | string | EXT-DISPLAY |
+| `dColor` | `node`, `edge` | `color` | string | EXT-DISPLAY |
+| `dFormalName` | `graph`, `node` | `formalName` | string | EXT-PLATFORM |
 
 ## 3. Compatibility statement
 
