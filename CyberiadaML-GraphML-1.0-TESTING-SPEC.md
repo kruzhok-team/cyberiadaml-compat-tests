@@ -255,8 +255,8 @@ Composite states admit all simple-state requirements (see 6.2).
 Inherits base format (2.4).
 
 - `CGML-9.1-1` MUST: additionally (Table 6) transitions get geometry:
-  - `CGML-9.1-1-1` MUST: non-empty `dGeometry` on polyline edges with 1+ intermediate point; coordinates relative to the left-top point of the source element.
-  - `CGML-9.1-1-2` MUST: `dSourcePoint` keys for all edge endpoint attachment; coordinates relative to the left-top point of the source element;
+  - `CGML-9.1-1-1` MUST: non-empty `dGeometry` on polyline edges with 1+ intermediate point; coordinates relative to the left-top point of the source element. [R/W]
+  - `CGML-9.1-1-2` MUST: `dSourcePoint` keys for all edge endpoint attachment; coordinates relative to the left-top point of the source element; [R/W]
   - `CGML-9.1-1-3` `dTargetPoint` keys for all edge endpoint attachment:
     - `CGML-9.1-1-3-1` MUST: if transition edges - coordinates relative to the left-top point of the target element; [R/W]
     - `CGML-9.1-1-3-2` MUST: if comment link to an element edges - coordinates relative to the left-top point of the target element; [R/W]
