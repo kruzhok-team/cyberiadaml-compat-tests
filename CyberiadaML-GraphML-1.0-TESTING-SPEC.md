@@ -10,7 +10,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.5 (2026-08-25)
+**Document version:** 1.6 (2026-08-30)
 
 ## 1. Purpose
 
@@ -63,7 +63,7 @@ The CyberiadaML GraphML standard extends the GraphML format specification. This 
 
 **5.4 Format version** (`CGML-5.4-*`)
 
-- `CGML-5.4-1` MUST: a `data` tag with `key="gFormat"` is present as the **first child** of `graphml`. [R/W/X] **Note:** This is the additional requirement to the GraphML format. 
+- `CGML-5.4-1` MUST: a `data` tag with `key="gFormat"` is present as the **first child** of `graphml`. [R/W/X] **Note:** This is the additional requirement to the GraphML format (see `CGML-5.10-1`).
 - `CGML-5.4-2` MUST: its value is the fixed string `Cyberiada-GraphML-1.0`; any other value is invalid for this version of the standard. [R/W/X]
 
 **5.5 Data keys** (`CGML-5.5-*`)
@@ -73,7 +73,7 @@ The CyberiadaML GraphML standard extends the GraphML format specification. This 
 - `CGML-5.5-3` MUST: a `data` tag always carries a `key` attribute; content is interpreted by its key. [R/W/X]
 - `CGML-5.5-4` MUST: a given graph/node/edge carries **at most one** `data` of each key type (no duplicate keys within one tag). [R/W/X]
 - `CGML-5.5-5` MUST: a standard `key` redeclaration keeps the original `attr.name` and `attr.type`. [R/W/X]
-- `CGML-5.5.6` SHOULD: do not change the standard keys declarations. [R/W]
+- `CGML-5.5-6` SHOULD: do not change the standard keys declarations. [R/W]
 - `CGML-5.5-7` MAY: add custom keys to the list of declared `keys`. [R]
 
 **5.6 Graph** (`CGML-5.6-*`)
@@ -81,18 +81,19 @@ The CyberiadaML GraphML standard extends the GraphML format specification. This 
 - `CGML-5.6-1` MUST: `graph` has a unique `id`; `edgedefault="directed"` (state-machine graphs are always directed). [R/W/X]
 - `CGML-5.6-2` MUST: one **or more** top-level graphs per document, each a separate state machine. [R/W]
 - `CGML-5.6-3` MUST: child order inside `graph`: data keys → nodes → edges; subgraphs nest only inside nodes (regions / nested state machines). [R/W]
-- `CGML-5-6-4` SHOULD: the `graph` name is started with `g` or `G` prefix. [W] 
+- `CGML-5.6-4` SHOULD: the `graph` name is started with `g` or `G` prefix. [W] 
 
 **5.7 Node** (`CGML-5.7-*`)
 
 - `CGML-5.7-1` MUST: `node` has a unique `id`. [R/W/X]
-- `CGML-5.7.2` MUST: `node` appears only inside `graph`. [R/W/X]
+- `CGML-5.7-2` MUST: `node` appears only inside `graph`. [R/W/X]
 - `CGML-5.7-3` MAY: node contains data keys and, for composite/submachine states, nested `graph` tags. [R]
+- `CGML-5.7-4` MUST: the node kind is given by a marker key placed **first** among the node's data keys — `dNote` (comment), `dVertex` (pseudostate or final state), `dSubmachineState` (submachine state); a `node` carries **at most one** marker key; a node without a marker key is a simple or composite state. [R/W/X]
 
 **5.8 Edge** (`CGML-5.8-*`)
 
 - `CGML-5.8-1` MUST: `edge` has non-empty `id`, `source`, `target` attributes. [R/W/X]
-- `CGML-5.8-2` SHOULD: edge id follows the `source-target#N` template. `N` starts at 0. [W]
+- `CGML-5.8-2` SHOULD: edge id follows the `source-target` template, or `source-target#N` template when several edges connect the same pair of nodes; `N` starts at 0. [W]
 - `CGML-5.8-3` MUST: all edge tags of a state-machine graph are placed **as a single block at the end** of that graph (after all nodes). [R/W]
 
 **5.9 Identifiers** (`CGML-5.9-*`)
@@ -101,6 +102,10 @@ The CyberiadaML GraphML standard extends the GraphML format specification. This 
 - `CGML-5.9-2` MUST: id charset — ASCII 33 (`!`) through 126 (`~`), **excluding** `"` (34), `'` (39), `` ` `` (96) and `\` (92); hyphen, underscore, `#` explicitly allowed. [R/W/X]
 - `CGML-5.9-3` MUST: ids are case-sensitive; non-empty; length ≤ 256 characters. [R/W/X]
 - `CGML-5.9-4` MUST: ids are unique across the **whole document**, including all nested nodes and all state machines. [R/W/X]
+
+**5.10 Differences from GraphML** (`CGML-5.10-*`)
+
+- `CGML-5.10-1` MUST: a CGML document is not a valid GraphML document in exactly two respects, which implementations must tolerate: (1) the `data` tag with `key` attribute equal to `gFormat` tag precedes the `key` declarations (see `CGML-5.4-1`); (2) a key `id` is declared once per element kind (`for`), so the same `id` may appear in several `key` tags. Generic GraphML tools may reject CGML documents on these points. [R/W]
 
 ### 2.3 §6 — Document elements
 
@@ -113,7 +118,7 @@ Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateM
 - `CGML-6.1-3` MAY: `dGeometry` (rectangle, §7). [R/W]
 - `CGML-6.1-4` MUST: children ordered keys → nodes → edges. [R/W/X]
 - `CGML-6.1-5` MAY: several independent state machines at top level (multi-SM documents). [R/W]
-- `CGML-6.1-6` MUST: no `dRegion` subgraph directly under the SM graph (see appendix А: `graph*` only under `node*`)
+- `CGML-6.1-6` MUST: no `graph` (region) tag directly under a state-machine graph — subgraphs nest only inside nodes. [R/W/X]
 
 **6.2 Simple state** (`CGML-6.2-*`)
 
@@ -146,22 +151,24 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-6.5-1` MUST: nested elements of a composite state live in one or more region subgraphs (`graph` inside the `node`); the region subgraph is mandatory for holding children. [R/W]
 - `CGML-6.5-2` MUST: region marker: `dRegion` key on the nested graph (empty value). Must be the first child tag when present. [R/W]
 - `CGML-6.5-3` SHOULD: region/subgraph id = parent node id + separator (`:`/`::`). Test must not enforce a single/double colon. [W]
-- `CGML-6.5-4` MAY: region tag may be omitted for a single region within a composite state. [R]
-- `CGML-6.5-5` MUST: region tag must present for 2+ regions withi a composite state. [R/W/X]
+- `CGML-6.5-4` MAY: the `dRegion` marker may be omitted when a composite state has a single region subgraph. [R/W]
+- `CGML-6.5-5` MUST: with two or more region subgraphs in a composite state each of them carries the `dRegion` marker as its first data key. [R/W/X]
 - `CGML-6.5-6` MAY: `dName` - region title (see `CGML-6.2-3`). [W]
 - `CGML-6.5-7` MUST: if region geometry is omitted the regions' geometry is considered as equal to the parent composite state node's. [R]
 - `CGML-6.5-8` MUST: transitions of child elements are placed at the end of the **top-level** state-machine graph, not inside region subgraphs. [R/W/X]
 
 **6.6 Comment** (`CGML-6.6-*`)
+
 - `CGML-6.6-1` MUST: `dNote` — mandatory **first** child key of a comment node; value `informal` (human-readable) or `formal` (machine-readable). [R/W/X]
 - `CGML-6.6-2` MAY: `dData` — comment body text; `dName` — comment title (see `CGML-6.2-3`); `dGeometry` (rectangle). [R/W]
 - `CGML-6.6-3` SHOULD: it is recommended to preserve a formal comments body verbatim. [R]
 
 **6.7 Comment-subject links** (`CGML-6.7-*`)
+
 - `CGML-6.7-1` MUST: link = `edge` from comment node to subject node with mandatory first key `dPivot` naming the commented aspect from the closed set: {`dName`, `dData`, empty}, reject others. [R/W/X]
 - `CGML-6.7-2` MUST: `source` and `target` nodes exist and belong to the **same state-machine graph**. [R/W/X] **Extension hook:** under EXT-COMPLETENESS (8.5) `target` may reference an edge id (comment link to a transition).
 - `CGML-6.7-3` MUST: `dChunk` — substring of the subject's aspect being commented. Must present and be non-empty when `dPivot` is `dName` or `dData`. [R/W]
-- `CGML-6.7-4` MUST: `source` must be a `dNote` node; no self-loops allowed; see geometry condition as in `CGML-6.3-5`. 
+- `CGML-6.7-4` MUST: the link's `source` is a comment node (`dNote` present); `source` ≠ `target` (no self-loops); the geometry condition of `CGML-6.3-5` applies. [R/W/X]
 
 **6.8 Events, guards, behaviour** (`CGML-6.8-*`)
 
@@ -170,7 +177,7 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-6.8-3` MUST: internal-behaviour blocks begin with one of the keywords `entry/`, `exit/`, or `do/` (entry, exit, do behaviour respectively). [R/W]
 - `CGML-6.8-4` MUST: an event description starts with the event name (may be empty). [R/W]
 - `CGML-6.8-5` MAY: an event description may carry event-handling parameters from ПНСТ 984-2024: the keywords `propagate` and `block` placed directly before the `/` separator (after the guard when present), or `defer` placed directly after it (§6.8.1). [R/W] **Note:** per-event keywords, distinct from the document-level `eventPropagation` metadata parameter (6.9), which allows only `block`/`propagate`.
-- `CGML-6.8-6` MAY: a guard block may contain the keyword `else` (see the at-most-one-else constraints in `CGML-6.3-4` and `CGML-6.4-4-2`). [R/W]
+- `CGML-6.8-6` MAY: a guard block may contain the keyword `else` (see the at-most-one-else constraints in `CGML-6.3-4`). [R/W]
 - `CGML-6.8-7` MUST: XML special characters inside `dData` (`<`, `>`, `&`) are escaped per 5.2, as everywhere in the document. [R/W/X]
 - `CGML-6.8-8` MUST: square brackets used **inside a guard's logical expression** are escaped with a backslash — `\[`, `\]` (e.g. `[String.Contains(\[Example\])]`). [R/W]
 
@@ -208,7 +215,7 @@ Composite states admit all simple-state requirements (see 6.2).
   - `CGML-7.2-1-4` region — `dGeometry` rect on the region subgraph;
   - `CGML-7.2-1-5` transition — **no geometry in base format** including comment links;
   - `CGML-7.2-1-6` transition label — `dLabelGeometry` point or rect on the edge; must present when the edge is viauzualized and labelled; label coordinates relative to the **source node's** top-left corner;
-- `CGML-7.2-2` MUST: the coordinate axes are: x left-to-right, y axis downwards; coordinates relative to the **parent** element's top-left corner (SM; composite state for regions; region); SM coordinates global; `point` carries `x`,`y` = element **center**; `rect` carries `x`,`y` = **top-left corner** + `width`,`height`. Coordinates are real numbers; SVG-like syntax `<point x= y=/>`, `<rect x= y= width= height=/>` nested inside the `data` tag. [R/W/X]
+- `CGML-7.2-2` MUST: the coordinate axes are: x left-to-right, y axis downwards; coordinates relative to the **parent** element's top-left corner (SM; composite state for regions; region); SM coordinates are global document coordinates, and when the SM carries no geometry its top-level children are given in the same global coordinates; `point` carries `x`,`y` = element **center**; `rect` carries `x`,`y` = **top-left corner** + `width`,`height`. Coordinates are real numbers; SVG-like syntax `<point x= y=/>`, `<rect x= y= width= height=/>` nested inside the `data` tag. [R/W/X]
 - `CGML-7.2-3` MAY: `width` and `height` of the rectangular elements may be set loosely and reconstructed on load in the base (short) geometry format. [R]
 - `CGML-7.2-4` MUST: absence of `dGeometry` on an element = element is not visualized; a non-visualized composite state hides all its children. [R]
 
@@ -216,7 +223,7 @@ Composite states admit all simple-state requirements (see 6.2).
 
 **8.1 Submachine state** (`CGML-8.1-*`)
 
-- `CGML-8.1-1` MUST: node with key `dSubmachineState`; value = reference to a state machine — external (`file://…`) or within the document (the referenced SM `id`). Resolution of internal references (the SM id) and tolerance of unresolvable external references must be tested. [R/W]
+- `CGML-8.1-1` MUST: node with the marker key `dSubmachineState` as its **first** data key (see `CGML-5.7-4`); value = reference to a state machine — external (`file://…`, a URI) or within the document (the referenced SM `id`). Resolution of internal references (the SM id) and tolerance of unresolvable external references must be tested. [R/W/X]
 - `CGML-8.1-2` MUST: if a submachine state has entry/exit points then a single subgraph must be used for the entry/exit points specification; the subgraph may have no `dData` keys. [R/W]
 
 **8.2 History pseudostates** (`CGML-8.2-*`)
@@ -237,7 +244,7 @@ Composite states admit all simple-state requirements (see 6.2).
 
 **8.5 Comment link to a transition** (`CGML-8.5-*`)
 
-- `CGML-8.5-1` MAY: An edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present).The
+- `CGML-8.5-1` MAY: An edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present).
 - `CGML-8.5-2` MUST: The `target` edge must be a transition, not a comment link. [R/W/X]
 - `CGML-8.5-3` MUST: Non-comment link edges targeting edges remain invalid. [X]
 
@@ -261,15 +268,15 @@ Inherits base format (2.4).
 
 **9.2 Color marking** (`CGML-9.2-*`)
 
-- `CGML-9.2-1` MAY: `dColor` key on `node` or `edge`; value = non-empty CSS/SVG color string. [R/W]
-- `CGML-9.2-2` MUST: explicit hex forms `#RRGGBB` or `#RRGGBBAA` must be supported. [R/W]
-- `CGML-9.2-3` SHOULD: named colors (e.g. `red`) also allowed. [R/W]
+- `CGML-9.2-1` MAY: `dColor` key on `node` or `edge` selects the element's colour. [R/W]
+- `CGML-9.2-2` MUST: the value is a non-empty string `#RRGGBB` (RGB) or `#RRGGBBAA` (RGBA, alpha byte last) with hexadecimal digits; this form must be supported by every implementation claiming EXT-DISPLAY. [R/W/X]
+- `CGML-9.2-3` SHOULD: a colour name from the CSS/HTML named-colour list (e.g. `red`, `green`) is an accepted alternative value; its support is recommended. Any other value is invalid. [R/W]
 - `CGML-9.2-4` MUST: may not use on `graph` (SMs and regions). [R/W]
 
 **9.3 Comment markup** (`CGML-9.3-*`)
 
-- `CGML-9.3-1` MAY: `dMarkup` on informal comment nodes selects the markup language of `dData`; default `plain`; `markdown` supported per 9.3.1. [R/W]
-- `CGML-9.3-2` MUST: `dMarkup` key outside the informal comment nodes is invalid. [X] 
+- `CGML-9.3-1` MAY: `dMarkup` on an informal comment node (`dNote` = `informal`) selects the markup language of its `dData`; value is a non-empty string; `plain` (default when absent) and `markdown` are standard values, editors may add their own. [R/W]
+- `CGML-9.3-2` MUST: `dMarkup` on any node other than an informal comment, or with an empty value, is invalid. [R/W/X]
 - `CGML-9.3-3` MAY: document-wide default is set via `markupLanguage` metadata (6.9). [R/W]
 - `CGML-9.3-4` MUST: `dMarkup` key overrides the document-wide `markupLanguage` for the comment. [R/W/X]
 
@@ -289,13 +296,14 @@ Inherits base format (2.4).
 
 **10.3 Dynamic components** (`CGML-10.3-*`)
 
-- `CGML-10.3-1` MUST: Formal comment with name `CGML_COMPONENT` and structured body (`id/ …`, `type/ …`, `name/ …`, parameter lines in the 6.9 metadata syntax) describes a diagram component. [R/W]
+- `CGML-10.3-1` MUST: a dynamic component is a formal comment whose `dName` is the string `CGML_COMPONENT`, one space, and the component identifier — unique among the components of the document and satisfying the formal-name rules of `CGML-10.1-2` (e.g. `CGML_COMPONENT LED1`); its `dData` body is a parameter list in the document metadata syntax (`name/ value`, blank-line separated, whitespace around `/` trimmed) with the mandatory parameter `type` (component type, e.g. `LED`); further platform-defined parameters (`name`, `description`, …) are optional. [R/W/X]
+- `CGML-10.3-2` MUST: when a platform supports dynamic components and a diagram uses them, every state machine of the document that uses a component defines it (a `CGML_COMPONENT` comment in that state machine). [R/W]
 
 ### 2.8 Additional machine-checkable artefacts (Appendices A & B) 
 
 **2.8.1 Document tag tree** (`CGML-appendix-A-*`)
 
-`CGML-appendix-A-1` MUST: The complete hierarchy of admissible tags; any tag placement outside the tree is invalid. Basis for XML structural validation. The syntax `data<KEY>` means `data` tag with the key `KEY`; `*` means repeating (0+ times). Here is the hierarchical structure: [R/W/X]
+`CGML-appendix-A-1` MUST: the tag tree of appendix А defines the admissible **nesting** of tags: a tag placed under a parent the tree does not allow is invalid. The tree does not define presence or order — those follow from the clause rows (`CGML-5.4-1`, `CGML-5.5-1`, `CGML-5.6-3`, `CGML-5.7-4`, `CGML-5.8-3`, `CGML-6.1-1`, `CGML-6.1-4`, `CGML-6.4-1`, `CGML-6.6-1`, `CGML-6.7-1`) and the per-element key lists (`CGML-8.1-2`, `CGML-9.2-4`, `CGML-9.3-2`); the `node*` of a subgraph has the same structure as a top-level node, including its own `graph*` (unbounded depth). The syntax `data<KEY>` means a `data` tag with the key `KEY`; `*` means repeating (0+ times). [R/W/X]
 
 - `graphml`
   - `data<gFormat>`
@@ -344,9 +352,7 @@ Inherits base format (2.4).
 
 **2.8.2 Standard key declarations** (`CGML-appendix-B-*`)
 
-Here is the complete key inventory with element bindings. It is not recommended to
-redefine the standard keys, and using an undeclared key without declaration is not allowed (see
-5.5). Reproduced for reference:
+`CGML-appendix-B-1` MUST: a `key` declaration of a standard key binds the `id` to the element kinds, `attr.name` and `attr.type` given in appendix Б (Table below); a declaration with a different `for`, `attr.name` or `attr.type` for a standard `id`, and a `data` tag whose key is not declared (explicitly or by the appendix Б defaults), are invalid. [R/W/X]
 
 | Key | for | attr.name | Profile |
 |---|---|---|---|
@@ -370,4 +376,3 @@ redefine the standard keys, and using an undeclared key without declaration is n
 ## 3. Compatibility statement
 
 An implementation is **CORE-compatible** when it satisfies every MUST of §2.2–§2.4 in each conformance sense ([R]/[W]/[X]) applicable to its capabilities (read-only tools are exempt from [W]; write-only generators from [R]). Extension-profile compatibility is claimed and tested per profile (§2.5–§2.7). SHOULD-level deviations do not break compatibility but must be reported. Verdicts per requirement: `pass` / `fail` / `not-applicable` / `not-supported` (unclaimed profile).
-
