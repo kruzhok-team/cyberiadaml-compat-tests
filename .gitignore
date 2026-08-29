@@ -5,3 +5,5 @@ results/
 report.json
 drivers/cs/bin/
 drivers/cs/obj/
+*-REVIEW.md
+*-PROPOSAL.md
