@@ -38,6 +38,8 @@ EXT_PLATFORM = "EXT-PLATFORM"
 VALIDATOR = "validator"
 INTEGRATION = "integration"
 WRITE_ONLY = "write-only"
+# pending     - checkable on a document, the rule is not implemented yet
+PENDING = "pending"
 
 Req = namedtuple("Req", "level senses profile scope")
 
@@ -58,28 +60,37 @@ REQUIREMENTS = {
     "CGML-5.5-2": Req(SHOULD, "RW", CORE, VALIDATOR),
     "CGML-5.5-3": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-5.5-4": Req(MUST, "RWX", CORE, VALIDATOR),
+    "CGML-5.5-5": Req(MUST, "RWX", CORE, PENDING),
+    "CGML-5.5-6": Req(SHOULD, "RW", CORE, WRITE_ONLY),
+    "CGML-5.5-7": Req(MAY, "R", CORE, INTEGRATION),
     # 5.6 Graph
     "CGML-5.6-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-5.6-2": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-5.6-3": Req(MUST, "RW", CORE, VALIDATOR),
+    "CGML-5.6-4": Req(SHOULD, "W", CORE, WRITE_ONLY),
     # 5.7 Node
-    "CGML-5.7-1": Req(MUST, "RWX", CORE, VALIDATOR),
-    "CGML-5.7-2": Req(MAY, "R", CORE, VALIDATOR),
+    "CGML-5.7-1": Req(MUST, "RWX", CORE, PENDING),
+    "CGML-5.7-2": Req(MUST, "RWX", CORE, VALIDATOR),
+    "CGML-5.7-3": Req(MAY, "R", CORE, VALIDATOR),
+    "CGML-5.7-4": Req(MUST, "RWX", CORE, PENDING),
     # 5.8 Edge
     "CGML-5.8-1": Req(MUST, "RWX", CORE, VALIDATOR),
-    "CGML-5.8-2": Req(MAY, "W", CORE, VALIDATOR),
+    "CGML-5.8-2": Req(SHOULD, "W", CORE, VALIDATOR),
     "CGML-5.8-3": Req(MUST, "RW", CORE, VALIDATOR),
     # 5.9 Identifiers
     "CGML-5.9-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-5.9-2": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-5.9-3": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-5.9-4": Req(MUST, "RWX", CORE, VALIDATOR),
+    # 5.10 Differences from GraphML
+    "CGML-5.10-1": Req(MUST, "RW", CORE, INTEGRATION),
     # 6.1 State machine
     "CGML-6.1-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.1-2": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.1-3": Req(MAY, "RW", CORE, INTEGRATION),
     "CGML-6.1-4": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.1-5": Req(MAY, "RW", CORE, INTEGRATION),
+    "CGML-6.1-6": Req(MUST, "RWX", CORE, PENDING),
     # 6.2 Simple state
     "CGML-6.2-1": Req(MUST, "R", CORE, INTEGRATION),
     "CGML-6.2-2": Req(MAY, "RWX", CORE, INTEGRATION),
@@ -97,12 +108,15 @@ REQUIREMENTS = {
     "CGML-6.4-2": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.4-3": Req(MAY, "RW", CORE, INTEGRATION),
     "CGML-6.4-4-1": Req(MUST, "RW", CORE, VALIDATOR),
-    "CGML-6.4-4-2": Req(MUST, "RWX", CORE, VALIDATOR),
     # 6.5 Composite state and region
     "CGML-6.5-1": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-6.5-2": Req(MUST, "RW", CORE, VALIDATOR),
-    "CGML-6.5-3": Req(MAY, "W", CORE, WRITE_ONLY),
-    "CGML-6.5-4": Req(MUST, "RWX", CORE, VALIDATOR),
+    "CGML-6.5-3": Req(SHOULD, "W", CORE, WRITE_ONLY),
+    "CGML-6.5-4": Req(MAY, "RW", CORE, INTEGRATION),
+    "CGML-6.5-5": Req(MUST, "RWX", CORE, PENDING),
+    "CGML-6.5-6": Req(MAY, "W", CORE, INTEGRATION),
+    "CGML-6.5-7": Req(MUST, "R", CORE, INTEGRATION),
+    "CGML-6.5-8": Req(MUST, "RWX", CORE, VALIDATOR),
     # 6.6 Comment
     "CGML-6.6-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.6-2": Req(MAY, "RW", CORE, INTEGRATION),
@@ -110,7 +124,8 @@ REQUIREMENTS = {
     # 6.7 Comment-subject links
     "CGML-6.7-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.7-2": Req(MUST, "RWX", CORE, VALIDATOR),
-    "CGML-6.7-3": Req(MAY, "RW", CORE, INTEGRATION),
+    "CGML-6.7-3": Req(MUST, "RW", CORE, INTEGRATION),
+    "CGML-6.7-4": Req(MUST, "RWX", CORE, PENDING),
     # 6.8 Events, guards, behaviour
     "CGML-6.8-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.8-2": Req(MUST, "RW", CORE, VALIDATOR),
@@ -123,6 +138,8 @@ REQUIREMENTS = {
     # 6.9 Document metadata
     "CGML-6.9-1": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.9-2": Req(MUST, "RWX", CORE, VALIDATOR),
+    "CGML-6.9-2-1": Req(MAY, "RW", CORE, INTEGRATION),
+    "CGML-6.9-2-2": Req(SHOULD, "W", CORE, WRITE_ONLY),
     "CGML-6.9-3": Req(MUST, "RWX", CORE, VALIDATOR),
     "CGML-6.9-4-1": Req(MAY, "R", CORE, VALIDATOR),
     "CGML-6.9-4-2": Req(MAY, "R", CORE, VALIDATOR),
@@ -141,29 +158,58 @@ REQUIREMENTS = {
     "CGML-7.2-1-5": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-7.2-1-6": Req(MUST, "RW", CORE, VALIDATOR),
     "CGML-7.2-2": Req(MUST, "RWX", CORE, VALIDATOR),
-    "CGML-7.2-3": Req(MUST, "R", CORE, INTEGRATION),
-    # 8 EXT-COMPLETENESS
-    "CGML-8.1-1": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
+    "CGML-7.2-3": Req(MAY, "R", CORE, INTEGRATION),
+    "CGML-7.2-4": Req(MUST, "R", CORE, INTEGRATION),
+    # 8.1 Submachine state
+    "CGML-8.1-1": Req(MUST, "RWX", EXT_COMPLETENESS, INTEGRATION),
+    "CGML-8.1-2": Req(MUST, "RWX", EXT_COMPLETENESS, PENDING),
+    # 8.2 History pseudostates
     "CGML-8.2-1": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
     "CGML-8.2-2": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
+    # 8.3 Entry/exit points
     "CGML-8.3-1": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
     "CGML-8.3-2": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
+    "CGML-8.3-3": Req(MUST, "RW", EXT_COMPLETENESS, INTEGRATION),
+    # 8.4 Collapsed composite state
     "CGML-8.4-1": Req(MAY, "RW", EXT_COMPLETENESS, INTEGRATION),
-    "CGML-8.5-1": Req(MAY, "RWX", EXT_COMPLETENESS, INTEGRATION),
-    "CGML-8.5-2": Req(MUST, "X", EXT_COMPLETENESS, VALIDATOR),
-    # 9 EXT-DISPLAY
-    "CGML-9.1-1": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-8.4-2": Req(MUST, "WX", EXT_COMPLETENESS, PENDING),
+    # 8.5 Comment link to a transition
+    "CGML-8.5-1": Req(MAY, "RW", EXT_COMPLETENESS, INTEGRATION),
+    "CGML-8.5-2": Req(MUST, "RWX", EXT_COMPLETENESS, PENDING),
+    "CGML-8.5-3": Req(MUST, "X", EXT_COMPLETENESS, VALIDATOR),
+    # 9.1 Full geometry
+    "CGML-9.1-1": Req(MUST, "RWX", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-1": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-2": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-3": Req(MUST, "RWX", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-3-1": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-3-2": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-3-3": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-3-4": Req(MUST, "RWX", EXT_DISPLAY, PENDING),
+    "CGML-9.1-1-4": Req(MAY, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.1-1-5": Req(MUST, "RW", EXT_DISPLAY, INTEGRATION),
     "CGML-9.1-2": Req(MUST, "W", EXT_DISPLAY, WRITE_ONLY),
+    # 9.2 Color marking
     "CGML-9.2-1": Req(MAY, "RW", EXT_DISPLAY, VALIDATOR),
+    "CGML-9.2-2": Req(MUST, "RWX", EXT_DISPLAY, PENDING),
+    "CGML-9.2-3": Req(SHOULD, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.2-4": Req(MUST, "RW", EXT_DISPLAY, PENDING),
+    # 9.3 Comment markup
     "CGML-9.3-1": Req(MAY, "RW", EXT_DISPLAY, VALIDATOR),
-    "CGML-9.3-2": Req(MAY, "RW", EXT_DISPLAY, INTEGRATION),
-    # 10 EXT-PLATFORM
+    "CGML-9.3-2": Req(MUST, "RWX", EXT_DISPLAY, PENDING),
+    "CGML-9.3-3": Req(MAY, "RW", EXT_DISPLAY, INTEGRATION),
+    "CGML-9.3-4": Req(MUST, "RWX", EXT_DISPLAY, INTEGRATION),
+    # 10.1 Formal names
     "CGML-10.1-1": Req(MAY, "RW", EXT_PLATFORM, INTEGRATION),
     "CGML-10.1-2": Req(MUST, "RWX", EXT_PLATFORM, VALIDATOR),
     "CGML-10.1-3": Req(MUST, "RWX", EXT_PLATFORM, VALIDATOR),
+    # 10.2 Formal comments for initialization
     "CGML-10.2-1": Req(MAY, "RW", EXT_PLATFORM, INTEGRATION),
-    "CGML-10.3-1": Req(MUST, "RW", EXT_PLATFORM, INTEGRATION),
-    # Appendices
+    # 10.3 Dynamic components
+    "CGML-10.3-1": Req(MUST, "RWX", EXT_PLATFORM, PENDING),
+    "CGML-10.3-2": Req(MUST, "RW", EXT_PLATFORM, PENDING),
+    # Appendix Document tag tree
     "CGML-appendix-A-1": Req(MUST, "RWX", CORE, VALIDATOR),
+    # Appendix Standard key declarations
     "CGML-appendix-B-1": Req(MUST, "RWX", CORE, VALIDATOR),
 }

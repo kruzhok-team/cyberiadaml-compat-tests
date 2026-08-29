@@ -43,6 +43,7 @@ UNREACHABLE = frozenset((
     "X-5.9-4-duplicate-id",         # identity
     "X-6.3-2-dangling-target",      # reference resolution
     "X-6.7-2-dangling-link",        # reference resolution
+    "X-8.5-3-transition-targets-edge",  # reference resolution
     "X-6.8-1-node-no-slash",        # dData behaviour grammar
     "X-6.9-1-no-meta",              # named comment existence and text
     "X-6.9-4-5-bad-propagation",    # CGML_META parameter grammar

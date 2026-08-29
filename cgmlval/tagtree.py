@@ -38,9 +38,9 @@ declare("graph-in-graph", "CGML-5.6-3", 2, ERROR,
         "subgraphs nest only inside nodes")
 declare("graph-child-order", "CGML-5.6-3", 2, ERROR,
         "graph children are ordered keys, nodes, edges")
-declare("node-placement", "CGML-5.7-1", 2, ERROR,
+declare("node-placement", "CGML-5.7-2", 2, ERROR,
         "nodes appear only inside graphs")
-declare("node-content", "CGML-5.7-2", 2, INFO,
+declare("node-content", "CGML-5.7-3", 2, INFO,
         "nodes contain data keys and nested graphs",
         note="admissible content is accepted by the walker")
 declare("edge-block", "CGML-5.8-3", 2, WARNING,
@@ -53,7 +53,7 @@ declare("vertex-first-key", "CGML-6.4-1", 2, ERROR,
         "dVertex is the first key of a vertex node")
 declare("composite-children", "CGML-6.5-1", 2, ERROR,
         "composite state children live in region subgraphs")
-declare("region-no-edges", "CGML-6.5-4", 2, ERROR,
+declare("region-no-edges", "CGML-6.5-8", 2, ERROR,
         "child transitions are placed at the top level, not in regions")
 declare("note-first-key", "CGML-6.6-1", 2, ERROR,
         "dNote is the first key of a comment node")

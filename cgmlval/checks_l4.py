@@ -216,7 +216,7 @@ def transition_endpoints(ctx):
                              elem=transition.elem)
 
 
-declare("link-target", "CGML-8.5-2", 4, ERROR,
+declare("link-target", "CGML-8.5-3", 4, ERROR,
         "only comment links may target an edge id")
 
 
@@ -269,7 +269,7 @@ def single_else(ctx):
                          elem=transitions[1].elem)
 
 
-declare("choice-single-else", "CGML-6.4-4-2", 4, WARNING,
+declare("choice-single-else", "CGML-6.3-4", 4, WARNING,
         "at most one else transition leaves a choice")
 
 

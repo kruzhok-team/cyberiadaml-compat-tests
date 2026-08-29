@@ -12,6 +12,7 @@
         "CGML-5.6-2",
         "CGML-5.6-3",
         "CGML-5.7-1",
+        "CGML-5.7-2",
         "CGML-5.8-1",
         "CGML-5.9-1",
         "CGML-6.1-1",
@@ -51,11 +52,11 @@
     "core/F-HIER": {
       "profile": "CORE",
       "requirements": [
-        "CGML-5.7-2",
+        "CGML-5.7-3",
         "CGML-6.2-3",
         "CGML-6.5-1",
         "CGML-6.5-2",
-        "CGML-6.5-4"
+        "CGML-6.5-8"
       ]
     },
     "core/F-MULTI": {
@@ -197,6 +198,9 @@
     "negative/X-6.7-2-dangling-link": {
       "reject": "CGML-6.7-2"
     },
+    "negative/X-8.5-3-transition-targets-edge": {
+      "reject": "CGML-8.5-3"
+    },
     "negative/X-6.9-1-no-meta": {
       "reject": "CGML-6.9-1"
     },
@@ -239,7 +243,6 @@
       "requirements": [
         "CGML-6.3-4",
         "CGML-6.4-2",
-        "CGML-6.4-4-2",
         "CGML-6.8-6"
       ]
     },
@@ -309,7 +312,7 @@
         "CGML-6.4-2",
         "CGML-6.5-1",
         "CGML-6.5-2",
-        "CGML-6.5-4",
+        "CGML-6.5-8",
         "CGML-6.8-1",
         "CGML-6.8-3",
         "CGML-6.9-4-1",
