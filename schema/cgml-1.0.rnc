@@ -32,12 +32,13 @@
 #
 # The advisory constraints live in cgml-1.0-strict.rnc.
 
+
 datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
 default namespace = "http://graphml.graphdrawing.org/xmlns"
 
 start = cgml.graphml
 
-# === values (5.4, 5.9, 10.1.1) ==============================================
+# === values (5.4, 5.9, 6.7, 9.2, 10.1.1) ====================================
 
 # 5.9: ASCII 33..126, non-empty, at most 256 characters, excluding the codes
 # 34, 39, 96 (the quotes) and 92 (the backslash) -- written as the surviving
@@ -49,6 +50,15 @@ cgml.id =
 cgml.formalName = xsd:string { pattern = "[A-Za-z_][A-Za-z0-9_]*" }
 
 cgml.nonEmpty = xsd:string { minLength = "1" }
+
+# a non-empty value once the surrounding whitespace is dropped
+cgml.word = xsd:token { minLength = "1" }
+
+# 9.2: #RRGGBB, #RRGGBBAA or a CSS colour name.  The name list is matched by
+# cgmlval; the schema admits any alphabetic word, so that a name in any letter
+# case passes both.
+cgml.color =
+  xsd:token { pattern = "#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?|[A-Za-z]+" }
 
 # 6.5-2 requires an empty marker value; cgmlval only reports a deviation,
 # so the base profile accepts any content and the strict profile pins it.
@@ -86,16 +96,20 @@ d.gFormat =
 
 # --- appendix Б key declarations --------------------------------------------
 #
-# attr.type is left free here and pinned in the strict profile: 5.5(3) forbids
-# changing it, but does not require the declaration to carry it.
+# 5.5-5: a standard key keeps its appendix Б attr.type -- "string" for the
+# text keys, none for the four geometry keys.
 
 cgml.key = cgml.key.standard | cgml.key.custom
 
-cgml.key.attrType = attribute attr.type { text }?
+cgml.key.attrType = attribute attr.type { "string" }?
 
-cgml.key.standard = element key { cgml.key.binding, cgml.key.attrType }
+cgml.key.standard =
+  element key {
+      ( cgml.key.binding.text, cgml.key.attrType )
+    | cgml.key.binding.geometry
+  }
 
-cgml.key.binding =
+cgml.key.binding.text =
     ( attribute id { "gFormat" }, attribute for { "graphml" },
       attribute attr.name { "format" } )
   | ( attribute id { "dName" }, attribute for { "graph" | "node" },
@@ -106,14 +120,6 @@ cgml.key.binding =
       attribute attr.name { "region" } )
   | ( attribute id { "dSubmachineState" }, attribute for { "node" },
       attribute attr.name { "submachineState" } )
-  | ( attribute id { "dGeometry" }, attribute for { "graph" | "node" | "edge" },
-      attribute attr.name { "geometry" } )
-  | ( attribute id { "dSourcePoint" }, attribute for { "edge" },
-      attribute attr.name { "sourcePoint" } )
-  | ( attribute id { "dTargetPoint" }, attribute for { "edge" },
-      attribute attr.name { "targetPoint" } )
-  | ( attribute id { "dLabelGeometry" }, attribute for { "edge" },
-      attribute attr.name { "labelGeometry" } )
   | ( attribute id { "dNote" }, attribute for { "node" },
       attribute attr.name { "note" } )
   | ( attribute id { "dVertex" }, attribute for { "node" },
@@ -133,9 +139,21 @@ cgml.key.binding =
   | ( attribute id { "dFormalName" }, attribute for { "graph" | "node" },
       attribute attr.name { "formalName" } )
 
+cgml.key.binding.geometry =
+    ( attribute id { "dGeometry" }, attribute for { "graph" | "node" | "edge" },
+      attribute attr.name { "geometry" } )
+  | ( attribute id { "dSourcePoint" }, attribute for { "edge" },
+      attribute attr.name { "sourcePoint" } )
+  | ( attribute id { "dTargetPoint" }, attribute for { "edge" },
+      attribute attr.name { "targetPoint" } )
+  | ( attribute id { "dLabelGeometry" }, attribute for { "edge" },
+      attribute attr.name { "labelGeometry" } )
+
 # 5.5(3): applications may add their own keys, which must be declared.  The
 # datatype "except" keeps a standard id out of this branch, so that a standard
 # key redeclared with the wrong attr.name cannot slip through as a custom one.
+# cgmlval does not check the shape of a custom declaration; the strict profile
+# pins it to the GraphML attribute set.
 cgml.key.custom =
   element key {
     attribute id {
@@ -145,15 +163,19 @@ cgml.key.custom =
                    | "dData" | "dPivot" | "dChunk" | "dCollapsed" | "dMarkup"
                    | "dColor" | "dFormalName" )
     },
-    attribute for { text },
-    attribute attr.name { text }?,
-    attribute attr.type { text }?
+    cgml.key.custom.shape
   }
+
+cgml.key.custom.shape =
+  attribute for { text },
+  attribute attr.name { text }?,
+  attribute attr.type { text }?
 
 # === state machine graph (5.6, 6.1) =========================================
 #
 # 6.1-1: dStateMachine is present and is the first data key of a top level
 # graph.  5.6-3/6.1-4: the children are ordered data keys, nodes, edges.
+# 6.1-6: no subgraph directly under the state machine graph.
 
 cgml.stateMachine =
   element graph {
@@ -179,32 +201,48 @@ cgml.region.attributes = cgml.graph.attributes
 d.dStateMachine =
   element data { attribute key { "dStateMachine" }, empty }
 
+# 9.2-4: dColor is not a graph key.
 cgml.graph.key =
     d.dName
   | d.dGeometry.graph
   | d.dFormalName          # [EXT-PLATFORM]
 
-# === region subgraph (6.5) ==================================================
+# === region subgraphs (6.5) =================================================
 #
-# 6.5-4 lets a single region omit dRegion, and 6.5-2 requires it first when
-# present; cgmlval checks neither, so the base profile keeps dRegion free and
-# the strict profile pins it.
+# 6.5-4: a single region may omit dRegion; 6.5-5: two and more regions each
+# start with it.  Where dRegion stands inside a single region is a deviation
+# cgmlval does not report, so the base profile leaves it free and the strict
+# profile pins it first.
 
-cgml.region =
+cgml.node.regions = empty | cgml.node.regions.some
+
+cgml.node.regions.some =
+    cgml.region.single
+  | ( cgml.region.marked, cgml.region.marked+ )
+
+cgml.region.single =
   element graph {
     cgml.region.attributes,
     ( d.dRegion | cgml.graph.key )*,
     cgml.nodes
   }
 
+cgml.region.marked =
+  element graph {
+    cgml.region.attributes,
+    d.dRegion,
+    cgml.graph.key*,
+    cgml.nodes
+  }
+
 d.dRegion = element data { attribute key { "dRegion" }, cgml.marker }
 
-# === node (5.7, 6.2, 6.4, 6.6) ==============================================
+# === node (5.7, 6.2, 6.4, 6.6, 8.1, 8.4, 9.3) ===============================
 #
-# The leading data key selects the kind of node, and a node of one kind must
-# not carry the marker of another.  This three way branch on a sibling data
-# key is the construct XSD 1.0 cannot express: all three alternatives start
-# with the same element name and differ only in an attribute value.
+# 5.7-4: the leading data key selects the kind of node, and a node carries at
+# most one marker.  This four way branch on a sibling data key is the
+# construct XSD 1.0 cannot express: all alternatives start with the same
+# element name and differ only in an attribute value.
 
 # CGML-6.4-4-1 (ПНСТ 984-2024 semantics, not stated in this standard): only
 # one initial pseudostate is allowed on a hierarchy level.  Counting competing
@@ -215,34 +253,61 @@ cgml.nodes = cgml.node.plain*, ( cgml.node.initial, cgml.node.plain* )?
 cgml.node.initial =
   element node {
     attribute id { cgml.id },
-    d.dVertex.initial, cgml.node.key*,
-    cgml.region*
+    d.dVertex.initial, cgml.node.key.other*,
+    cgml.node.regions
   }
 
 cgml.node.plain =
   element node {
     attribute id { cgml.id },
-    ( cgml.node.vertex | cgml.node.comment | cgml.node.state ),
-    cgml.region*
+    ( cgml.node.vertex | cgml.node.comment | cgml.node.submachine
+    | cgml.node.state )
   }
 
-cgml.node.vertex  = d.dVertex, cgml.node.key*
-cgml.node.comment = d.dNote, cgml.node.key*
-cgml.node.state   = cgml.node.key*
+cgml.node.vertex  = d.dVertex, cgml.node.key.other*, cgml.node.regions
+
+# 9.3-2: dMarkup belongs to an informal comment only, with a non-empty value.
+cgml.node.comment =
+    ( d.dNote.informal, ( cgml.node.key.other | d.dMarkup )*,
+      cgml.node.regions )
+  | ( d.dNote.formal, cgml.node.key.other*, cgml.node.regions )
+
+# 8.1-1, 8.1-2: dSubmachineState comes first; the only subgraph holds the
+# entry and exit points and carries no data key.
+cgml.node.submachine =
+  d.dSubmachineState, cgml.node.key.other*, cgml.submachine.graph?
+
+cgml.submachine.graph =
+  element graph { cgml.region.attributes, cgml.node.entryExit* }
+
+cgml.node.entryExit =
+  element node {
+    attribute id { cgml.id },
+    d.dVertex.entryExit, cgml.node.key.other*,
+    cgml.node.regions
+  }
+
+# 8.4-2: a collapsed state keeps its region subgraphs.
+cgml.node.state =
+    ( cgml.node.key*, cgml.node.regions )
+  | ( cgml.node.key*, d.dCollapsed, cgml.node.key*, cgml.node.regions.some )
 
 cgml.node.key =
     d.dName
   | d.dGeometry.node
   | d.dData
-  | d.dSubmachineState     # [EXT-COMPLETENESS]
   | d.dFormalName          # [EXT-PLATFORM]
-  | d.dCollapsed           # [EXT-COMPLETENESS]
   | d.dColor               # [EXT-DISPLAY]
-  | d.dMarkup              # [EXT-DISPLAY]
+
+# dCollapsed on a node that is not a state is admitted by the tag tree and
+# ignored by cgmlval, hence the wider key set outside the state branch.
+cgml.node.key.other = cgml.node.key | d.dCollapsed
 
 # 6.4, table 3.  fork and join are reserved for future versions and are
 # tolerated on read, so they stay in the base profile.
 d.dVertex.initial = element data { attribute key { "dVertex" }, "initial" }
+d.dVertex.entryExit =
+  element data { attribute key { "dVertex" }, ( "entryPoint" | "exitPoint" ) }
 d.dVertex = element data { attribute key { "dVertex" }, cgml.vertex.kind }
 
 cgml.vertex.kind =
@@ -252,7 +317,9 @@ cgml.vertex.kind =
   | "fork" | "join"                      # reserved
 
 # 6.6
-d.dNote = element data { attribute key { "dNote" }, ( "informal" | "formal" ) }
+d.dNote = d.dNote.informal | d.dNote.formal
+d.dNote.informal = element data { attribute key { "dNote" }, "informal" }
+d.dNote.formal = element data { attribute key { "dNote" }, "formal" }
 
 d.dName = element data { attribute key { "dName" }, text }
 d.dName.required =
@@ -263,18 +330,20 @@ d.dSubmachineState =
 d.dFormalName =
   element data { attribute key { "dFormalName" }, cgml.formalName }
 d.dCollapsed = element data { attribute key { "dCollapsed" }, cgml.marker }
-d.dColor = element data { attribute key { "dColor" }, text }
-d.dMarkup = element data { attribute key { "dMarkup" }, text }
+d.dColor = element data { attribute key { "dColor" }, cgml.color }
+d.dMarkup = element data { attribute key { "dMarkup" }, cgml.word }
 
 d.dGeometry.graph =
   element data { attribute key { "dGeometry" }, cgml.rect }
 d.dGeometry.node =
   element data { attribute key { "dGeometry" }, ( cgml.point | cgml.rect ) }
 
-# === edge (5.8, 6.3, 6.7) ===================================================
+# === edge (5.8, 6.3, 6.7, 9.1) ==============================================
 #
 # 6.7-1: an edge whose first data key is dPivot is a comment link; any other
 # edge is a transition.  The same attribute value branch as for a node.
+# 6.7-3: a dName or dData link carries a non-empty dChunk; 9.1-1-3-4: a link
+# with dChunk carries no dTargetPoint.
 
 cgml.edge =
   element edge {
@@ -284,19 +353,28 @@ cgml.edge =
     ( cgml.edge.link | cgml.edge.transition )
   }
 
-cgml.edge.link       = d.dPivot, d.dChunk?, cgml.edge.key*
+cgml.edge.link =
+    ( d.dPivot.named, d.dChunk.required, cgml.edge.key.noTargetPoint* )
+  | ( d.dPivot.empty, d.dChunk, cgml.edge.key.noTargetPoint* )
+  | ( d.dPivot.empty, cgml.edge.key* )
 cgml.edge.transition = cgml.edge.key*
 
 cgml.edge.key =
+    cgml.edge.key.noTargetPoint
+  | d.dTargetPoint         # [EXT-DISPLAY]
+
+cgml.edge.key.noTargetPoint =
     d.dData
   | d.dLabelGeometry
   | d.dGeometry.edge       # [EXT-DISPLAY]
   | d.dSourcePoint         # [EXT-DISPLAY]
-  | d.dTargetPoint         # [EXT-DISPLAY]
   | d.dColor               # [EXT-DISPLAY]
 
-d.dPivot = element data { attribute key { "dPivot" }, text }
+d.dPivot.named =
+  element data { attribute key { "dPivot" }, ( "dName" | "dData" ) }
+d.dPivot.empty = element data { attribute key { "dPivot" }, empty }
 d.dChunk = element data { attribute key { "dChunk" }, text }
+d.dChunk.required = element data { attribute key { "dChunk" }, cgml.word }
 
 d.dLabelGeometry =
   element data { attribute key { "dLabelGeometry" }, ( cgml.point | cgml.rect ) }

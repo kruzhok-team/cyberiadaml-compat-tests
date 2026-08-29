@@ -23,8 +23,7 @@
 # The base profile encodes what cgmlval rejects.  This profile adds the rest of
 # the standard: the constraints cgmlval reports as a deviation rather than an
 # error (the counterpart of cgmlval --strict), and the requirements cgmlval
-# does not check at all.  The second group is listed in schema/README.md; the
-# schema is deliberately stricter than the validator there.
+# does not check at all -- the strict-only examples of schema/README.md.
 
 # The default namespace must be repeated here: patterns written in this file,
 # including those inside the override block, are compiled in this file's
@@ -49,77 +48,60 @@ include "cgml-1.0.rnc" {
     attribute id { cgml.id },
     attribute edgedefault { "directed" }?
 
-  # 6.4, table 3: fork and join are reserved for future versions of the format
-  # and are not written by a conforming implementation.
-  cgml.vertex.kind =
-      "final" | "choice" | "terminate"
-    | "shallowHistory" | "deepHistory"
-    | "entryPoint" | "exitPoint"
+  # 5.5, GraphML: a custom key names its element kind from the GraphML set
+  # and carries an attr.name.
+  cgml.key.custom.shape =
+    attribute for { "all" | "graphml" | "graph" | "node" | "edge"
+                  | "hyperedge" | "port" | "endpoint" },
+    attribute attr.name { cgml.nonEmpty },
+    attribute attr.type { text }?
 
-  # 9.2-1: a colour marking is a non-empty string.
-  d.dColor = element data { attribute key { "dColor" }, cgml.nonEmpty }
-
-  # appendix Б with 5.5(3): redefining the declared type of a standard key is
-  # forbidden, and every appendix Б key that declares a type declares "string".
-  # cgmlval checks attr.name and for, never attr.type.
-  cgml.key.attrType = attribute attr.type { "string" }?
-
-  # 6.5-2 and 6.5-5: dRegion is the first child tag of a region subgraph, and
-  # may be omitted only when the composite state has a single region.
-  cgml.region =
+  # 6.5-2: dRegion, when present, is the first key of a single region too.
+  cgml.region.single =
     element graph {
       cgml.region.attributes,
-      d.dRegion,
+      d.dRegion?,
       cgml.graph.key*,
       cgml.nodes
     }
 
   # appendix В: a choice carries rect geometry, every other pseudostate and the
   # final state carry point geometry, and a state or a comment carries rect.
+  # 6.4, table 3: fork and join are reserved for future versions of the format
+  # and are not written by a conforming implementation.
   cgml.node.initial =
     element node {
       attribute id { cgml.id },
-      d.dVertex.initial, cgml.node.key.point*,
-      cgml.node.regions
-    }
-
-  cgml.node.plain =
-    element node {
-      attribute id { cgml.id },
-      ( cgml.node.vertex | cgml.node.comment | cgml.node.state ),
+      d.dVertex.initial, cgml.node.key.point.other*,
       cgml.node.regions
     }
 
   cgml.node.vertex =
-      ( d.dVertex.rect,  cgml.node.key.rect* )
-    | ( d.dVertex.point, cgml.node.key.point* )
+      ( d.dVertex.rect,  cgml.node.key.rect.other*, cgml.node.regions )
+    | ( d.dVertex.point, cgml.node.key.point.other*, cgml.node.regions )
 
-  cgml.node.state = cgml.node.key.rect*
-
-  # 9.3-1: dMarkup describes the text of a human readable comment, so it
-  # belongs to an informal one only.
   cgml.node.comment =
-      ( d.dNote.informal, cgml.node.key.rect* )
-    | ( d.dNote.formal, cgml.node.key.rect.nomarkup* )
+      ( d.dNote.informal, ( cgml.node.key.rect.other | d.dMarkup )*,
+        cgml.node.regions )
+    | ( d.dNote.formal, cgml.node.key.rect.other*, cgml.node.regions )
+
+  cgml.node.submachine =
+    d.dSubmachineState, cgml.node.key.rect.other*, cgml.submachine.graph?
+
+  cgml.node.entryExit =
+    element node {
+      attribute id { cgml.id },
+      d.dVertex.entryExit, cgml.node.key.point.other*,
+      cgml.node.regions
+    }
+
+  cgml.node.state =
+      ( cgml.node.key.rect*, cgml.node.regions )
+    | ( cgml.node.key.rect*, d.dCollapsed, cgml.node.key.rect*,
+        cgml.node.regions.some )
 }
 
 # --- definitions added by this profile ---------------------------------------
-
-# 6.5-1, 6.5-4, 6.5-5: no region, one region (dRegion optional above is already
-# pinned, so a single unmarked region is admitted by the lax form), or two and
-# more regions each carrying the marker.
-cgml.node.regions =
-    empty
-  | cgml.region.single
-  | ( cgml.region, cgml.region+ )
-
-cgml.region.single =
-  element graph {
-    cgml.region.attributes,
-    d.dRegion?,
-    cgml.graph.key*,
-    cgml.nodes
-  }
 
 d.dVertex.rect = element data { attribute key { "dVertex" }, "choice" }
 
@@ -131,9 +113,6 @@ d.dVertex.point =
     | "entryPoint" | "exitPoint" )
   }
 
-d.dNote.informal = element data { attribute key { "dNote" }, "informal" }
-d.dNote.formal = element data { attribute key { "dNote" }, "formal" }
-
 d.dGeometry.node.point =
   element data { attribute key { "dGeometry" }, cgml.point }
 d.dGeometry.node.rect =
@@ -143,27 +122,15 @@ cgml.node.key.point =
     d.dName
   | d.dGeometry.node.point
   | d.dData
-  | d.dSubmachineState
   | d.dFormalName
-  | d.dCollapsed
   | d.dColor
-  | d.dMarkup
 
 cgml.node.key.rect =
     d.dName
   | d.dGeometry.node.rect
   | d.dData
-  | d.dSubmachineState
   | d.dFormalName
-  | d.dCollapsed
   | d.dColor
-  | d.dMarkup
 
-cgml.node.key.rect.nomarkup =
-    d.dName
-  | d.dGeometry.node.rect
-  | d.dData
-  | d.dSubmachineState
-  | d.dFormalName
-  | d.dCollapsed
-  | d.dColor
+cgml.node.key.point.other = cgml.node.key.point | d.dCollapsed
+cgml.node.key.rect.other = cgml.node.key.rect | d.dCollapsed

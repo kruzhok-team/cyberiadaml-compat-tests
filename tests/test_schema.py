@@ -43,17 +43,23 @@ UNREACHABLE = frozenset((
     "X-5.9-4-duplicate-id",         # identity
     "X-6.3-2-dangling-target",      # reference resolution
     "X-6.7-2-dangling-link",        # reference resolution
+    "X-6.7-4-self-loop",            # identity of two attributes
+    "X-8.5-2-link-targets-link",    # reference resolution
     "X-8.5-3-transition-targets-edge",  # reference resolution
+    "X-6.3-4-two-else",             # a count over the edges' dData text
     "X-6.8-1-node-no-slash",        # dData behaviour grammar
     "X-6.9-1-no-meta",              # named comment existence and text
+    "X-6.9-1-two-meta",             # named comment count
+    "X-6.9-2-repeated-param",       # CGML_META parameter grammar
     "X-6.9-4-5-bad-propagation",    # CGML_META parameter grammar
+    "X-10.3-1-no-type",             # CGML_COMPONENT parameter grammar
 ))
 
 # schema/examples: the strict profile rejects each, the base profile accepts it.
-# The first three break a requirement cgmlval implements no rule for.
-STRICT_ONLY = ("S-attr-type", "S-two-regions", "S-choice-point",
-               "S-markup-formal", "S-reserved-vertex")
-UNCHECKED_BY_CGMLVAL = ("S-attr-type", "S-two-regions")
+# The last two break a requirement cgmlval implements no rule for.
+STRICT_ONLY = ("S-choice-point", "S-reserved-vertex",
+               "S-region-marker-order", "S-custom-key-for")
+UNCHECKED_BY_CGMLVAL = ("S-region-marker-order", "S-custom-key-for")
 
 # The two L1 rules no schema can reach: both are properties of the byte stream,
 # which the parser consumes and the XML infoset does not preserve.  Both
@@ -100,7 +106,7 @@ EXAMPLES = list(_documents("schema/examples"))
 
 
 def test_the_corpus_is_present():
-    assert len(POSITIVE) > 20 and len(NEGATIVE) > 20 and len(EXAMPLES) == 7
+    assert len(POSITIVE) > 20 and len(NEGATIVE) > 20 and len(EXAMPLES) == 6
 
 
 @pytest.mark.parametrize("path", POSITIVE, ids=lambda p: p.stem)
