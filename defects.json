@@ -213,7 +213,8 @@
       "note": "the standard's Г.3 example names its components ' CGML_COMPONENT ' with spaces; the name is verbatim text (§6.6)",
       "signatures": [
         "dump:'    name: \" CGML_COMPONENT \"'|'    name: \" CGML_COMPONENT\"'"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "PY-3",
@@ -231,7 +232,8 @@
       "note": "' CGML_COMPONENT ' (standard Г.3) re-emitted as 'CGML_COMPONENT'",
       "signatures": [
         "dump:'    name: \" CGML_COMPONENT \"'|'    name: \"CGML_COMPONENT\"'"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "CS-6",
@@ -240,7 +242,8 @@
       "note": "the two CGML_COMPONENT comments of Г.3 lose dNote and collide on their name (CGML-6.2-3)",
       "signatures": [
         "validate:CGML-6.2-3"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "JS-12",

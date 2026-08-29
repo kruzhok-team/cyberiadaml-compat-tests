@@ -1,11 +1,11 @@
 # CyberiadaML-GraphML 1.0 — Conformance Test Catalog
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0). Enumerates the tests required to
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6). Enumerates the tests required to
 check every requirement of the testing specification and organizes the testing procedure into
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.6 (2026-08-24)
+**Document version:** 1.7 (2026-08-30)
 
 ## 1. Testing layers
 
@@ -123,18 +123,23 @@ respect, named in its test row.
 | T-5.5-1.1 | CGML-5.5-1 | A | full Appendix Б declaration block before graph structure → parsed |
 | T-5.5-1.2 | CGML-5.5-1 | W | written key declarations appear before graph structure |
 | T-5.6-3.1 | CGML-5.6-3 | X | subgraph directly inside `graph` (not via node) → rejected |
-| T-5.7-1.1 | CGML-5.7-1 | X | `node` as direct child of `graphml` → rejected |
-| T-5.7-2.1 | CGML-5.7-2 | A | `F-HIER` node with nested graph → composite state |
+| T-5.7-2.1 | CGML-5.7-2 | X | `node` as direct child of `graphml` → rejected |
+| T-5.7-3.1 | CGML-5.7-3 | A | `F-HIER` node with nested graph → composite state |
+| T-5.7-4.1 | CGML-5.7-4 | X | node carrying two marker keys (`dVertex` + `dSubmachineState`; `dNote` + `dVertex`, 2 variants) → rejected |
 | T-5.8-3.1 | CGML-5.8-3 | X | edge placed between two nodes → rejected or reported |
 | T-5.8-3.2 | CGML-5.8-3 | W | written edges form a single trailing block |
 | T-6.1-1.2a | CGML-6.1-1 | X | `dStateMachine` not the first key of the SM graph → rejected |
 | T-6.1-4.1 | CGML-6.1-4 | X | data key after first node in SM graph → rejected |
+| T-6.1-6.1 | CGML-6.1-6 | X | region `graph` directly under the SM graph → rejected |
 | T-6.4-1.1 | CGML-6.4-1 | X | vertex node with `dName` before `dVertex` → rejected |
 | T-6.5-1.1 | CGML-6.5-1 | A | `F-HIER` → children attached to composite via region subgraph |
 | T-6.5-2.1 | CGML-6.5-2 | A | region graph with empty `dRegion`; node with **two** region subgraphs → parsed (2 fixtures) |
-| T-6.5-4.1 | CGML-6.5-4 | X | edge inside region subgraph → rejected |
+| T-6.5-5.1 | CGML-6.5-5 | X | composite state with two region subgraphs, one without `dRegion` first → rejected |
+| T-6.5-8.1 | CGML-6.5-8 | X | edge inside region subgraph → rejected |
 | T-6.6-1.2a | CGML-6.6-1 | X | `dNote` not the first key of a comment node → rejected |
 | T-6.7-1.2 | CGML-6.7-1 | X | `dPivot` not the first key of the link edge → rejected |
+| T-8.1-1.4 | CGML-8.1-1 | X | `dSubmachineState` not the first key of the node → rejected |
+| T-8.1-2.1 | CGML-8.1-2 | X | submachine subgraph with a data key (`dRegion`); with a plain state inside (2 variants) → rejected |
 | T-A-1.1 | CGML-appendix-A-1 | X | unknown tag inside `graphml` (`<foo>`) → rejected |
 | T-A-1.2 | CGML-appendix-A-1 | X | key on the wrong element kind: `dVertex` on a graph; `dRegion` on a node; `dPivot` on a node (3 variants) → rejected |
 | T-A-1.3 | CGML-appendix-A-1 | X | geometry sub-tag misuse: `rect` inside `data<dSourcePoint>` → rejected |
@@ -148,10 +153,14 @@ respect, named in its test row.
 | T-5.4-2.2 | CGML-5.4-2 | X | empty `gFormat` value → rejected |
 | T-5.5-2.1 | CGML-5.5-2 | A | no key block → defaults of Appendix Б applied (doc parses identically to declared twin) |
 | T-5.5-3.1 | CGML-5.5-3 | X | `data` tag without `key` attribute → rejected |
+| T-5.5-5.1 | CGML-5.5-5 | X | standard key redeclared with `attr.type="int"`; a geometry key declared with `attr.type` (2 variants) → rejected |
+| T-5.5-6.1 | CGML-5.5-6 | W | written declarations reproduce appendix Б verbatim → informational (SHOULD) |
+| T-5.5-7.1 | CGML-5.5-7 | A | document declaring a custom key `xMine` and using it → parsed, key preserved or ignored |
+| T-5.6-4.1 | CGML-5.6-4 | I | written graph ids start with `g`/`G` → informational |
 | T-5.6-1.1 | CGML-5.6-1 | X | graph without `id` → rejected |
 | T-5.6-1.2 | CGML-5.6-1 | X | `edgedefault="undirected"` → rejected or reported |
 | T-5.8-1.1 | CGML-5.8-1 | X | edge missing `source` (or `target`, or `id`, or empty ones — 4 variants) → rejected |
-| T-5.8-2.1 | CGML-5.8-2 | I | written edge ids follow `source-target#N` → informational |
+| T-5.8-2.1 | CGML-5.8-2 | I | written edge ids follow `source-target` or `source-target#N` → informational |
 | T-5.9-1.1 | CGML-5.9-1 | X | missing `id` on graph/node/edge (3 variants) → rejected |
 | T-5.9-2.1 | CGML-5.9-2 | A | ids using `- _ # ! ~` and hierarchical `n0::n1` (`F-FLAT`) → accepted |
 | T-5.9-2.2 | CGML-5.9-2 | X | id with space; with `"`; with `\`; with Cyrillic (4 variants) → rejected |
@@ -160,6 +169,8 @@ respect, named in its test row.
 | T-6.1-1.2b | CGML-6.1-1 | X | `dStateMachine` with non-empty value → rejected |
 | T-6.4-2.2 | CGML-6.4-2 | X | `dVertex` value `banana` → rejected |
 | T-6.6-1.2b | CGML-6.6-1 | X | `dNote` value `casual` → rejected |
+| T-6.7-1.3 | CGML-6.7-1 | X | `dPivot` value `dColor` → rejected |
+| T-6.7-3.2 | CGML-6.7-3 | X | `dPivot` = `dName` without `dChunk`; with empty `dChunk` (2 variants) → rejected |
 | T-6.8-1.1 | CGML-6.8-1 | A | transition `Trigger [Guard]/ behavior` → trigger/guard/behavior separated correctly |
 | T-6.8-1.2 | CGML-6.8-1 | A | empty `dData` → no behavior, no error |
 | T-6.8-1.3 | CGML-6.8-1 | A | trigger with guard and empty behavior list; `entry/` with empty body (2 fixtures) → accepted |
@@ -177,7 +188,11 @@ respect, named in its test row.
 | T-6.8-6.1 | CGML-6.8-6 | A | `[else]` guard → recognized |
 | T-6.8-8.1 | CGML-6.8-8 | RT | guard `[Строка.Содержит(\[Пример\])]` → backslash-escaped brackets preserved |
 | T-6.9-2.1 | CGML-6.9-2 | A | multi-line parameter value (`description` = three lines); blank-line separation → parsed to pairs |
-| T-6.9-2.2 | CGML-6.9-2 | X | parameter name with non-Latin characters → rejected or reported |
+| T-6.9-2.2 | CGML-6.9-2 | X | parameter name with non-Latin characters → rejected |
+| T-6.9-2.3 | CGML-6.9-2 | X | repeated parameter name → rejected |
+| T-6.9-2.4 | CGML-6.9-2 | A | `name \t/ \t value` → whitespace around `/` trimmed |
+| T-6.9-2-1.1 | CGML-6.9-2-1 | A | multi-line value → preserved with its line breaks |
+| T-6.9-2-2.1 | CGML-6.9-2-2 | I | written parameter names are camelCase → informational |
 | T-6.9-3.1 | CGML-6.9-3 | X | `standardVersion` missing; value `2.0` (2 variants) → rejected |
 | T-6.9-4.1 | CGML-6.9-4-1 | A | `geometry` absent → `none` assumed; `short`; `full` (3 fixtures) |
 | T-6.9-4.2 | CGML-6.9-4-1 | X | `geometry/ big` → rejected |
@@ -189,13 +204,20 @@ respect, named in its test row.
 | T-6.9-4.8 | CGML-6.9-4-6 | A | `markupLanguage/ markdown` → recorded as document default |
 | T-6.9-5.1 | CGML-6.9-5 | A | custom parameter `myParam/ value` → preserved |
 | T-7.2-2.1 | CGML-7.2-2 | A | negative and fractional coordinates (incl. high-precision values) → values in model within tolerance |
-| T-9.2-1.1 | CGML-9.2-1 | A | `dColor` `#RRGGBB`, `#RRGGBBAA`, named `red` on node and edge → parsed |
-| T-9.2-1.2 | CGML-9.2-1 | X | empty `dColor` value → rejected or reported |
+| T-9.1-1-3-4.1 | CGML-9.1-1-3-4 | X | comment link with `dChunk` carrying `dTargetPoint` → rejected |
+| T-9.2-1.1 | CGML-9.2-1 | A | `dColor` on a node and on an edge → parsed |
+| T-9.2-2.1 | CGML-9.2-2 | A | `#RRGGBB`, `#RRGGBBAA` → parsed |
+| T-9.2-2.2 | CGML-9.2-2 | X | empty `dColor`; `#GG0000`; `xyz` (3 variants) → rejected |
+| T-9.2-3.1 | CGML-9.2-3 | A | named colour `red` → accepted |
+| T-9.2-4.1 | CGML-9.2-4 | X | `dColor` on the SM graph → rejected |
 | T-9.3-1.1 | CGML-9.3-1 | A | `dMarkup` = `markdown` on informal comment; absent → default `plain` |
+| T-9.3-2.1 | CGML-9.3-2 | X | `dMarkup` on a state; on a formal comment; empty on an informal comment (3 variants) → rejected |
+| T-9.3-4.1 | CGML-9.3-4 | A | `markupLanguage/ markdown` with a comment carrying `dMarkup` = `plain` → the comment's own value wins |
+| T-10.3-1.2 | CGML-10.3-1 | X | `CGML_COMPONENT` comment without `type`; name without the identifier; two comments with the same identifier (3 variants) → rejected |
 | T-10.1-2.1 | CGML-10.1-2 | A | formal names `_x`, `Scan9`, `A_b_1` → accepted |
 | T-10.1-2.2 | CGML-10.1-2 | X | formal name starting with digit; containing dash; Cyrillic; empty (4 variants) → rejected |
-| T-B-1.1 | CGML-appendix-B-* | X | standard key redeclared with different `for`/`attr.name` → rejected |
-| T-B-1.2 | CGML-appendix-B-* | A | document declaring only the subset of keys it uses → accepted |
+| T-B-1.1 | CGML-appendix-B-1 | X | standard key redeclared with different `for`/`attr.name` → rejected |
+| T-B-1.2 | CGML-appendix-B-1 | A | document declaring only the subset of keys it uses → accepted |
 
 ### 3.4 Layer L4 — Document integrity
 
@@ -211,17 +233,21 @@ respect, named in its test row.
 | T-6.2-3.2 | CGML-6.2-3 | A | same name on different hierarchy levels → accepted |
 | T-6.3-2.1 | CGML-6.3-2 | X | edge with nonexistent `source`; `target` in the other SM of `F-MULTI` (2 variants) → rejected |
 | T-6.3-2.2 | CGML-6.3-2 | X | edge whose `source` or `target` is the SM graph id itself (2 variants) → rejected |
-| T-6.3-4.1 | CGML-6.3-4 | X | two `[else]` transitions from one state → rejected or reported |
+| T-6.3-4.1 | CGML-6.3-4 | X | two `[else]` transitions from one state → rejected |
+| T-6.3-4.2 | CGML-6.3-4 | X | choice with two `[else]` outgoing transitions → rejected |
 | T-6.3-5.1 | CGML-6.3-5 | X | edge label geometry while an endpoint node has none (short mode) → rejected or reported |
 | T-6.4-4-1.1 | CGML-6.4-4-1 | X | two `initial` on the same level → rejected |
 | T-6.4-4-1.2 | CGML-6.4-4-1 | A | `initial` at SM level and inside a region → accepted |
-| T-6.4-4-2.1 | CGML-6.4-4-2 | X | choice with two `[else]` outgoing transitions → rejected or reported |
 | T-6.7-2.1 | CGML-6.7-2 | X | comment link to nonexistent node → rejected |
+| T-6.7-4.1 | CGML-6.7-4 | X | link whose `source` is a state; link with `source` = `target` (2 variants) → rejected |
 | T-6.9-1.1 | CGML-6.9-1 | X | no `CGML_META` node; meta only in second SM (2 variants) → rejected |
+| T-6.9-1.3 | CGML-6.9-1 | X | a second `CGML_META` comment; a comment link attached to `CGML_META` (2 variants) → rejected |
 | T-7.1-1.1 | CGML-7.1-1 | A | `F-MIN` (none), `F-GEO-S` (short), `F-GEO-F` (full) → mode detected correctly |
 | T-7.2-1.2 | CGML-7.2-1-5 | X | edge `dGeometry` present in a `short`-mode document → rejected or reported |
 | T-7.2-1.3 | CGML-7.2-1-* | X | wrong geometry object kind: point on a state; rect on an initial (2 variants) → rejected or reported |
-| T-8.5-2.1 | CGML-8.5-2 | X | plain transition (no `dPivot`) targeting an edge id → rejected |
+| T-8.4-2.1 | CGML-8.4-2 | X | `dCollapsed` state without a region subgraph → rejected |
+| T-8.5-2.2 | CGML-8.5-2 | X | comment link targeting another comment link → rejected |
+| T-8.5-3.1 | CGML-8.5-3 | X | plain transition (no `dPivot`) targeting an edge id → rejected |
 | T-10.1-3.1 | CGML-10.1-3 | X | duplicate SM formal names; duplicate sibling-state formal names (2 variants) → rejected |
 
 ### 3.5 Integration tests (implementations under test)
@@ -232,6 +258,7 @@ that pass L1–L4.
 | Test | Req | Type | Fixture / action → expectation |
 |---|---|---|---|
 | T-5.5-2.1i | CGML-5.5-2 | A | declared/undeclared key-block twins parse to identical models |
+| T-5.10-1.1 | CGML-5.10-1 | A | `gFormat` before the keys and a key id declared per element kind → parsed (the two GraphML deviations tolerated) |
 | T-5.6-2.1 | CGML-5.6-2 | A | `F-MULTI` → two SMs in model |
 | T-6.1-3.1 | CGML-6.1-3 | A | SM `dGeometry` rect in `F-GEO-S` → parsed |
 | T-6.1-5.1 | CGML-6.1-5 | A | `F-MULTI` names/content of both SMs correct |
@@ -248,7 +275,10 @@ that pass L1–L4.
 | T-6.4-2.4 | CGML-6.4-2 | W | no written document ever contains `fork`/`join` |
 | T-6.4-3.1 | CGML-6.4-3 | A | named pseudostate; point geometry on initial/final; rect on choice → parsed |
 | T-6.5-3.1 | CGML-6.5-3 | I | written region ids use `parent:` convention → informational |
-| T-6.5-4.2 | CGML-6.5-4 | A | child-state transitions at top level → correctly resolved to nested endpoints |
+| T-6.5-4.1 | CGML-6.5-4 | A | single region subgraph without `dRegion` → parsed as the region |
+| T-6.5-6.1 | CGML-6.5-6 | A | region `dName` → region title in model |
+| T-6.5-7.1 | CGML-6.5-7 | A | region without `dGeometry` in a short document → geometry of the parent state assumed |
+| T-6.5-8.2 | CGML-6.5-8 | A | child-state transitions at top level → correctly resolved to nested endpoints |
 | T-6.6-1.1 | CGML-6.6-1 | A | informal and formal comments (`F-CMT`) → correct kinds |
 | T-6.6-2.1 | CGML-6.6-2 | A | comment with body, title, rect geometry → parsed |
 | T-6.6-3.1 | CGML-6.6-3 | I | formal comment body byte-identical after round-trip → informational (SHOULD) |
@@ -258,7 +288,8 @@ that pass L1–L4.
 | T-6.9-1.2 | CGML-6.9-1 | A | meta on an otherwise empty SM (`F-EMPTY-SM`) → all parameters readable |
 | T-7.2-1.1 | CGML-7.2-1-1…4,6 | A | `F-GEO-S`: rect on SM/state/choice/comment/region; point on initial/final; label point and rect → all parsed with correct object kinds |
 | T-7.2-2.2 | CGML-7.2-2 | RT | coordinates preserved through round-trip within the §2.1 tolerance |
-| T-7.2-3.1 | CGML-7.2-3 | A | element without `dGeometry` in short doc → flagged non-visualized; children of a geometry-less composite → hidden |
+| T-7.2-3.1 | CGML-7.2-3 | A | zero-size rects in a short document (appendix Г.2) → sizes reconstructed on load |
+| T-7.2-4.1 | CGML-7.2-4 | A | element without `dGeometry` in short doc → flagged non-visualized; children of a geometry-less composite → hidden |
 | T-8.1-1.1 | CGML-8.1-1 | A | submachine node with `file://` reference → parsed, reference preserved |
 | T-8.1-1.2 | CGML-8.1-1 | A | internal SM reference → resolved within document |
 | T-8.1-1.3 | CGML-8.1-1 | I | unresolvable external reference → tolerated on parse, reported |
@@ -266,30 +297,37 @@ that pass L1–L4.
 | T-8.2-2.1 | CGML-8.2-2 | A | history inside a region and at SM level → accepted |
 | T-8.3-1.1 | CGML-8.3-1 | A | `entryPoint`/`exitPoint` vertexes → correct kinds |
 | T-8.3-2.1 | CGML-8.3-2 | A | entry/exit points inside a state, at SM level, adjacent to a submachine state → accepted |
+| T-8.3-3.1 | CGML-8.3-3 | A | entry/exit point geometry inside or on the border of the parent → parsed |
 | T-8.4-1.1 | CGML-8.4-1 | A/RT | `dCollapsed` composite with region → parsed; flag survives round-trip |
 | T-8.5-1.1 | CGML-8.5-1 | A | comment link (`dPivot` present) targeting an edge id → parsed as link-to-transition |
 | T-9.1-1.1 | CGML-9.1-1 | A | `F-GEO-F`: edge polyline points, `dSourcePoint`, `dTargetPoint`, label rect → parsed |
+| T-9.1-1-1.1 | CGML-9.1-1-1 | A | polyline with one intermediate point, relative to the source's top-left → coordinates in model |
+| T-9.1-1-2.1 | CGML-9.1-1-2 | A | `dSourcePoint` on every full-mode edge → parsed relative to the source |
+| T-9.1-1-3.1 | CGML-9.1-1-3-1…3 | A | `dTargetPoint` on a transition, a link to a node, a link to a transition → parsed relative to the target / the transition's source (3 fixtures) |
+| T-9.1-1-4.1 | CGML-9.1-1-4 | A | label geometry as a rect → parsed |
+| T-9.1-1-5.1 | CGML-9.1-1-5 | X | label rect with zero `width` in a full document → rejected or reported |
 | T-9.1-2.1 | CGML-9.1-2 | W | full-mode writer output contains complete geometry (L1–L4 check) |
-| T-9.3-2.1 | CGML-9.3-2 | A | `markupLanguage` metadata default applied to comments without own `dMarkup` |
+| T-9.3-3.1 | CGML-9.3-3 | A | `markupLanguage` metadata default applied to comments without own `dMarkup` |
 | T-10.1-1.1 | CGML-10.1-1 | A | `dFormalName` on a node and on an SM graph → parsed |
 | T-10.2-1.1 | CGML-10.2-1 | RT | formal comment body (init data) preserved verbatim |
-| T-10.3-1.1 | CGML-10.3-1 | A | `CGML_COMPONENT` comment with `id/ type/ name/` params → parsed to component description |
+| T-10.3-1.1 | CGML-10.3-1 | A | `CGML_COMPONENT LED1` comment with `type/ LED` and `name/` params → parsed to component description |
+| T-10.3-2.1 | CGML-10.3-2 | I | every SM using a component defines it → informational (platform semantics) |
 
 Plus the cross-cutting suites of §2.2 (`RT-ALL`, `VAL-OUT`, `TOL-EXT`, `GEO-AGNOSTIC`, `FIELD`).
 
 ## 4. Coverage summary
 
-- Requirements in the testing spec: **101** (all covered; sub-groups covered via their parent or item tests).
-- Test rows: **~130**, ≈ 165 concrete cases counting multi-variant rows.
-- By layer: L1 = 10, L2 = 24, L3 = 47, L4 = 22, INT = 42 rows (+5 cross-cutting suites).
-- By type: A ≈ 68, X ≈ 58 (every MUST with an [X] sense has at least one rejection test at exactly one layer), RT/W ≈ 22, I = 5.
+- Requirements in the testing spec: **134** (all covered; sub-groups covered via their parent or item tests).
+- Test rows: **189**, ≈ 200 concrete cases counting multi-variant rows.
+- By layer: L1 = 10, L2 = 29, L3 = 69, L4 = 26, INT = 55 rows (+5 cross-cutting suites).
+- Every MUST with an [X] sense has at least one rejection test at exactly one layer; the
+  `fixtures/negative` corpus carries one document per rejection rule of `cgmlval`.
 - Requirements checked at two layers get split ids (`T-6.1-1.2a` structure / `T-6.1-1.2b` value).
 
 ## 5. Open items for the implementation phase
 
-- Source of the L2 schema: adapt the official GraphML XSD and generate the CGML tag-tree
-  constraints (XSD 1.0 cannot express key-dependent content — the split between L2 and L3 follows
-  exactly this tool boundary).
+- The L2 schema is the RELAX NG pair in `schema/` (XSD 1.0 cannot express key-dependent
+  content); its base profile is kept equal to the ERROR-level rules of `cgmlval`.
 - Exact canonical textual dump format behind the golden files.
 - Per-implementation capability declarations: which profiles each implementation claims.
 - Policy for "rejected **or reported**" rows: strict mode vs warning mode, decided per implementation.

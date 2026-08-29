@@ -1,12 +1,12 @@
 # CyberiadaML-GraphML 1.0 — Compatibility Harness Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0),
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.2) and
-`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.0). Specifies the conformance fixture corpus,
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6),
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.7) and
+`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.6). Specifies the conformance fixture corpus,
 the implementation driver contract and the `intharness` runner that compares the CGML libraries
 against the standard and against each other.
 
-**Document version:** 1.1 (2026-08-23)
+**Document version:** 1.2 (2026-08-30)
 
 ## 1. Purpose
 
