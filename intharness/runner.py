@@ -22,6 +22,7 @@
 
 import json
 import pathlib
+import re
 
 from cgmlval import dump as dump_mod
 from cgmlval import rules
@@ -40,11 +41,23 @@ def _judge(path):
     return errors, text
 
 
+# a rect whose size the fixture leaves unset in short geometry mode (7.2-3):
+# the writer may reconstruct any size at the same origin
+_LOOSE_RECT = re.compile(r"^(\s*[a-z-]+: rect -?[0-9.]+ -?[0-9.]+) 0\.00 0\.00$")
+_ANY_RECT = re.compile(r"^(\s*[a-z-]+: rect -?[0-9.]+ -?[0-9.]+) -?[0-9.]+ -?[0-9.]+$")
+
+
+def _same_loose_rect(exp, act):
+    loose, any_ = _LOOSE_RECT.match(exp), _ANY_RECT.match(act)
+    return bool(loose and any_ and loose.group(1) == any_.group(1))
+
+
 def _first_diff(expected, got):
     exp_lines = expected.splitlines()
     got_lines = got.splitlines()
+    short = "geometry-mode: short" in exp_lines
     for index, (exp, act) in enumerate(zip(exp_lines, got_lines), 1):
-        if exp != act:
+        if exp != act and not (short and _same_loose_rect(exp, act)):
             return "line %d: expected %r, got %r" % (index, exp, act)
     if len(exp_lines) != len(got_lines):
         return "line %d: the dumps differ in length" % \

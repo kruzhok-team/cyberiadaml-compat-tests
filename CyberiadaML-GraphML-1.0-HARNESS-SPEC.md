@@ -101,7 +101,7 @@ For every available driver:
 
 | # | Channel | Input | Judgement |
 |---|---|---|---|
-| 1 | dump equality | positive fixtures | `convert` succeeds and `cgmlval dump OUT` equals the golden dump |
+| 1 | dump equality | positive fixtures | `convert` succeeds and `cgmlval dump OUT` equals the golden dump; in a `short` geometry document a golden rect of size 0×0 matches any size at the same origin (the writer may reconstruct it, CGML-7.2-3) |
 | 2 | validate output | positive fixtures | `cgmlval validate OUT` reports no errors |
 | 3 | reject protocol | negative fixtures | `convert` exits 2 (rejected); exit 0 = silently accepted, other = crash |
 | 4 | twin dumps | twin pairs | both round-trips succeed and their `cgmlval dump` outputs are equal |
