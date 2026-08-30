@@ -218,6 +218,15 @@
       "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
+      "id": "C-8",
+      "driver": "c",
+      "title": "reader rejects CSS colour names",
+      "note": "cyberiada_check_color accepts only #RRGGBB[AA]; CGML-9.2-3 (SHOULD) recommends the CSS/HTML names (F-EXT-D-NAMED)",
+      "signatures": [
+        "reject:rejected by libcyberiadaml: Bad color 'red' of the node n0"
+      ]
+    },
+    {
       "id": "PY-3",
       "driver": "py",
       "title": "writer places data keys after the region subgraph of a node",

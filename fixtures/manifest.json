@@ -121,6 +121,13 @@
         "CGML-9.3-1"
       ]
     },
+    "ext/F-EXT-D-NAMED": {
+      "profile": "EXT-DISPLAY",
+      "requirements": [
+        "CGML-9.2-1",
+        "CGML-9.2-3"
+      ]
+    },
     "ext/F-EXT-P": {
       "profile": "EXT-PLATFORM",
       "requirements": [

@@ -83,6 +83,7 @@ respect, named in its test row.
 | `F-FLAT` | flattened-hierarchy document: states whose ids encode former nesting (`n0::n1`), no composite nodes |
 | `F-EXT-C` | EXT-COMPLETENESS features: submachine, histories, entry/exit points, collapsed composite, comment link to transition |
 | `F-EXT-D` | EXT-DISPLAY features: colors, markup |
+| `F-EXT-D-NAMED` | EXT-DISPLAY: CSS colour names `red`, `SteelBlue` (CGML-9.2-3) |
 | `F-EXT-P` | EXT-PLATFORM features: formal names, `CGML_COMPONENT` |
 | `F-CMT` | comments (informal + formal) with subject links (`dPivot`/`dChunk`) |
 | `F-FIELD-*` | real-world documents collected from the ecosystem (converted legacy diagrams, IDE-produced files, generator examples) — admitted after passing L1–L4 |

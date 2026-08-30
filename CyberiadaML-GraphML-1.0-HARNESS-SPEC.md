@@ -51,8 +51,8 @@ they only convert.
 
 The positive fixtures transcribe the catalog's fixture table: `F-MIN`, `F-EMPTY-SM`, `F-TWO`,
 `F-HIER`, `F-MULTI`, `F-FLAT`, `F-CMT` (core), `F-GEO-S`, `F-GEO-F` (geometry), `F-EXT-C`,
-`F-EXT-D`, `F-EXT-P` (extensions), `F-FIELD-*` (real-world documents admitted after passing
-L1–L4). Every positive fixture ships with its frozen golden dump `<name>.expected.txt`.
+`F-EXT-D`, `F-EXT-D-NAMED`, `F-EXT-P` (extensions), `F-FIELD-*` (real-world documents
+admitted after passing L1–L4). Every positive fixture ships with its frozen golden dump `<name>.expected.txt`.
 
 Golden dump policy: a dump is produced by `cgmlval dump`, reviewed line by line against the
 standard, then committed and **frozen** — it is never regenerated to make a test pass; a
