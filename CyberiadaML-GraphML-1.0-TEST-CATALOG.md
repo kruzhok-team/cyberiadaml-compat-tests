@@ -294,6 +294,7 @@ that pass L1–L4.
 | T-8.1-1.1 | CGML-8.1-1 | A | submachine node with `file://` reference → parsed, reference preserved |
 | T-8.1-1.2 | CGML-8.1-1 | A | internal SM reference → resolved within document |
 | T-8.1-1.3 | CGML-8.1-1 | I | unresolvable external reference → tolerated on parse, reported |
+| T-8.1-2.2 | CGML-8.1-2 | A | submachine node with a valid no-keys entry/exit subgraph → accepted, points nested under it |
 | T-8.2-1.1 | CGML-8.2-1 | A | `shallowHistory` and `deepHistory` vertexes → correct kinds |
 | T-8.2-2.1 | CGML-8.2-2 | A | history inside a region and at SM level → accepted |
 | T-8.3-1.1 | CGML-8.3-1 | A | `entryPoint`/`exitPoint` vertexes → correct kinds |

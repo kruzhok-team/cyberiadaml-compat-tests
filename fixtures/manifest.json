@@ -113,6 +113,14 @@
         "CGML-8.5-2"
       ]
     },
+    "ext/F-EXT-SUB": {
+      "profile": "EXT-COMPLETENESS",
+      "requirements": [
+        "CGML-8.1-2",
+        "CGML-8.3-1",
+        "CGML-8.3-2"
+      ]
+    },
     "ext/F-EXT-D": {
       "profile": "EXT-DISPLAY",
       "requirements": [
