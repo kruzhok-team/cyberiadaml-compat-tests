@@ -36,6 +36,7 @@ class Rule:
     title: str
     func: Optional[Callable] = None
     note: Optional[str] = None
+    also: tuple = ()      # further requirement ids the rule covers
 
 
 REGISTRY = {}
@@ -44,22 +45,35 @@ REGISTRY = {}
 def _register(rule_obj):
     if rule_obj.name in REGISTRY:
         raise ValueError("duplicate rule name: %s" % rule_obj.name)
-    if rule_obj.req is not None and rule_obj.req not in REQUIREMENTS:
-        raise ValueError("unknown requirement: %s" % rule_obj.req)
+    for req in (rule_obj.req,) + tuple(rule_obj.also):
+        if req is not None and req not in REQUIREMENTS:
+            raise ValueError("unknown requirement: %s" % req)
     REGISTRY[rule_obj.name] = rule_obj
 
 
-def rule(name, req, layer, severity, title):
+def rule(name, req, layer, severity, title, also=()):
     """Register a callable check; the callable receives the layer context."""
     def decorator(func):
-        _register(Rule(name, req, layer, severity, title, func))
+        _register(Rule(name, req, layer, severity, title, func, None,
+                       tuple(also)))
         return func
     return decorator
 
 
-def declare(name, req, layer, severity, title, note=None):
+def declare(name, req, layer, severity, title, note=None, also=()):
     """Register a rule emitted by a walker or the parser, without a callable."""
-    _register(Rule(name, req, layer, severity, title, None, note))
+    _register(Rule(name, req, layer, severity, title, None, note,
+                   tuple(also)))
+
+
+def cited(registry=None):
+    """All requirement ids the registered rules cover."""
+    ids = set()
+    for rule_obj in (registry or REGISTRY).values():
+        if rule_obj.req is not None:
+            ids.add(rule_obj.req)
+        ids.update(rule_obj.also)
+    return ids
 
 
 class Context:

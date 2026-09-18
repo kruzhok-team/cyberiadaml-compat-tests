@@ -24,6 +24,7 @@
   <key id="dColor" for="node" attr.name="color" attr.type="string"/>
   <key id="dColor" for="edge" attr.name="color" attr.type="string"/>
   <key id="dFormalName" for="graph" attr.name="formalName" attr.type="string"/>
+  <key id="dFormalName" for="node" attr.name="formalName" attr.type="string"/>
   <graph id="G" edgedefault="directed">
     <data key="dStateMachine"/>
     <data key="dName">SM-0</data>

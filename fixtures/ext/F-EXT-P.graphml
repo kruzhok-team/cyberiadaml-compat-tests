@@ -36,10 +36,8 @@
     </node>
     <node id="cComp">
       <data key="dNote">formal</data>
-      <data key="dName">CGML_COMPONENT</data>
-      <data key="dData">id/ led1
-
-type/ LED
+      <data key="dName">CGML_COMPONENT led1</data>
+      <data key="dData">type/ LED
 
 name/ Main indicator
 

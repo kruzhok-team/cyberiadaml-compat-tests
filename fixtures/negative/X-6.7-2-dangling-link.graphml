@@ -42,6 +42,7 @@
     <edge id="init-n0#1" source="init" target="n0"/>
     <edge id="nMeta-x#1" source="nMeta" target="nowhere">
       <data key="dPivot">dName</data>
+      <data key="dChunk">Idle</data>
     </edge>
   </graph>
 </graphml>

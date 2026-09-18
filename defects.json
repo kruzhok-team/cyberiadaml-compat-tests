@@ -138,9 +138,10 @@
       "id": "CS-4",
       "driver": "cs",
       "title": "comment link to a transition re-written without dPivot",
-      "note": "the edge then reads as a plain transition targeting an edge id (§8.5)",
+      "note": "the edge then reads as a plain transition targeting an edge id (§8.5); reported as CGML-8.5-3 since spec 1.6",
       "signatures": [
-        "validate:CGML-8.5-2"
+        "validate:CGML-8.5-2",
+        "validate:CGML-8.5-3"
       ]
     },
     {
@@ -213,7 +214,8 @@
       "note": "the standard's Г.3 example names its components ' CGML_COMPONENT ' with spaces; the name is verbatim text (§6.6)",
       "signatures": [
         "dump:'    name: \" CGML_COMPONENT \"'|'    name: \" CGML_COMPONENT\"'"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "PY-3",
@@ -231,7 +233,8 @@
       "note": "' CGML_COMPONENT ' (standard Г.3) re-emitted as 'CGML_COMPONENT'",
       "signatures": [
         "dump:'    name: \" CGML_COMPONENT \"'|'    name: \"CGML_COMPONENT\"'"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "CS-6",
@@ -240,7 +243,8 @@
       "note": "the two CGML_COMPONENT comments of Г.3 lose dNote and collide on their name (CGML-6.2-3)",
       "signatures": [
         "validate:CGML-6.2-3"
-      ]
+      ],
+      "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
       "id": "JS-12",
@@ -249,6 +253,34 @@
       "note": "'No reg!' on F-LABEL's trigger-less '/ finish()' transition",
       "signatures": [
         "reject:rejected by cyberiadaml-js: No reg!"
+      ]
+    },
+    {
+      "id": "JS-13",
+      "driver": "js",
+      "title": "writer places dSubmachineState after other keys",
+      "note": "dSubmachineState must be the first data key of a submachine state node (§8.1.1)",
+      "signatures": [
+        "validate:CGML-8.1-1"
+      ]
+    },
+    {
+      "id": "PY-5",
+      "driver": "py",
+      "title": "writer drops the CGML_COMPONENT comments",
+      "note": "the two component comments of Г.3 vanish on write; the remaining comment's rect geometry is re-emitted as a point",
+      "signatures": [
+        "dump:'  comment \"cLED#\" formal:'|'  comment \"commentX\" informal:'"
+      ]
+    },
+    {
+      "id": "JS-14",
+      "driver": "js",
+      "title": "reader rejects CGML_COMPONENT comments named with their identifier",
+      "note": "spec 1.6 §10.3.1 names a component 'CGML_COMPONENT <id>' (Г.3: LED1, timer1); the reader expects the bare name and fails on the first parameter line",
+      "signatures": [
+        "reject:pin/ 12. Ожидается CGML_META или CGML_COMPONENT.",
+        "reject:pin/ 13. Ожидается CGML_META или CGML_COMPONENT."
       ]
     }
   ]

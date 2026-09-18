@@ -48,10 +48,8 @@ description/ Включение и выключение лампочки по т
   </node>
   <node id="cLED1">
     <data key="dNote">formal</data>
-    <data key="dName"> CGML_COMPONENT </data>
-    <data key="dData">id/ LED1
-
-type/ LED
+    <data key="dName">CGML_COMPONENT LED1</data>
+    <data key="dData">type/ LED
 
 name/ Светодиод
 
@@ -62,10 +60,8 @@ pin/ 12
   </node>
   <node id="ctimer1">
     <data key="dNote">formal</data>
-    <data key="dName"> CGML_COMPONENT </data>
-    <data key="dData">id/ timer1
-
-type/ Timer
+    <data key="dName">CGML_COMPONENT timer1</data>
+    <data key="dData">type/ Timer
 
 name/ Таймер
 

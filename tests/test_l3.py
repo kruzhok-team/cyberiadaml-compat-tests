@@ -225,14 +225,14 @@ def test_color_values():
     doc = minimal().replace(b'      <data key="dName">Idle</data>',
                             b'      <data key="dName">Idle</data>\n'
                             b'      <data key="dColor"></data>')
-    assert "color-value" in warnings(run(doc))
+    assert "color-value" in errors(run(doc))
 
 
 def test_markup_on_state_reported():
     doc = minimal().replace(b'      <data key="dName">Idle</data>',
                             b'      <data key="dName">Idle</data>\n'
                             b'      <data key="dMarkup">markdown</data>')
-    assert "markup-usage" in warnings(run(doc))
+    assert "markup-usage" in errors(run(doc))
 
 
 def test_formal_names():
@@ -289,12 +289,12 @@ def test_node_block_without_separator_rejected():
 
 def test_meta_param_name_reported():
     ctx = run(with_meta("standardVersion/ 1.0\n\nимя/ значение"))
-    assert "meta-params" in warnings(ctx)
+    assert "meta-params" in errors(ctx)
 
 
 def test_repeated_meta_param_reported():
     ctx = run(with_meta("standardVersion/ 1.0\n\nauthor/ A\n\nauthor/ B"))
-    assert "meta-params" in warnings(ctx)
+    assert "meta-params" in errors(ctx)
 
 
 def test_standard_version_missing_rejected():

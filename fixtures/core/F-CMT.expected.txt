@@ -20,4 +20,4 @@ state-machine "G":
     name: "CGML_META"
   transition "init-n0#1": "init" -> "n0"
   comment-link "cNote-n0#1": "cNote" -> "n0" pivot "dName" chunk "Idle"
-  comment-link "cSpec-n0#1": "cSpec" -> "n0" pivot "dName"
+  comment-link "cSpec-n0#1": "cSpec" -> "n0" pivot "dName" chunk "Idle"

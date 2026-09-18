@@ -20,6 +20,9 @@ state-machine "M1":
     name: "Wait"
     formal-name: "wait_state"
     collapsed
+    region "s0:":
+      state "s0w":
+        name: "Inner"
   submachine "sub0" ref "M2":
     name: "Nested"
   transition "ch0-s0#1": "ch0" -> "s0"

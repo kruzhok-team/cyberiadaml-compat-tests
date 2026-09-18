@@ -1,12 +1,12 @@
 # CyberiadaML-GraphML 1.0 — Compatibility Harness Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0),
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.2) and
-`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.0). Specifies the conformance fixture corpus,
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6),
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.7) and
+`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.6). Specifies the conformance fixture corpus,
 the implementation driver contract and the `intharness` runner that compares the CGML libraries
 against the standard and against each other.
 
-**Document version:** 1.1 (2026-08-23)
+**Document version:** 1.2 (2026-08-30)
 
 ## 1. Purpose
 
@@ -101,7 +101,7 @@ For every available driver:
 
 | # | Channel | Input | Judgement |
 |---|---|---|---|
-| 1 | dump equality | positive fixtures | `convert` succeeds and `cgmlval dump OUT` equals the golden dump |
+| 1 | dump equality | positive fixtures | `convert` succeeds and `cgmlval dump OUT` equals the golden dump; in a `short` geometry document a golden rect of size 0×0 matches any size at the same origin (the writer may reconstruct it, CGML-7.2-3) |
 | 2 | validate output | positive fixtures | `cgmlval validate OUT` reports no errors |
 | 3 | reject protocol | negative fixtures | `convert` exits 2 (rejected); exit 0 = silently accepted, other = crash |
 | 4 | twin dumps | twin pairs | both round-trips succeed and their `cgmlval dump` outputs are equal |

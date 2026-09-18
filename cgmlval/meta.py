@@ -34,7 +34,7 @@ def parse(text):
     """Parse a metadata parameter list; return (params, errors).
 
     Parameters are separated by blank lines; the first line of a chunk is
-    'name/ value' (one optional space after the '/' is consumed), the
+    'name/ value' (spaces and tabs around the '/' are trimmed), the
     following chunk lines continue the value. The same grammar parses the
     CGML_COMPONENT bodies. Errors are (line index, message) pairs.
     """
@@ -56,10 +56,8 @@ def parse(text):
             errors.append((header_lineno,
                            "missing '/' in the parameter description"))
         else:
-            name = header[:sep]
-            value = header[sep + 1:]
-            if value.startswith(" "):
-                value = value[1:]
+            name = header[:sep].strip(" \t")
+            value = header[sep + 1:].lstrip(" \t")
             for _, extra in run[1:]:
                 value += "\n" + extra
             if not name:

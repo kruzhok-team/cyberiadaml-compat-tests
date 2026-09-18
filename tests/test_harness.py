@@ -65,6 +65,16 @@ def test_convert_outcomes(tmp_path):
 
 def test_first_diff():
     assert _first_diff("a\nb\n", "a\nb\n") is None
+
+
+def test_first_diff_tolerates_reconstructed_sizes_in_short_mode():
+    golden = "geometry-mode: short\n    geometry: rect 5.00 0.00 0.00 0.00\n"
+    got = "geometry-mode: short\n    geometry: rect 5.00 0.00 300.00 200.00\n"
+    assert _first_diff(golden, got) is None
+    moved = got.replace("5.00 0.00 300", "6.00 0.00 300")
+    assert _first_diff(golden, moved) is not None
+    full = golden.replace("short", "full")
+    assert _first_diff(full, got.replace("short", "full")) is not None
     assert "line 2" in _first_diff("a\nb\n", "a\nc\n")
     assert "length" in _first_diff("a\n", "a\nb\n")
 

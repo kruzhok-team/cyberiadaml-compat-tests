@@ -1,11 +1,11 @@
 # CyberiadaML-GraphML 1.0 — Document Validator Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.0) and
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.2). Specifies `cgmlval` — the standalone validator
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6) and
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.7). Specifies `cgmlval` — the standalone validator
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.5 (2026-08-27)
+**Document version:** 1.6 (2026-08-30)
 
 ## 1. Purpose
 
@@ -27,8 +27,9 @@ This document closes two open items of the test catalog (§5):
   NG schema of the same structure now exists in `schema/`: RELAX NG has no Unique Particle
   Attribution rule and does express key-dependent content. It is a reference artefact
   transcribed from the standard, not generated from these tables, and `cgmlval` does not read
-  it. It covers all 22 rules of L2 and 49 of the 83 rules overall; `schema/README.md` carries
-  the measurement and the reasons for the rest.
+  it. Its base profile encodes the ERROR-level constraints and its strict profile the rest of
+  the standard; `schema/README.md` carries the measurement and the reasons for what no schema
+  can reach.
 - **Canonical dump format.** Defined normatively in §7 below.
 
 Out of scope (later phases): the test corpus F-MIN…F-FIELD-* and its reference dumps, the
@@ -108,8 +109,9 @@ fixed at registration:
 `--strict` changes the exit code only — the report text is identical with and without it.
 
 Warning-level rows include: non-UTF-8 encoding, `edgedefault` other than `directed`, edge tags
-not in a trailing block, duplicate `else` triggers, reserved `fork`/`join` vertices, and the
-geometry-mode consistency rows of §7.2.
+not in a trailing block, non-empty `dRegion`/`dCollapsed` marker values, reserved `fork`/`join`
+vertices, `transitionOrder` values, and the geometry-kind and geometry-mode consistency rows of
+§7.2. The registry holds 96 rules: 66 ERROR, 11 WARNING, 19 INFO (L1 7, L2 26, L3 40, L4 23).
 
 ## 5. Rules and requirement mapping
 
@@ -118,16 +120,23 @@ Every check registers with the rule registry:
     @rule("gformat-value", req="CGML-5.4-2", layer=3, severity=ERROR,
           title='gFormat value must be "Cyberiada-GraphML-1.0"')
 
-- The rule name identifies the check; `req` names exactly one requirement (a requirement may
-  have several rules). Level (MUST/SHOULD/MAY) and profile come from the requirement table,
-  never duplicated in the rule.
+- The rule name identifies the check; `req` names the requirement the finding is reported
+  under (a requirement may have several rules); `also=(...)` names further requirements the same
+  check covers without a second report — `unique-ids` also covers `CGML-5.7-1`, `graph-in-graph`
+  covers `CGML-6.1-6`, `key-usage` covers `CGML-9.2-4`, `color-value` covers `CGML-9.2-1` and
+  `CGML-9.2-3`, `markup-usage` covers `CGML-9.3-1`. Level (MUST/SHOULD/MAY) and profile come
+  from the requirement table, never duplicated in the rule.
 - L1 and L2 are each implemented as one walker emitting findings under several registered rule
   names; such names register without a callable so listing and coverage audit still see them.
 - `requirements.py` transcribes all requirement identifiers of the testing specification with
   level, senses, profile and a scope class: `validator` (checkable on a document — the union of
   the catalog's L1–L4 rows), `integration` (implementation behaviour, INT layer), `write-only`
-  ([W]-sense only). The self-test suite asserts that every `validator`-scoped requirement has at
-  least one rule and that no rule cites a requirement outside the validator scope.
+  ([W]-sense only), `pending` (checkable, rule not implemented yet — none at present). The
+  self-test suite parses the specification rows (`tests/spec_rows.py`: sub-rows inherit the
+  level and senses of their enclosing row, a group row takes the union of its sub-rows) and
+  asserts that the table lists exactly those rows with the same level and senses, that every
+  `validator`-scoped requirement has at least one rule and one fixture, and that no rule cites a
+  requirement outside the validator scope.
 
 ## 6. Document model
 
@@ -161,10 +170,12 @@ accepted both in a node block and in a transition, where it denotes a completion
 closing `/`, none is required.
 
 **Metadata text (§6.9).** The `dData` of a formal comment splits into chunks on blank lines;
-each chunk is `name/ value` — the name up to the first `/`, one optional space consumed, the
-rest of the chunk (including continuation lines) is the value. The same grammar parses
-`CGML_COMPONENT` bodies (§10.3). Resolved ambiguity: parameter order is preserved; a repeated
-parameter name is reported at L3 and the first occurrence wins.
+each chunk is `name/ value` — the name up to the first `/`, spaces and tabs around the `/`
+trimmed (§6.9.2), the rest of the chunk (including continuation lines) is the value. The same
+grammar parses `CGML_COMPONENT` bodies (§10.3): the comment name is `CGML_COMPONENT`, one space
+and a formal identifier unique among the components; the `type` parameter is mandatory.
+Parameter order is preserved in the model; a non-Latin or repeated parameter name is an error at
+L3.
 
 ## 7. Canonical dump format
 
@@ -178,15 +189,16 @@ bytes.
 - Numbers render as fixed two-decimal text (`%.2f`, round-half-even), `-0.00` normalized to
   `0.00` — the textual form of the catalog's 0.01 coordinate tolerance.
 - Ordering: state machines and every element container sort by id (byte order); transitions and
-  comment links sort by (source, target, id); behaviour blocks and metadata parameters keep
-  document order (their order is semantic).
+  comment links sort by (source, target, id); behaviour blocks keep document order (their order
+  is semantic); metadata parameters sort by name with `standardVersion` first.
 - Key declarations and data-key order are not dumped: a document relying on the appendix Б
   defaults and its explicitly-declared twin produce identical dumps.
 - Absent optional values are omitted. The resolved values of `geometry`, `transitionOrder`,
   `eventPropagation` and comment markup are materialized in the header/element lines; the raw
   metadata parameters are also listed.
-- Formal comment bodies dump verbatim as one quoted string; state and transition behaviour dumps
-  as parsed blocks.
+- Formal comment bodies dump verbatim as one quoted string, except the `CGML_META` body whose
+  parameters are already listed under `meta:`; state and transition behaviour dumps as parsed
+  blocks.
 
 Example:
 
@@ -204,7 +216,6 @@ state-machine "g1":
   geometry: rect 0.00 0.00 400.00 300.00
   comment "cMeta" formal:
     name: "CGML_META"
-    body: "standardVersion/ 1.0\n\ngeometry/ short"
   state "n1":
     name: "Off"
     action entry:

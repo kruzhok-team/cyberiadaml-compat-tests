@@ -55,6 +55,7 @@
     </edge>
     <edge id="cSpec-n0#1" source="cSpec" target="n0">
       <data key="dPivot">dName</data>
+      <data key="dChunk">Idle</data>
     </edge>
   </graph>
 </graphml>
