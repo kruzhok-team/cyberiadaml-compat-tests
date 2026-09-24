@@ -4,7 +4,7 @@ A RELAX NG schema of the CGML document structure, transcribed from ПНСТ 1044
 (`../docs/PNST_1044-2025.md`), and the measurement of how much of the standard a schema can
 carry.
 
-**Document version:** 1.1 (2026-08-30) — follows the testing specification 1.6.
+**Document version:** 1.2 (2026-09-24) — follows the testing specification 1.7.
 
 ## Files
 
@@ -40,20 +40,22 @@ checks and cgmlval does not*.
 ## What the schema carries
 
 Measured on the repository corpus with `jing` 20241231 (OpenJDK 25); `cgmlval` registers
-96 rules (66 ERROR, 11 WARNING, 19 INFO).
+107 rules (76 ERROR, 11 WARNING, 20 INFO).
 
 | Corpus | Documents | Base profile | Strict profile |
 |---|---|---|---|
 | positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 33 | 33 accepted | 33 accepted |
 | appendix Г documents of the standard | 4 | 4 accepted | 4 accepted |
-| negative fixtures (`fixtures/negative`) | 43 | 29 rejected | 29 rejected |
+| negative fixtures (`fixtures/negative`) | 54 | 29 rejected | 29 rejected |
 | `examples/S-*` (strict only) | 4 | 4 accepted | 4 rejected |
 | `examples/L1-*` (below the schema) | 2 | 2 accepted | 2 accepted |
 
-The 14 negatives neither profile rejects are the identity, reference and text-grammar cases
+The 25 negatives neither profile rejects are the identity, reference and text-grammar cases
 listed as `UNREACHABLE` in `tests/test_schema.py`: duplicate ids and data keys, dangling
-endpoints, self-loops, links targeting links, a second `CGML_META`, and the `dData` /
-`CGML_META` / `CGML_COMPONENT` grammars.
+endpoints, self-loops, links targeting links, a second `CGML_META`, the `dData` /
+`CGML_META` / `CGML_COMPONENT` grammars (incl. the 6.8.1/6.8.2 constraints on blocks, reserved
+names, `defer` and `propagate`/`block`), `dChunk` containment, submachine references and point
+names, and the region a point sits in.
 
 ### Requirements the schema checks and cgmlval does not
 

@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.7 (2026-08-30)
+**Document version:** 1.8 (2026-09-24)
 
 ## 1. Testing layers
 
@@ -74,7 +74,7 @@ respect, named in its test row.
 | Fixture | Content |
 |---|---|
 | `F-MIN` | minimal CORE document: `graphml` + `gFormat` + Appendix Б key block + one SM (`dStateMachine`, `dName`, `CGML_META` with `standardVersion/ 1.0`) + initial pseudostate + one state + one transition |
-| `F-EMPTY-SM` | document whose single SM contains no elements (valid) |
+| `F-EMPTY-SM` | document whose single SM contains no elements (valid; INFO `CGML-6.4-4-2`: no initial pseudostate) |
 | `F-TWO` | `F-MIN` + second state and transition with trigger/guard/behavior |
 | `F-HIER` | composite state with one region, child states, child transitions at top level |
 | `F-MULTI` | two state machines at top level |
@@ -141,6 +141,7 @@ respect, named in its test row.
 | T-6.7-1.2 | CGML-6.7-1 | X | `dPivot` not the first key of the link edge → rejected |
 | T-8.1-1.4 | CGML-8.1-1 | X | `dSubmachineState` not the first key of the node → rejected |
 | T-8.1-2.1 | CGML-8.1-2 | X | submachine subgraph with a data key (`dRegion`); with a plain state inside (2 variants) → rejected |
+| T-8.1-3.1 | CGML-8.1-3 | X | `dData` on a submachine state → rejected |
 | T-A-1.1 | CGML-appendix-A-1 | X | unknown tag inside `graphml` (`<foo>`) → rejected |
 | T-A-1.2 | CGML-appendix-A-1 | X | key on the wrong element kind: `dVertex` on a graph; `dRegion` on a node; `dPivot` on a node (3 variants) → rejected |
 | T-A-1.3 | CGML-appendix-A-1 | X | geometry sub-tag misuse: `rect` inside `data<dSourcePoint>` → rejected |
@@ -182,10 +183,17 @@ respect, named in its test row.
 | T-6.8-1.8 | CGML-6.8-1 | A | completion transition `/ act()` (no event name, no guard) → accepted |
 | T-6.8-2.1 | CGML-6.8-2 | A | two blocks split by blank line → two behavior entries |
 | T-6.8-3.1 | CGML-6.8-3 | A | `entry/`, `exit/`, `do/` blocks → recognized as the three behavior kinds |
-| T-6.8-3.2 | CGML-6.8-3 | A | multiple `entry/` + event + `exit/` blocks in one state (order preserved) → parsed |
+| T-6.8-3.2 | CGML-6.8-3 | A | `entry/` + event + `exit/` blocks in one state (order preserved) → parsed |
+| T-6.8-3.3 | CGML-6.8-3-1 | X | a second `entry/` block in one state → rejected |
 | T-6.8-4.1 | CGML-6.8-4 | A | exotic event names (dots, arguments `EVENT(b)`, Unicode) → preserved verbatim, not validated |
+| T-6.8-4.2 | CGML-6.8-4-1 | X | event named `else` (also `entry`, `exit`, `do`, `defer`; an `entry/` block on a transition) → rejected |
+| T-6.8-4.3 | CGML-6.8-4-2 | A | events `ANY` and `UNKNOWN` → accepted |
 | T-6.8-5.1 | CGML-6.8-5 | A | `propagate` / `block` directly before the `/` (after the guard when present) → parameters preserved |
-| T-6.8-5.2 | CGML-6.8-5 | A | `Event [Guard]/ defer` with behaviour lines → defer recognized |
+| T-6.8-5.2 | CGML-6.8-5 | A | `Event [Guard]/ defer` as an internal transition of a state → defer recognized |
+| T-6.8-5.3 | CGML-6.8-5-1 | X | `Event/ defer` on a transition → rejected |
+| T-6.8-5.4 | CGML-6.8-5-1 | X | `Event/ defer` followed by behaviour lines → rejected |
+| T-6.8-5.5 | CGML-6.8-5-2 | X | `propagate/` or `[g] block/` without an event name → rejected |
+| T-8.3-4.1 | CGML-8.3-4 | X | `entryPoint` without `dName` → rejected |
 | T-6.8-6.1 | CGML-6.8-6 | A | `[else]` guard → recognized |
 | T-6.8-8.1 | CGML-6.8-8 | RT | guard `[Строка.Содержит(\[Пример\])]` → backslash-escaped brackets preserved |
 | T-6.9-2.1 | CGML-6.9-2 | A | multi-line parameter value (`description` = three lines); blank-line separation → parsed to pairs |
@@ -239,6 +247,12 @@ respect, named in its test row.
 | T-6.3-5.1 | CGML-6.3-5 | X | edge label geometry while an endpoint node has none (short mode) → rejected or reported |
 | T-6.4-4-1.1 | CGML-6.4-4-1 | X | two `initial` on the same level → rejected |
 | T-6.4-4-1.2 | CGML-6.4-4-1 | A | `initial` at SM level and inside a region → accepted |
+| T-6.4-4-2.1 | CGML-6.4-4-2 | I | state machine without any `initial` (`F-EMPTY-SM`) → valid, INFO reported |
+| T-6.2-3.3 | CGML-6.2-3 | A | two sibling comments with the same name → accepted |
+| T-6.7-3.3 | CGML-6.7-3 | X | `dChunk` not a substring of the subject's `dName` → rejected |
+| T-8.1-1.5 | CGML-8.1-1-1 | X | `dSubmachineState` naming the containing machine → rejected |
+| T-8.1-4.1 | CGML-8.1-4 | X | submachine point named `Begin` while the referenced machine defines `Start`/`Done` → rejected |
+| T-8.3-5.1 | CGML-8.3-5 | X | entry point inside the second region of a two-region state → rejected |
 | T-6.7-2.1 | CGML-6.7-2 | X | comment link to nonexistent node → rejected |
 | T-6.7-4.1 | CGML-6.7-4 | X | link whose `source` is a state; link with `source` = `target` (2 variants) → rejected |
 | T-6.9-1.1 | CGML-6.9-1 | X | no `CGML_META` node; meta only in second SM (2 variants) → rejected |
@@ -283,6 +297,10 @@ that pass L1–L4.
 | T-6.6-1.1 | CGML-6.6-1 | A | informal and formal comments (`F-CMT`) → correct kinds |
 | T-6.6-2.1 | CGML-6.6-2 | A | comment with body, title, rect geometry → parsed |
 | T-6.6-3.1 | CGML-6.6-3 | I | formal comment body byte-identical after round-trip → informational (SHOULD) |
+| T-6.6-4.1 | CGML-6.6-4 | I | comment without links → belongs to its state machine (6.6.2) |
+| T-6.8-4.4 | CGML-6.8-4-3 | I | one event per transition — the format's limitation of ПНСТ 984-2024 7.6.7.2 |
+| T-6.8-4.5 | CGML-6.8-4-4 | I | event names global to the document |
+| T-6.9-6.1 | CGML-6.9-6 | I | metadata parameters apply to every state machine of the document |
 | T-6.7-1.1 | CGML-6.7-1 | A | comment link with `dPivot` = `dName` / `dData` → parsed as link, not transition |
 | T-6.7-3.1 | CGML-6.7-3 | A | link with `dChunk` substring → parsed |
 | T-6.8-2.2 | CGML-6.8-2 | RT | multi-block `dData` with multi-line behaviors → block structure preserved |
@@ -319,9 +337,9 @@ Plus the cross-cutting suites of §2.2 (`RT-ALL`, `VAL-OUT`, `TOL-EXT`, `GEO-AGN
 
 ## 4. Coverage summary
 
-- Requirements in the testing spec: **134** (all covered; sub-groups covered via their parent or item tests).
-- Test rows: **189**, ≈ 200 concrete cases counting multi-variant rows.
-- By layer: L1 = 10, L2 = 29, L3 = 69, L4 = 26, INT = 55 rows (+5 cross-cutting suites).
+- Requirements in the testing spec: **149** (all covered; sub-groups covered via their parent or item tests).
+- Test rows: **207**, ≈ 220 concrete cases counting multi-variant rows.
+- By layer: L1 = 10, L2 = 30, L3 = 76, L4 = 32, INT = 59 rows (+5 cross-cutting suites).
 - Every MUST with an [X] sense has at least one rejection test at exactly one layer; the
   `fixtures/negative` corpus carries one document per rejection rule of `cgmlval`.
 - Requirements checked at two layers get split ids (`T-6.1-1.2a` structure / `T-6.1-1.2b` value).

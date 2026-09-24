@@ -1,11 +1,11 @@
 # CyberiadaML-GraphML 1.0 — Document Validator Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6) and
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.7). Specifies `cgmlval` — the standalone validator
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.7) and
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.8). Specifies `cgmlval` — the standalone validator
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.6 (2026-08-30)
+**Document version:** 1.7 (2026-09-24)
 
 ## 1. Purpose
 
@@ -111,7 +111,9 @@ fixed at registration:
 Warning-level rows include: non-UTF-8 encoding, `edgedefault` other than `directed`, edge tags
 not in a trailing block, non-empty `dRegion`/`dCollapsed` marker values, reserved `fork`/`join`
 vertices, `transitionOrder` values, and the geometry-kind and geometry-mode consistency rows of
-§7.2. The registry holds 96 rules: 66 ERROR, 11 WARNING, 19 INFO (L1 7, L2 26, L3 40, L4 23).
+§7.2. INFO-level rows include the edge-id template and the absence of an initial pseudostate in a
+state machine (`CGML-6.4-4-2`: the standard admits intermediate documents, §1). The registry holds
+107 rules: 76 ERROR, 11 WARNING, 20 INFO (L1 7, L2 27, L3 45, L4 28).
 
 ## 5. Rules and requirement mapping
 
@@ -161,8 +163,13 @@ line; behaviour lines without the separator on it are reported. In a **transitio
 the block text up to and including the first line carrying the separator, and when no line
 carries one the whole block is the header and the label has no behaviour (the standard's own §6.8
 edge example: event name on one line, guard on the next). The event name is preserved verbatim
-(platform syntax is not validated). The event parameters `propagate` and `block` are recognized
-directly before the separator (after the guard when present); `defer` directly after it. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
+(platform syntax is not validated), but it must not be one of the reserved words `entry`, `exit`,
+`do`, `propagate`, `block`, `defer`, `else` (`CGML-6.8-4-1`; `ANY` and `UNKNOWN` pass). The event
+parameters `propagate` and `block` are recognized directly before the separator (after the guard
+when present) and require a non-empty event name (`CGML-6.8-5-2`); `defer` directly after it, only
+in a node block and as the whole behaviour — a `defer` on a transition or followed by behaviour is
+reported (`CGML-6.8-5-1`). A second `entry/`, `exit/` or `do/` block in one node is reported
+(`CGML-6.8-3-1`). The parser tags each error with the rule that reports it. The guard is the last unescaped `[`…`]` pair at the end of the remaining header; `\[` and
 `\]` inside it denote literal brackets; the guard `else` is recognized. An empty event name is
 accepted both in a node block and in a transition, where it denotes a completion transition
 (ПНСТ 984-2024 3.31), with or without guard and behaviour. Remaining block lines are behaviour lines, order preserved. An empty
