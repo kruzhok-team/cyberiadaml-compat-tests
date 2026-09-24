@@ -90,7 +90,7 @@ def test_event_parameters():
         assert errors == []
         assert blocks[0].trigger == "TIMER"
         assert blocks[0].param == param
-    blocks, errors = parse("TIMER/ defer\nx()")
+    blocks, errors = parse("TIMER/ defer")
     assert errors == []
     assert (blocks[0].trigger, blocks[0].param) == ("TIMER", "defer")
 
@@ -196,9 +196,11 @@ def test_defer_after_separator():
     assert errors == []
     assert (blocks[0].trigger, blocks[0].param) == ("TICK", "defer")
     assert blocks[0].behaviour == []
-    blocks, _ = parse("TICK [g]/ defer\nact()")
+    blocks, errors = parse("TICK [g]/ defer\nact()")
     assert (blocks[0].param, blocks[0].guard) == ("defer", "g")
-    assert blocks[0].behaviour == ["act()"]
+    assert [e[2] for e in errors] == ["defer-usage"]
+    blocks, errors = parse("TICK/ defer", transition=True)
+    assert [e[2] for e in errors] == ["defer-usage"]
     blocks, _ = parse("TICK/ deferred()")
     assert blocks[0].param is None
     assert blocks[0].behaviour == ["deferred()"]
@@ -236,13 +238,27 @@ def test_node_event_without_behaviour_accepted():
 
 def test_node_behaviour_lines_require_separator():
     blocks, errors = parse("EV\n[g]")
-    assert errors == [(0, "missing '/' before the behaviour lines")]
+    assert errors == [(0, "missing '/' before the behaviour lines", "behaviour-syntax")]
     assert blocks[0].trigger == "EV"
     assert blocks[0].behaviour == ["[g]"]
 
 
 def test_error_line_numbers():
     _, errors = parse("entry/\na()\n\nbroken\nlines")
-    assert errors == [(3, "missing '/' before the behaviour lines")]
+    assert errors == [(3, "missing '/' before the behaviour lines", "behaviour-syntax")]
     _, errors = parse("entry/\na()\n\n/ x()")
     assert errors == []
+
+
+def test_reserved_event_names_and_empty_event_params():
+    for name in ("entry", "exit", "do", "defer", "else"):
+        _, errors = parse("%s/ x()" % name, transition=True)
+        assert [e[2] for e in errors] == ["event-name-reserved"], name
+    _, errors = parse("ANY/ x()\n\nUNKNOWN/ y()")
+    assert errors == []
+    _, errors = parse("propagate/ x()", transition=True)
+    assert [e[2] for e in errors] == ["param-needs-event"]
+    _, errors = parse("[g] block/", transition=True)
+    assert [e[2] for e in errors] == ["param-needs-event"]
+    _, errors = parse("entry/ a()\n\nexit/ b()\n\nentry/ c()")
+    assert [e[2] for e in errors] == ["behaviour-block-once"]

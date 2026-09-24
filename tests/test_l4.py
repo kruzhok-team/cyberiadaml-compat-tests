@@ -59,7 +59,7 @@ def test_minimal_document_clean_at_l4():
 
 def test_multi_machine_document_accepted():
     ctx = run(multi())
-    assert ctx.report.findings == []
+    assert errors(ctx) == []
 
 
 def test_duplicate_data_key_rejected():
@@ -151,7 +151,7 @@ def test_same_name_on_different_levels_accepted():
   </graph>
 """ % META_NODE
     ctx = run(minimal(machines=machines))
-    assert ctx.report.findings == []
+    assert errors(ctx) == []
 
 
 def test_transition_to_missing_node_rejected():

@@ -14,7 +14,6 @@ state-machine "G":
     action entry:
       do: "prepare();"
     action event "TICK" defer:
-      do: "count();"
   state "n1":
     name: "Active"
   state "n2":
@@ -29,4 +28,4 @@ state-machine "G":
     action event "STOP" block guard "ready":
       do: "finish();"
   transition "n2-n0": "n2" -> "n0"
-    action event "RESET" defer:
+    action event "RESET":

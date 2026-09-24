@@ -32,6 +32,12 @@ KEYWORDS = (ENTRY, EXIT, DO)
 EVENT_PARAMS = ("propagate", "block", "defer")
 PRE_PARAMS = ("propagate", "block")   # directly before the '/' separator
 DEFER = "defer"                       # directly after the '/' separator
+RESERVED = KEYWORDS + EVENT_PARAMS + ("else",)   # not event names (6.8.1)
+SYNTAX = "behaviour-syntax"
+RESERVED_RULE = "event-name-reserved"
+DEFER_RULE = "defer-usage"
+PARAM_RULE = "param-needs-event"
+ONCE_RULE = "behaviour-block-once"
 
 
 @dataclass
@@ -102,6 +108,9 @@ def _parse_header(text, lineno, errors, transition):
             inline = stripped[len(prefix):]
             if inline.startswith(" "):
                 inline = inline[1:]
+            if transition:
+                errors.append((lineno, "the %s block belongs to a state, "
+                               "not to a transition" % prefix, RESERVED_RULE))
             return Block(keyword), inline or None
     sep = _find_separator(stripped)
     if sep < 0:
@@ -124,7 +133,19 @@ def _parse_header(text, lineno, errors, transition):
             (inline == DEFER or inline.startswith(DEFER + " ")):
         param = DEFER
         inline = inline[len(DEFER):].lstrip()
+        if transition:
+            errors.append((lineno, "defer on a transition; it belongs to an "
+                           "internal transition of a state", DEFER_RULE))
+        if inline:
+            errors.append((lineno, "behaviour %r after defer" % inline,
+                           DEFER_RULE))
     trigger = head
+    if trigger.strip() in RESERVED:
+        errors.append((lineno, "event name %r is a reserved word" %
+                       trigger.strip(), RESERVED_RULE))
+    if param in PRE_PARAMS and not trigger.strip():
+        errors.append((lineno, "%s without an event name" % param,
+                       PARAM_RULE))
     # an event description without the event name is a completion transition
     return Block(EVENT, trigger=trigger, param=param, guard=guard), \
         inline or None
@@ -134,9 +155,12 @@ def parse(text, transition=False):
     """Parse a dData behaviour value; return (blocks, errors).
 
     Blocks are separated by blank lines; an empty value is zero blocks.
-    Errors are (line index, message) pairs for the L3 checks. The
-    transition flag selects the label grammar of edges (separator
-    optional) over the node grammar (separator mandatory).
+    Errors are (line index, message, rule) triples for the L3 checks:
+    the syntax rule, or one of the 6.8.1/6.8.2 constraints (reserved event
+    names, defer placement, propagate/block without an event, repeated
+    entry/exit/do blocks). The transition flag selects the label grammar
+    of edges (separator optional) over the node grammar (separator
+    mandatory).
     """
     blocks = []
     errors = []
@@ -163,7 +187,7 @@ def parse(text, transition=False):
                     break
         elif len(run) > 1 and _find_separator(run[0][1].rstrip()) < 0:
             errors.append((run[0][0],
-                           "missing '/' before the behaviour lines"))
+                           "missing '/' before the behaviour lines", SYNTAX))
         header = "\n".join(text_line for _, text_line in run[:header_end + 1])
         block, inline = _parse_header(header, run[0][0], errors, transition)
         if inline:
@@ -171,6 +195,13 @@ def parse(text, transition=False):
         block.behaviour.extend(text_line for _, text_line in
                                run[header_end + 1:])
         block.verbatim = "\n".join(text for _, text in run)
+        if block.param == DEFER and block.behaviour:
+            errors.append((run[0][0], "behaviour lines after defer",
+                           DEFER_RULE))
+        if block.kind in KEYWORDS and \
+                any(b.kind == block.kind for b in blocks):
+            errors.append((run[0][0], "a second %s/ block" % block.kind,
+                           ONCE_RULE))
         blocks.append(block)
         run = []
     return blocks, errors

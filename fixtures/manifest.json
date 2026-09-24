@@ -440,6 +440,21 @@
     },
     "negative/X-appendix-B-1-wrong-for": {
       "reject": "CGML-appendix-B-1"
+    },
+    "negative/X-6.8-3-1-two-entry": {
+      "reject": "CGML-6.8-3-1"
+    },
+    "negative/X-6.8-4-1-reserved-event": {
+      "reject": "CGML-6.8-4-1"
+    },
+    "negative/X-6.8-5-1-defer-on-transition": {
+      "reject": "CGML-6.8-5-1"
+    },
+    "negative/X-6.8-5-1-defer-with-behaviour": {
+      "reject": "CGML-6.8-5-1"
+    },
+    "negative/X-6.8-5-2-propagate-no-event": {
+      "reject": "CGML-6.8-5-2"
     }
   },
   "twins": [

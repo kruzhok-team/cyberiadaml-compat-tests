@@ -22,6 +22,7 @@ state-machine "G":
     name: "Done"
     action event "":
       do: "act()"
+    action event "TIMEOUT" defer guard "armed":
   comment "nMeta" formal:
     name: "CGML_META"
   transition "init-n0#1": "init" -> "n0"
@@ -37,7 +38,7 @@ state-machine "G":
   transition "n2-n0#1": "n2" -> "n0"
     action event "RESET" propagate guard "count == 0":
   transition "n2-n1#1": "n2" -> "n1"
-    action event "TIMEOUT" defer guard "armed":
+    action event "TIMEOUT" guard "armed":
       do: "rearm()"
   transition "n2-n2#1": "n2" -> "n2"
     action event "":

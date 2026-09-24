@@ -59,6 +59,14 @@ declare("event-name", "CGML-6.8-4", 3, INFO,
 declare("event-params", "CGML-6.8-5", 3, INFO,
         "the propagate, block and defer event parameters are recognized",
         note="checked by the behaviour parser")
+declare("behaviour-block-once", "CGML-6.8-3-1", 3, ERROR,
+        "a state carries at most one entry/, exit/ and do/ block")
+declare("event-name-reserved", "CGML-6.8-4-1", 3, ERROR,
+        "event names are not reserved words")
+declare("defer-usage", "CGML-6.8-5-1", 3, ERROR,
+        "defer is the whole behaviour of an internal transition")
+declare("param-needs-event", "CGML-6.8-5-2", 3, ERROR,
+        "propagate and block require an event name")
 declare("else-guard", "CGML-6.8-6", 3, INFO,
         "the else guard keyword is recognized",
         note="checked by the behaviour parser")
@@ -411,16 +419,15 @@ def component_syntax(ctx):
 @rule("behaviour-syntax", "CGML-6.8-1", 3, ERROR,
       "dData behaviour text follows the trigger syntax")
 def behaviour_syntax(ctx):
+    """Report the parser errors under the rule each one names."""
     for node in model_mod.iter_nodes(ctx.model):
-        for line, message in getattr(node, "block_errors", ()):
-            ctx.emit("behaviour-syntax",
-                     "%s (value line %d)" % (message, line + 1),
+        for line, message, name in getattr(node, "block_errors", ()):
+            ctx.emit(name, "%s (value line %d)" % (message, line + 1),
                      elem=node.elem)
     for machine in ctx.model.machines:
         for transition in machine.transitions:
-            for line, message in transition.block_errors:
-                ctx.emit("behaviour-syntax",
-                         "%s (value line %d)" % (message, line + 1),
+            for line, message, name in transition.block_errors:
+                ctx.emit(name, "%s (value line %d)" % (message, line + 1),
                          elem=transition.elem)
 
 
