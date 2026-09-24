@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="194.10695mm"
+   height="54.247082mm"
+   viewBox="0 0 194.10695 54.247082"
+   version="1.1"
+   id="svg125058"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="submachine-exit-point-variants.svg"
+   inkscape:export-filename="рисунок-4-12-9.png"
+   inkscape:export-xdpi="299"
+   inkscape:export-ydpi="299">
+  <defs
+     id="defs125052">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker11838"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path11836"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1895"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1893"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker11824"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path11822"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker2134"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path2132"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1882"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1880"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1876"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1874"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1984"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1982"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1988"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1986"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1896"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1894"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1901"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1899"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker2094"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path2092"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1858"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL"
+       inkscape:collect="always">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1856"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1838"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1836"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1826"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1824"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-898.89799"
+     inkscape:cy="-304.62867"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="2452"
+     inkscape:window-height="1486"
+     inkscape:window-x="108"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata125055">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-13.315568,-14.364557)">
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       y="14.463914"
+       x="13.414925"
+       height="47.072792"
+       width="87.253387"
+       id="rect1749"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000018;stroke-width:0.19871402;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0"
+       id="path1751"
+       d="m 13.321062,19.517996 h 30.12935 l 2.55134,-2.55133 v -2.55134"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       id="text1757"
+       y="17.817108"
+       x="16.954933"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:50%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.26458332px"
+         y="17.817108"
+         x="16.954933"
+         id="tspan1755"
+         sodipodi:role="line">МС_ВводВеличины</tspan></text>
+    <rect
+       ry="1.0690722"
+       rx="1.0690722"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="29.109283"
+       x="17.561531"
+       height="13.398378"
+       width="30.13353"
+       id="rect1759"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="32.628975"
+       y="35.274384"
+       id="text1765"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1763"
+         sodipodi:role="line"
+         x="32.628975"
+         y="35.274384"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">Выбор величины</tspan><tspan
+         sodipodi:role="line"
+         x="32.628975"
+         y="38.377949"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1806">из списка</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1808"
+       width="20.117163"
+       height="9.9907227"
+       x="51.484901"
+       y="46.502075"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       rx="1.0690722"
+       ry="1.0690722" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1814"
+       y="50.939209"
+       x="61.550362"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         id="tspan1812"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="50.939209"
+         x="61.550362"
+         sodipodi:role="line">Ввод</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="54.042774"
+         x="61.550362"
+         sodipodi:role="line"
+         id="tspan1818">величины</tspan></text>
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.06258906;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle1820"
+       cx="32.628273"
+       cy="23.588898"
+       r="1.4428031"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1826)"
+       d="m 32.628282,24.149066 v 3.83813"
+       id="path1822"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:transform-center-y="-0.56817197" />
+    <circle
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle1828"
+       cx="92.307961"
+       cy="51.462708"
+       r="1.9377041" />
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:connector-curvature="0"
+       id="path1830"
+       d="m 90.976932,52.832448 2.73951,-2.739509"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 93.716442,52.832448 -2.73951,-2.739509"
+       id="path1832"
+       inkscape:connector-curvature="0" />
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1838)"
+       d="m 71.556162,51.46269 h 17.6681"
+       id="path1834"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="80.354683"
+       y="49.994263"
+       id="text1844"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1842"
+         sodipodi:role="line"
+         x="80.354683"
+         y="49.994263"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">ОТМЕНИТЬ</tspan></text>
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path1854"
+       d="m 47.695072,31.947546 h 44.59146 v 16.408782"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1858)" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1862"
+       y="30.483597"
+       x="70.466011"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="30.483597"
+         x="70.466011"
+         sodipodi:role="line"
+         id="tspan1860">ОТМЕНИТЬ</tspan></text>
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1866"
+       y="56.275116"
+       x="92.359779"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="56.275116"
+         x="92.359779"
+         sodipodi:role="line"
+         id="tspan1864">отмена</tspan></text>
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.13723829;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle1868"
+       cx="32.647865"
+       cy="51.497437"
+       r="1.894327"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <circle
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       r="1.3569037"
+       cy="51.497437"
+       cx="32.647865"
+       id="circle1870"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05886274;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <path
+       inkscape:transform-center-y="-0.56817197"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path1872"
+       d="m 32.628282,42.45703 v 5.909468"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker2094)" />
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path1878"
+       d="M 51.472882,51.497429 H 35.809312"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1901)" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="38.594124"
+       y="46.386139"
+       id="text1886"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1884"
+         sodipodi:role="line"
+         x="38.594124"
+         y="46.386139"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">ВЫБОР</tspan></text>
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1890"
+       y="54.738312"
+       x="44.273598"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="54.738312"
+         x="44.273598"
+         sodipodi:role="line"
+         id="tspan1888">ОК</tspan></text>
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1896)"
+       d="m 47.695072,39.601569 h 14.44786 v 5.541961"
+       id="path1892"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1900"
+       y="38.259644"
+       x="55.225075"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="38.259644"
+         x="55.225075"
+         sodipodi:role="line"
+         id="tspan1898">ДРУГАЯ</tspan></text>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000018;stroke-width:0.19871402;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1902"
+       width="87.253387"
+       height="47.072792"
+       x="109.32639"
+       y="14.463914"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 109.23252,19.517996 h 30.12935 l 2.55134,-2.55133 v -2.55134"
+       id="path1904"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:50%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="112.86637"
+       y="17.817108"
+       id="text1908"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         sodipodi:role="line"
+         id="tspan1906"
+         x="112.86637"
+         y="17.817108"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.26458332px">МС_ВводВеличины</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1910"
+       width="30.13353"
+       height="13.398378"
+       x="113.47297"
+       y="29.109283"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       rx="1.0690722"
+       ry="1.0690722" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1916"
+       y="35.274384"
+       x="128.54041"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="35.274384"
+         x="128.54041"
+         sodipodi:role="line"
+         id="tspan1912">Выбор величины</tspan><tspan
+         id="tspan1914"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="38.377949"
+         x="128.54041"
+         sodipodi:role="line">из списка</tspan></text>
+    <rect
+       ry="1.0690722"
+       rx="1.0690722"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="46.502075"
+       x="147.39636"
+       height="9.9907227"
+       width="20.117163"
+       id="rect1918"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="157.46182"
+       y="50.939209"
+       id="text1924"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         sodipodi:role="line"
+         x="157.46182"
+         y="50.939209"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1920">Ввод</tspan><tspan
+         id="tspan1922"
+         sodipodi:role="line"
+         x="157.46182"
+         y="54.042774"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">величины</tspan></text>
+    <circle
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       r="1.4428031"
+       cy="23.588898"
+       cx="128.53973"
+       id="circle1926"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.06258906;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <path
+       inkscape:transform-center-y="-0.56817197"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path1928"
+       d="m 128.53974,24.149066 v 3.83813"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1895)" />
+    <circle
+       r="1.9377041"
+       cy="51.462708"
+       cx="196.53488"
+       id="circle1930"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 195.20388,52.832448 2.7395,-2.739509"
+       id="path1932"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path1934"
+       d="m 197.94338,52.832448 -2.7395,-2.739509"
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path1936"
+       d="M 167.46763,51.46269 H 193.4512"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1988)" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1940"
+       y="49.994263"
+       x="180.61288"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="49.994263"
+         x="180.61288"
+         sodipodi:role="line"
+         id="tspan1938">ОТМЕНИТЬ</tspan></text>
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1984)"
+       d="m 144.00743,32.398566 h 44.59147 l 6.70908,16.219792"
+       id="path1942"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="166.37747"
+       y="30.483597"
+       id="text1946"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1944"
+         sodipodi:role="line"
+         x="166.37747"
+         y="30.483597"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">ОТМЕНИТЬ</tspan></text>
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="202.82332"
+       y="56.275116"
+       id="text1950"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1948"
+         sodipodi:role="line"
+         x="202.82332"
+         y="56.275116"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">отмена</tspan></text>
+    <circle
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       r="1.894327"
+       cy="51.497437"
+       cx="128.55933"
+       id="circle1952"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.13723829;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05886274;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle1954"
+       cx="128.55933"
+       cy="51.497437"
+       r="1.3569037"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1876)"
+       d="m 128.53974,42.45703 v 5.909468"
+       id="path1956"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:transform-center-y="-0.56817197" />
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1882)"
+       d="M 147.38435,51.497429 H 131.72077"
+       id="path1958"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1962"
+       y="46.386139"
+       x="134.50558"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="46.386139"
+         x="134.50558"
+         sodipodi:role="line"
+         id="tspan1960">ВЫБОР</tspan></text>
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="140.18506"
+       y="54.738312"
+       id="text1966"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1964"
+         sodipodi:role="line"
+         x="140.18506"
+         y="54.738312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">ОК</tspan></text>
+    <path
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path1968"
+       d="m 143.60653,39.601569 h 14.44786 v 5.541961"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker2134)" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:10.00000015%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="151.13654"
+       y="38.259644"
+       id="text1972"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         id="tspan1970"
+         sodipodi:role="line"
+         x="151.13654"
+         y="38.259644"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:10.00000015%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">ДРУГАЯ</tspan></text>
+    <text
+       id="text1976"
+       y="67.706268"
+       x="54.572517"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:50%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.26458332px"
+         y="67.706268"
+         x="54.572517"
+         id="tspan1974"
+         sodipodi:role="line">(а)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:50%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="150.47778"
+       y="67.706268"
+       id="text1980"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         sodipodi:role="line"
+         id="tspan1978"
+         x="150.47778"
+         y="67.706268"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.26458332px">(б)</tspan></text>
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker11824)"
+       d="m 128.53974,24.149066 v 3.83813"
+       id="path44034"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:transform-center-y="-0.56817197" />
+    <circle
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.06258906;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-end:url(#TriangleOutL);color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="circle11826"
+       cx="128.53973"
+       cy="23.588898"
+       r="1.4428031"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <path
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker1895)"
+       d="m 128.53974,24.149066 v 3.83813"
+       id="path11828"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:transform-center-y="-0.56817197" />
+    <path
+       inkscape:transform-center-y="-0.56817197"
+       inkscape:transform-center-x="2.7875744"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/example-state-submachine-2.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path11830"
+       d="m 128.53974,24.149066 v 3.83813"
+       style="display:inline;opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker11838)" />
+  </g>
+</svg>
