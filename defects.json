@@ -256,6 +256,15 @@
       "superseded": "superseded 2026-08-30: the standard names components CGML_COMPONENT <id> (§10.3.1, spec 1.6); Г.3 no longer carries spaced names"
     },
     {
+      "id": "CS-7",
+      "driver": "cs",
+      "title": "writer drops the geometry metadata parameter",
+      "note": "F-EXT-SUB-GEO: geometry/ short is not written back, the output reads as geometry-mode none",
+      "signatures": [
+        "dump:'geometry-mode: short'|'geometry-mode: none'"
+      ]
+    },
+    {
       "id": "JS-12",
       "driver": "js",
       "title": "reader rejects a completion transition",
@@ -290,6 +299,15 @@
       "signatures": [
         "reject:pin/ 12. Ожидается CGML_META или CGML_COMPONENT.",
         "reject:pin/ 13. Ожидается CGML_META или CGML_COMPONENT."
+      ]
+    },
+    {
+      "id": "JS-15",
+      "driver": "js",
+      "title": "writer emits dData on submachine states",
+      "note": "a submachine state carries no dData (1044 8.1.2, CGML-8.1-3); F-EXT-C, F-EXT-SUB, F-EXT-SUB-GEO",
+      "signatures": [
+        "validate:CGML-8.1-3"
       ]
     }
   ]
