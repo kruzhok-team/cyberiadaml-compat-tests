@@ -83,6 +83,7 @@ respect, named in its test row.
 | `F-FLAT` | flattened-hierarchy document: states whose ids encode former nesting (`n0::n1`), no composite nodes |
 | `F-EXT-C` | EXT-COMPLETENESS features: submachine, histories, entry/exit points, collapsed composite, comment link to transition |
 | `F-EXT-D` | EXT-DISPLAY features: colors, markup |
+| `F-EXT-D-NAMED` | EXT-DISPLAY: CSS colour names `red`, `SteelBlue` (CGML-9.2-3) |
 | `F-EXT-P` | EXT-PLATFORM features: formal names, `CGML_COMPONENT` |
 | `F-CMT` | comments (informal + formal) with subject links (`dPivot`/`dChunk`) |
 | `F-FIELD-*` | real-world documents collected from the ecosystem (converted legacy diagrams, IDE-produced files, generator examples) — admitted after passing L1–L4 |
@@ -293,11 +294,12 @@ that pass L1–L4.
 | T-8.1-1.1 | CGML-8.1-1 | A | submachine node with `file://` reference → parsed, reference preserved |
 | T-8.1-1.2 | CGML-8.1-1 | A | internal SM reference → resolved within document |
 | T-8.1-1.3 | CGML-8.1-1 | I | unresolvable external reference → tolerated on parse, reported |
+| T-8.1-2.2 | CGML-8.1-2 | A | submachine node with a valid no-keys entry/exit subgraph → accepted, points nested under it |
 | T-8.2-1.1 | CGML-8.2-1 | A | `shallowHistory` and `deepHistory` vertexes → correct kinds |
 | T-8.2-2.1 | CGML-8.2-2 | A | history inside a region and at SM level → accepted |
 | T-8.3-1.1 | CGML-8.3-1 | A | `entryPoint`/`exitPoint` vertexes → correct kinds |
 | T-8.3-2.1 | CGML-8.3-2 | A | entry/exit points inside a state, at SM level, adjacent to a submachine state → accepted |
-| T-8.3-3.1 | CGML-8.3-3 | A | entry/exit point geometry inside or on the border of the parent → parsed |
+| T-8.3-3.1 | CGML-8.3-3 | A/RT | `F-EXT-SUB-GEO`: named entry/exit points of a submachine state carrying point geometry on the parent border (appendix В) → parsed; the point geometry survives round-trip within the §2.1 tolerance |
 | T-8.4-1.1 | CGML-8.4-1 | A/RT | `dCollapsed` composite with region → parsed; flag survives round-trip |
 | T-8.5-1.1 | CGML-8.5-1 | A | comment link (`dPivot` present) targeting an edge id → parsed as link-to-transition |
 | T-9.1-1.1 | CGML-9.1-1 | A | `F-GEO-F`: edge polyline points, `dSourcePoint`, `dTargetPoint`, label rect → parsed |

@@ -44,7 +44,7 @@ Measured on the repository corpus with `jing` 20241231 (OpenJDK 25); `cgmlval` r
 
 | Corpus | Documents | Base profile | Strict profile |
 |---|---|---|---|
-| positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 32 | 32 accepted | 32 accepted |
+| positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 33 | 33 accepted | 33 accepted |
 | appendix Г documents of the standard | 4 | 4 accepted | 4 accepted |
 | negative fixtures (`fixtures/negative`) | 43 | 29 rejected | 29 rejected |
 | `examples/S-*` (strict only) | 4 | 4 accepted | 4 rejected |

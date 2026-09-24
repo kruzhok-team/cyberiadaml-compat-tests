@@ -113,12 +113,42 @@
         "CGML-8.5-2"
       ]
     },
+    "ext/F-EXT-SUB": {
+      "profile": "EXT-COMPLETENESS",
+      "requirements": [
+        "CGML-8.1-2",
+        "CGML-8.3-1",
+        "CGML-8.3-2"
+      ]
+    },
+    "ext/F-EXT-SUB-GEO": {
+      "profile": "EXT-COMPLETENESS",
+      "requirements": [
+        "CGML-6.4-3",
+        "CGML-7.1-1",
+        "CGML-7.2-1-1",
+        "CGML-7.2-1-2",
+        "CGML-7.2-1-3",
+        "CGML-7.2-2",
+        "CGML-8.1-2",
+        "CGML-8.3-1",
+        "CGML-8.3-2",
+        "CGML-8.3-3"
+      ]
+    },
     "ext/F-EXT-D": {
       "profile": "EXT-DISPLAY",
       "requirements": [
         "CGML-6.9-4-6",
         "CGML-9.2-1",
         "CGML-9.3-1"
+      ]
+    },
+    "ext/F-EXT-D-NAMED": {
+      "profile": "EXT-DISPLAY",
+      "requirements": [
+        "CGML-9.2-1",
+        "CGML-9.2-3"
       ]
     },
     "ext/F-EXT-P": {
