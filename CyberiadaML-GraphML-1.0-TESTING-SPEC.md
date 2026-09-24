@@ -10,7 +10,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.6 (2026-08-30)
+**Document version:** 1.7 (2026-09-24)
 
 ## 1. Purpose
 
@@ -114,7 +114,7 @@ Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateM
 **6.1 State machine** (`CGML-6.1-*`)
 
 - `CGML-6.1-1` MUST: `dStateMachine` is the mandatory **first** child key of the top-level graph; its value is **empty** (pure type marker). [R/W/X]
-- `CGML-6.1-2` MUST: `dName` present; non-empty string; **no two state machines in a document share a name**. [R/W/X]
+- `CGML-6.1-2` MUST: `dName` present; non-empty string; **no two state machines in a document share a name**. The machine's name is also the name of its single region (6.1.2). [R/W/X]
 - `CGML-6.1-3` MAY: `dGeometry` (rectangle, §7). [R/W]
 - `CGML-6.1-4` MUST: children ordered keys → nodes → edges. [R/W/X]
 - `CGML-6.1-5` MAY: several independent state machines at top level (multi-SM documents). [R/W]
@@ -124,7 +124,7 @@ Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateM
 
 - `CGML-6.2-1` MUST: Default node type: a `node` without `dVertex`/`dNote`/`dSubmachineState` is a state. [R]
 - `CGML-6.2-2` MAY: `dName` — the state name; optional; empty value ≡ unnamed state; multiple unnamed siblings allowed. [R/W/X]
-- `CGML-6.2-3` MUST: sibling elements (states, pseudostates, and comments) on the same hierarchy level must have unique names. [R/W/X]
+- `CGML-6.2-3` MUST: sibling states and pseudostates on the same hierarchy level — a state machine or a region, each region being a separate name space (6.5.2) — must have unique names; comments are exempt (6.6.1). [R/W/X]
 - `CGML-6.2-4` MAY: `dData` — behaviour/internal transitions text (per 6.8). [R/W]
 - `CGML-6.2-5` MAY: `dGeometry` (rectangle). [R/W]
 
@@ -143,6 +143,7 @@ Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateM
 - `CGML-6.4-3` MAY: `dName` (see `CGML-6.2-3`), geometry (point for most pseudostates/final; rectangle for `choice`, per §7/Appendix В). [R/W]
 - `CGML-6.4-4-*` Usage counts constrained only by the ПНСТ 984-2024 standard semantics (e.g. one initial pseudostate per region):
   - `CGML-6.4-4-1` MUST: The only initial pseudostate is allowed on the same hierarchy level of the state machine; [R/W]
+  - `CGML-6.4-4-2` SHOULD: a document representing a correct ПРИМС diagram contains at least one `initial` pseudostate in every state machine (in any of its regions, 6.4.2); §1 admits intermediate documents that need not conform, so the validator reports the absence as INFO. [R/X]
 
 **6.5 Composite state and region** (`CGML-6.5-*`)
 
@@ -160,14 +161,15 @@ Composite states admit all simple-state requirements (see 6.2).
 **6.6 Comment** (`CGML-6.6-*`)
 
 - `CGML-6.6-1` MUST: `dNote` — mandatory **first** child key of a comment node; value `informal` (human-readable) or `formal` (machine-readable). [R/W/X]
-- `CGML-6.6-2` MAY: `dData` — comment body text; `dName` — comment title (see `CGML-6.2-3`); `dGeometry` (rectangle). [R/W]
+- `CGML-6.6-2` MAY: `dData` — comment body text; `dName` — comment title (named like states, but comment names need not be unique, 6.6.1); `dGeometry` (rectangle). [R/W]
 - `CGML-6.6-3` SHOULD: it is recommended to preserve a formal comments body verbatim. [R]
+- `CGML-6.6-4` MAY: a comment without subjects (no outgoing links) relates to the state machine that contains it (6.6.2). [R]
 
 **6.7 Comment-subject links** (`CGML-6.7-*`)
 
 - `CGML-6.7-1` MUST: link = `edge` from comment node to subject node with mandatory first key `dPivot` naming the commented aspect from the closed set: {`dName`, `dData`, empty}, reject others. [R/W/X]
-- `CGML-6.7-2` MUST: `source` and `target` nodes exist and belong to the **same state-machine graph**. [R/W/X] **Extension hook:** under EXT-COMPLETENESS (8.5) `target` may reference an edge id (comment link to a transition).
-- `CGML-6.7-3` MUST: `dChunk` — substring of the subject's aspect being commented. Must present and be non-empty when `dPivot` is `dName` or `dData`. [R/W]
+- `CGML-6.7-2` MUST: `source` and `target` nodes exist and belong to the **same state-machine graph**. [R/W/X] **Extension hook:** under EXT-COMPLETENESS (8.5) `target` may reference an edge id (comment link to a transition). A state-machine graph is never a link target (an edge targets nodes; 6.7.2).
+- `CGML-6.7-3` MUST: `dChunk` — a non-empty substring of the subject's aspect being commented: the `dName` value, or the `dData` text including the names of events, guards and actions (6.7.1). Must be present and non-empty when `dPivot` is `dName` or `dData`. [R/W/X]
 - `CGML-6.7-4` MUST: the link's `source` is a comment node (`dNote` present); `source` ≠ `target` (no self-loops); the geometry condition of `CGML-6.3-5` applies. [R/W/X]
 
 **6.8 Events, guards, behaviour** (`CGML-6.8-*`)
@@ -175,8 +177,15 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-6.8-1` MUST: `dData` value is text in the HSM diagram standard (ПНСТ 984-2024) label syntax `Event [Guard]/ Behaviour`: the `/` separates the event description — the event name (may be empty: a completion transition on an edge, ПНСТ 984-2024 3.31, or a completion block in a node) and an optional guard in square brackets — from the behaviour, and may be omitted only when no behaviour follows (§6.8.1). In a **node** every block is an internal-behaviour block (`entry/`, `exit/`, `do/`, see 6.8-3) or an internal event; its header is the block's first line, so behaviour lines require the `/` on it. In an **edge** the label may additionally span several lines (event name and guard on separate lines, as in the standard's own §6.8 edge example). The value may be an **empty string**, meaning no behaviour is defined. [R/W/X]
 - `CGML-6.8-2` MUST: multiple behaviour/event blocks inside one `dData` are separated by a blank line (double newline); the number of blocks is unlimited. Whitespace inside `dData` is significant to block separation; implementations must preserve block structure round-trip. [R/W]
 - `CGML-6.8-3` MUST: internal-behaviour blocks begin with one of the keywords `entry/`, `exit/`, or `do/` (entry, exit, do behaviour respectively). [R/W]
+  - `CGML-6.8-3-1` MUST: a state carries at most one `entry/`, one `exit/` and one `do/` block (6.8.1). [R/W/X]
 - `CGML-6.8-4` MUST: an event description starts with the event name (may be empty). [R/W]
+  - `CGML-6.8-4-1` MUST: the event name is not a reserved word: `entry`, `exit`, `do`, `propagate`, `block`, `defer`, `else` (6.8.1). [R/W/X]
+  - `CGML-6.8-4-2` MAY: the reserved event names `ANY` and `UNKNOWN` (ПНСТ 984-2024 7.4.6.7) are permitted event names. [R/W]
+  - `CGML-6.8-4-3` MUST: a transition carries a single event — the format's explicit limitation of ПНСТ 984-2024 7.6.7.2 (6.8.1). [R/W]
+  - `CGML-6.8-4-4` MAY: event names are global to the document (6.8.1). [R]
 - `CGML-6.8-5` MAY: an event description may carry event-handling parameters from ПНСТ 984-2024: the keywords `propagate` and `block` placed directly before the `/` separator (after the guard when present), or `defer` placed directly after it (§6.8.1). [R/W] **Note:** per-event keywords, distinct from the document-level `eventPropagation` metadata parameter (6.9), which allows only `block`/`propagate`.
+  - `CGML-6.8-5-1` MUST: `defer` appears only in a node `dData` (an internal transition) and is the whole behaviour of the block — nothing follows it (6.8.1). [R/W/X]
+  - `CGML-6.8-5-2` MUST: `propagate` and `block` are allowed only when the event name is non-empty (6.8.2). [R/W/X]
 - `CGML-6.8-6` MAY: a guard block may contain the keyword `else` (see the at-most-one-else constraints in `CGML-6.3-4`). [R/W]
 - `CGML-6.8-7` MUST: XML special characters inside `dData` (`<`, `>`, `&`) are escaped per 5.2, as everywhere in the document. [R/W/X]
 - `CGML-6.8-8` MUST: square brackets used **inside a guard's logical expression** are escaped with a backslash — `\[`, `\]` (e.g. `[String.Contains(\[Example\])]`). [R/W]
@@ -192,10 +201,11 @@ Composite states admit all simple-state requirements (see 6.2).
   - `CGML-6.9-4-1` `geometry` — `none` (default when absent) | `short` | `full` — governs §7/§9.1 interpretation;
   - `CGML-6.9-4-2` `platform`, `platformVersion`, `platformLanguage`, `target`, `name`, `author`, `contact`, `description`, `version` — a text string;
   - `CGML-6.9-4-3` `createdAt` — ISO 8601, UTC;
-  - `CGML-6.9-4-4` `transitionOrder` — `actionFirst` (default) | `exitFirst`;
-  - `CGML-6.9-4-5` `eventPropagation` — `block` (default) | `propagate`;
+  - `CGML-6.9-4-4` `transitionOrder` — `actionFirst` (default when absent) | `exitFirst`;
+  - `CGML-6.9-4-5` `eventPropagation` — `block` (default when absent) | `propagate`;
   - `CGML-6.9-4-6` `markupLanguage` — default markup of informal comments, a text string (see 9.3).
 - `CGML-6.9-5` MAY: any number of additional parameters. [R]
+- `CGML-6.9-6` MUST: the metadata applies to every state machine of the document; machines needing different parameters are described in different documents (6.9.2). [R]
 
 ### 2.4 §7 — Geometry (base format)
 
@@ -224,7 +234,10 @@ Composite states admit all simple-state requirements (see 6.2).
 **8.1 Submachine state** (`CGML-8.1-*`)
 
 - `CGML-8.1-1` MUST: node with the marker key `dSubmachineState` as its **first** data key (see `CGML-5.7-4`); value = reference to a state machine — external (`file://…`, a URI) or within the document (the referenced SM `id`). Resolution of internal references (the SM id) and tolerance of unresolvable external references must be tested. [R/W/X]
+  - `CGML-8.1-1-1` MUST: the reference does not name the state machine that contains the submachine state (8.1.1). [R/W/X]
 - `CGML-8.1-2` MUST: a submachine state has a nested `graph` only to hold its entry/exit points (8.3) — a single subgraph containing nothing but such `node` tags; that subgraph carries **no data keys at all** (not even `dRegion`). [R/W/X]
+- `CGML-8.1-3` MUST: a submachine state carries no `dData` — no internal behaviour or internal transitions (8.1.2). [R/W/X]
+- `CGML-8.1-4` MUST: for an internal reference, every entry/exit point inside the submachine subgraph is named after an entry/exit point of the referenced state machine (8.1). [R/W/X]
 
 **8.2 History pseudostates** (`CGML-8.2-*`)
 
@@ -236,6 +249,8 @@ Composite states admit all simple-state requirements (see 6.2).
 - `CGML-8.3-1` MUST: `dVertex` = `entryPoint` | `exitPoint`; otherwise the 6.4 vertex rules apply (dVertex first+mandatory; optional dName, point geometry). [R/W]
 - `CGML-8.3-2` MUST: usable inside states/SMs and with submachine states. [R/W]
 - `CGML-8.3-3` MUST: be placed inside the parent element / on the parent element's border if geometry is set. [R/W]
+- `CGML-8.3-4` MUST: an entry/exit point carries a non-empty `dName` (8.3.1). [R/W/X]
+- `CGML-8.3-5` MUST: in a composite state with several regions the state's entry/exit points are placed in the first region (8.3.2). [R/W/X]
 
 **8.4 Collapsed composite state** (`CGML-8.4-*`)
 
