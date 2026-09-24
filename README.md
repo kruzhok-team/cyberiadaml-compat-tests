@@ -3,8 +3,9 @@
 This repository contains the set of specifications and tools for checking
 CyberiadaML GraphML standard compatibilty of libraries and tools.
 
-See the PNST 1044-2025 and PNST 984-2024 Russian national standard documents for
-details. The standard document is stated in the `docs/PNST_1044-2025.md` file.
+See the and PNST 984-2024 and PNST 1044-2025 Russian national standard documents for
+details. The standard document are stated in the `docs/PNST_984-2024.md` and the
+`docs/PNST_1044-2025.md` files.
 
 ## Documentation
 
