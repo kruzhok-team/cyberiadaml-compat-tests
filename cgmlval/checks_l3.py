@@ -522,3 +522,16 @@ def created_at(ctx):
         ctx.emit("created-at",
                  "createdAt %r is not an ISO 8601 timestamp" % value,
                  elem=doc.meta_comment.elem)
+
+
+@rule("point-name-required", "CGML-8.3-4", 3, ERROR,
+      "entry and exit points carry a non-empty name")
+def point_name_required(ctx):
+    for node in model_mod.iter_nodes(ctx.model):
+        if isinstance(node, model_mod.Vertex) and \
+                node.kind in ("entryPoint", "exitPoint") and \
+                not (node.name or "").strip():
+            ctx.emit("point-name-required",
+                     "%s %r carries no non-empty dName" % (node.kind, node.id),
+                     elem=node.elem)
+

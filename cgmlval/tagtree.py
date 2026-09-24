@@ -57,6 +57,8 @@ declare("submachine-first-key", "CGML-8.1-1", 2, ERROR,
         "dSubmachineState is the first key of a submachine state node")
 declare("submachine-subgraph", "CGML-8.1-2", 2, ERROR,
         "a submachine subgraph holds entry/exit points only, without keys")
+declare("submachine-no-data", "CGML-8.1-3", 2, ERROR,
+        "a submachine state carries no dData")
 declare("region-marker-required", "CGML-6.5-5", 2, ERROR,
         "each of two or more regions starts with the dRegion key")
 declare("composite-children", "CGML-6.5-1", 2, ERROR,
@@ -234,6 +236,10 @@ def _check_node(ctx, node):
         _first_key_check(ctx, "submachine-first-key", "dSubmachineState",
                          datas)
     if "dSubmachineState" in keys:
+        if "dData" in keys:
+            ctx.emit("submachine-no-data",
+                     "submachine state carries a dData key",
+                     elem=datas[keys.index("dData")])
         if len(graphs) > 1:
             ctx.emit("submachine-subgraph",
                      "submachine state with %d subgraphs; at most one "

@@ -179,7 +179,7 @@ def formal_name_unique(ctx):
         level_seen = {}
         for child in children:
             name = getattr(child, "formal_name", None)
-            if not name:
+            if not name or isinstance(child, Comment):
                 continue
             if name in level_seen:
                 ctx.emit("formal-name-unique",
@@ -399,3 +399,99 @@ def transition_geometry_endpoints(ctx):
                     ctx.emit("transition-geometry-endpoints",
                              "transition geometry while the endpoint node "
                              "%r has none" % endpoint, elem=transition.elem)
+
+
+ENTRY_EXIT = ("entryPoint", "exitPoint")
+
+
+def _is_point(node):
+    return isinstance(node, Vertex) and node.kind in ENTRY_EXIT
+
+
+@rule("initial-present", "CGML-6.4-4-2", 4, INFO,
+      "a state machine of a correct diagram contains an initial pseudostate")
+def initial_present(ctx):
+    for machine in ctx.model.machines:
+        if not any(isinstance(n, Vertex) and n.kind == "initial"
+                   for n in _machine_nodes(machine)):
+            ctx.emit("initial-present",
+                     "state machine %r contains no initial pseudostate" %
+                     machine.id, elem=machine.elem)
+
+
+def _aspect(target, pivot):
+    """The commented text of a link target: its name or its dData text."""
+    if pivot == "dName":
+        return getattr(target, "name", None)
+    if isinstance(target, Comment):
+        return target.body
+    return getattr(target, "data", None)
+
+
+@rule("chunk-substring", "CGML-6.7-3", 4, ERROR,
+      "dChunk is a substring of the commented aspect of the subject")
+def chunk_substring(ctx):
+    nodes = {n.id: n for n in model_mod.iter_nodes(ctx.model)}
+    for machine in ctx.model.machines:
+        edges = {t.id: t for t in machine.transitions}
+        for link in machine.links:
+            pivot = (link.pivot or "").strip()
+            chunk = link.chunk or ""
+            if pivot not in ("dName", "dData") or not chunk.strip():
+                continue
+            target = nodes.get(link.target, edges.get(link.target))
+            if target is None:
+                continue
+            aspect = _aspect(target, pivot)
+            if chunk not in (aspect or ""):
+                ctx.emit("chunk-substring",
+                         "dChunk %r is not found in the %s of %r" %
+                         (chunk, pivot, link.target), elem=link.elem)
+
+
+@rule("submachine-self-reference", "CGML-8.1-1-1", 4, ERROR,
+      "a submachine state does not reference its own state machine")
+def submachine_self_reference(ctx):
+    for machine in ctx.model.machines:
+        for node in _machine_nodes(machine):
+            if isinstance(node, SubmachineState) and node.ref == machine.id:
+                ctx.emit("submachine-self-reference",
+                         "submachine state %r references its own state "
+                         "machine %r" % (node.id, machine.id), elem=node.elem)
+
+
+@rule("submachine-point-names", "CGML-8.1-4", 4, ERROR,
+      "the points of a submachine state are named after the points of the "
+      "referenced state machine")
+def submachine_point_names(ctx):
+    machines = {m.id: m for m in ctx.model.machines}
+    for node in model_mod.iter_nodes(ctx.model):
+        if not isinstance(node, SubmachineState) or node.ref not in machines:
+            continue
+        names = {(p.name or "").strip() for p in machines[node.ref].children
+                 if _is_point(p)}
+        for region in node.regions:
+            for point in region.children:
+                if _is_point(point) and (point.name or "").strip() not in names:
+                    ctx.emit("submachine-point-names",
+                             "point %r of submachine state %r is named %r; "
+                             "state machine %r defines the points %s" %
+                             (point.id, node.id, point.name, node.ref,
+                              sorted(names) or "none"), elem=point.elem)
+
+
+@rule("points-first-region", "CGML-8.3-5", 4, ERROR,
+      "the entry/exit points of a multi-region state sit in its first region")
+def points_first_region(ctx):
+    for node in model_mod.iter_nodes(ctx.model):
+        regions = getattr(node, "regions", ())
+        if isinstance(node, State) and len(regions) > 1:
+            for region in regions[1:]:
+                for point in region.children:
+                    if _is_point(point):
+                        ctx.emit("points-first-region",
+                                 "point %r of state %r sits in region %r, "
+                                 "not in the first region" %
+                                 (point.id, node.id, region.id),
+                                 elem=point.elem)
+

@@ -25,6 +25,10 @@ state-machine "M1":
 state-machine "M2":
   name: "Worker"
   geometry: rect 0.00 350.00 200.00 120.00
+  vertex "m2en" entryPoint:
+    name: "Start"
+  vertex "m2ex" exitPoint:
+    name: "Done"
   state "m2s":
     name: "Run"
     geometry: rect 10.00 10.00 100.00 60.00

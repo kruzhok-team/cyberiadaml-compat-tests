@@ -20,6 +20,7 @@ state-machine "M1":
     body: "This transition starts the work."
   vertex "dh0" deepHistory:
   vertex "ep0" entryPoint:
+    name: "In"
   vertex "init" initial:
   state "n0":
     name: "Idle"
@@ -28,6 +29,7 @@ state-machine "M1":
   submachine "sub0" ref "M2":
     name: "Nested job"
   vertex "xp0" exitPoint:
+    name: "Out"
   transition "c0-sub0#1": "c0" -> "sub0"
     action event "DELEGATE":
   transition "crinit-cs1#1": "crinit" -> "cs1"

@@ -33,7 +33,8 @@
         "CGML-6.1-2",
         "CGML-6.9-1",
         "CGML-6.9-2",
-        "CGML-6.9-3"
+        "CGML-6.9-3",
+        "CGML-6.4-4-2"
       ]
     },
     "core/F-TWO": {
@@ -118,7 +119,9 @@
       "requirements": [
         "CGML-8.1-2",
         "CGML-8.3-1",
-        "CGML-8.3-2"
+        "CGML-8.3-2",
+        "CGML-8.1-4",
+        "CGML-8.3-4"
       ]
     },
     "ext/F-EXT-SUB-GEO": {
@@ -455,6 +458,24 @@
     },
     "negative/X-6.8-5-2-propagate-no-event": {
       "reject": "CGML-6.8-5-2"
+    },
+    "negative/X-6.7-3-chunk-not-found": {
+      "reject": "CGML-6.7-3"
+    },
+    "negative/X-8.1-1-1-self-reference": {
+      "reject": "CGML-8.1-1-1"
+    },
+    "negative/X-8.1-3-submachine-data": {
+      "reject": "CGML-8.1-3"
+    },
+    "negative/X-8.1-4-point-name-mismatch": {
+      "reject": "CGML-8.1-4"
+    },
+    "negative/X-8.3-4-unnamed-point": {
+      "reject": "CGML-8.3-4"
+    },
+    "negative/X-8.3-5-point-in-second-region": {
+      "reject": "CGML-8.3-5"
     }
   },
   "twins": [

@@ -203,7 +203,8 @@ def test_extension_vertexes_accepted():
     for kind in (b"final", b"choice", b"terminate", b"shallowHistory",
                  b"deepHistory", b"entryPoint", b"exitPoint"):
         doc = minimal().replace(b'<data key="dVertex">initial</data>',
-                                b'<data key="dVertex">%s</data>' % kind)
+                                b'<data key="dVertex">%s</data>'
+                                b'<data key="dName">P</data>' % kind)
         assert errors(run(doc)) == [], kind
 
 

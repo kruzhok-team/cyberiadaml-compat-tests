@@ -58,6 +58,12 @@ UNREACHABLE = frozenset((
     "X-6.8-5-1-defer-on-transition",  # dData behaviour grammar
     "X-6.8-5-1-defer-with-behaviour", # dData behaviour grammar
     "X-6.8-5-2-propagate-no-event", # dData behaviour grammar
+    "X-6.7-3-chunk-not-found",      # text containment
+    "X-8.1-1-1-self-reference",     # reference identity
+    "X-8.1-3-submachine-data",      # key admissibility per node kind
+    "X-8.1-4-point-name-mismatch",  # cross-graph name resolution
+    "X-8.3-4-unnamed-point",        # dName presence per vertex kind
+    "X-8.3-5-point-in-second-region",  # region order
 ))
 
 # schema/examples: the strict profile rejects each, the base profile accepts it.
