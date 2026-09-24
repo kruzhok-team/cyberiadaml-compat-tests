@@ -34,7 +34,7 @@ state-machine "G":
     name: "Скан"
     action entry:
       do: "Сенсор.ПоискЦелиПоДистанции(мин)"
-      do: "exit/"
+    action exit:
       do: "Сенсор.ОстановкаПоиска()"
     geometry: rect 0.00 300.00 0.00 0.00
   comment "nMeta" formal:
