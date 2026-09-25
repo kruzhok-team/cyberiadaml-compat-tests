@@ -4,7 +4,7 @@ A RELAX NG schema of the CGML document structure, transcribed from ПНСТ 1044
 (`../docs/PNST_1044-2025.md`), and the measurement of how much of the standard a schema can
 carry.
 
-**Document version:** 1.2 (2026-09-24) — follows the testing specification 1.7.
+**Document version:** 1.3 (2026-09-25) — follows the testing specification 1.7.
 
 ## Files
 
@@ -44,7 +44,7 @@ Measured on the repository corpus with `jing` 20241231 (OpenJDK 25); `cgmlval` r
 
 | Corpus | Documents | Base profile | Strict profile |
 |---|---|---|---|
-| positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 33 | 33 accepted | 33 accepted |
+| positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 35 | 35 accepted | 35 accepted |
 | appendix Г documents of the standard | 4 | 4 accepted | 4 accepted |
 | negative fixtures (`fixtures/negative`) | 54 | 29 rejected | 29 rejected |
 | `examples/S-*` (strict only) | 4 | 4 accepted | 4 rejected |

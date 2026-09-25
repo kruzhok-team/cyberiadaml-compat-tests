@@ -309,6 +309,15 @@
       "signatures": [
         "validate:CGML-8.1-3"
       ]
+    },
+    {
+      "id": "JS-16",
+      "driver": "js",
+      "title": "writer drops the children of multi-region states",
+      "note": "the nodes of both regions of a two-region composite state are missing from the output while their transitions stay, so the document fails CGML-6.3-2 (1044 6.5.2); F-REGIONS, F-REGIONS-IDS",
+      "signatures": [
+        "validate:CGML-6.3-2"
+      ]
     }
   ]
 }

@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.8 (2026-09-24)
+**Document version:** 1.9 (2026-09-25)
 
 ## 1. Testing layers
 
@@ -77,6 +77,8 @@ respect, named in its test row.
 | `F-EMPTY-SM` | document whose single SM contains no elements (valid; INFO `CGML-6.4-4-2`: no initial pseudostate) |
 | `F-TWO` | `F-MIN` + second state and transition with trigger/guard/behavior |
 | `F-HIER` | composite state with one region, child states, child transitions at top level |
+| `F-REGIONS` | composite state with two regions (ids `p0-0:`/`p0-1:`), an initial in each, a named entry point in the first region |
+| `F-REGIONS-IDS` | `F-REGIONS` with the region ids `p0:1`/`p0:2` (any 5.9 id, not only the colon suffix) |
 | `F-MULTI` | two state machines at top level |
 | `F-GEO-S` | `F-TWO` with `geometry/ short` and full base geometry on all elements, incl. negative and fractional coordinates |
 | `F-GEO-F` | `F-GEO-S` with `geometry/ full`, edge polylines, source/target points, label rects, a self-loop with polyline |
@@ -136,6 +138,7 @@ respect, named in its test row.
 | T-6.5-1.1 | CGML-6.5-1 | A | `F-HIER` → children attached to composite via region subgraph |
 | T-6.5-2.1 | CGML-6.5-2 | A | region graph with empty `dRegion`; node with **two** region subgraphs → parsed (2 fixtures) |
 | T-6.5-5.1 | CGML-6.5-5 | X | composite state with two region subgraphs, one without `dRegion` first → rejected |
+| T-6.5-5.2 | CGML-6.5-5 | A | `F-REGIONS`, `F-REGIONS-IDS`: two regions each starting with `dRegion` → parsed, round-tripped with the markers kept |
 | T-6.5-8.1 | CGML-6.5-8 | X | edge inside region subgraph → rejected |
 | T-6.6-1.2a | CGML-6.6-1 | X | `dNote` not the first key of a comment node → rejected |
 | T-6.7-1.2 | CGML-6.7-1 | X | `dPivot` not the first key of the link edge → rejected |
@@ -253,6 +256,7 @@ respect, named in its test row.
 | T-8.1-1.5 | CGML-8.1-1-1 | X | `dSubmachineState` naming the containing machine → rejected |
 | T-8.1-4.1 | CGML-8.1-4 | X | submachine point named `Begin` while the referenced machine defines `Start`/`Done` → rejected |
 | T-8.3-5.1 | CGML-8.3-5 | X | entry point inside the second region of a two-region state → rejected |
+| T-8.3-5.2 | CGML-8.3-5 | A | `F-REGIONS`: entry point inside the first region of a two-region state → accepted |
 | T-6.7-2.1 | CGML-6.7-2 | X | comment link to nonexistent node → rejected |
 | T-6.7-4.1 | CGML-6.7-4 | X | link whose `source` is a state; link with `source` = `target` (2 variants) → rejected |
 | T-6.9-1.1 | CGML-6.9-1 | X | no `CGML_META` node; meta only in second SM (2 variants) → rejected |

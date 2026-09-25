@@ -60,6 +60,21 @@
         "CGML-6.5-8"
       ]
     },
+    "core/F-REGIONS": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.5-2",
+        "CGML-6.5-5",
+        "CGML-8.3-5"
+      ]
+    },
+    "core/F-REGIONS-IDS": {
+      "profile": "CORE",
+      "requirements": [
+        "CGML-6.5-5",
+        "CGML-5.9-3"
+      ]
+    },
     "core/F-MULTI": {
       "profile": "CORE",
       "requirements": [
