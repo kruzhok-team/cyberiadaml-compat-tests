@@ -192,15 +192,20 @@ def iter_elements(root):
             yield from walk_graph(child)
 
 
-def iter_nodes(document):
-    """All node model objects of the document, region children included."""
+def iter_machine_nodes(machine):
+    """All node model objects of a state machine, region children included."""
     def walk(children):
         for child in children:
             yield child
             for region in getattr(child, "regions", ()):
                 yield from walk(region.children)
+    yield from walk(machine.children)
+
+
+def iter_nodes(document):
+    """All node model objects of the document, region children included."""
     for machine in document.machines:
-        yield from walk(machine.children)
+        yield from iter_machine_nodes(machine)
 
 
 def iter_regions(document):

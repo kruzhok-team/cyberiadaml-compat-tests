@@ -382,38 +382,45 @@ def chunk_no_target_point(ctx):
 
 
 @rule("component-syntax", "CGML-10.3-1", 3, ERROR,
-      "CGML_COMPONENT comments name a unique component and its type")
+      "CGML_COMPONENT comments name a component unique in its state machine "
+      "and its type")
 def component_syntax(ctx):
-    seen = {}
-    for node in model_mod.iter_nodes(ctx.model):
-        if not isinstance(node, model_mod.Comment) \
-                or (node.kind or "").strip() != "formal":
-            continue
-        name = node.name or ""
-        if name != model_mod.COMPONENT_NAME \
-                and not name.startswith(COMPONENT_PREFIX):
-            continue
-        ident = name[len(COMPONENT_PREFIX):]
-        if not FORMAL_NAME_RE.match(ident):
-            ctx.emit("component-syntax",
-                     "component comment name %r is not CGML_COMPONENT, one "
-                     "space and a formal identifier" % name, elem=node.elem)
-        elif ident in seen:
-            ctx.emit("component-syntax",
-                     "component %r is defined twice (%r and %r)" %
-                     (ident, seen[ident], node.id), elem=node.elem)
-        else:
-            seen[ident] = node.id
-        params, errors = meta.parse(node.body)
-        for line, message in errors:
-            ctx.emit("component-syntax",
-                     "%s (value line %d)" % (message, line + 1),
-                     elem=node.elem)
-        types = [p.value.strip() for p in params if p.name == "type"]
-        if not types or not types[0]:
-            ctx.emit("component-syntax",
-                     "component %r has no non-empty type parameter" % ident,
-                     elem=node.elem)
+    for machine in ctx.model.machines:
+        # the component identifier is unique in its machine; the node ids are
+        # unique in the whole document (CGML-5.9-4)
+        seen = {}
+        for node in model_mod.iter_machine_nodes(machine):
+            if not isinstance(node, model_mod.Comment) \
+                    or (node.kind or "").strip() != "formal":
+                continue
+            name = node.name or ""
+            if name != model_mod.COMPONENT_NAME \
+                    and not name.startswith(COMPONENT_PREFIX):
+                continue
+            ident = name[len(COMPONENT_PREFIX):]
+            if not FORMAL_NAME_RE.match(ident):
+                ctx.emit("component-syntax",
+                         "component comment name %r is not CGML_COMPONENT, "
+                         "one space and a formal identifier" % name,
+                         elem=node.elem)
+            elif ident in seen:
+                ctx.emit("component-syntax",
+                         "component %r is defined twice in the state machine "
+                         "%r (nodes %r and %r)" %
+                         (ident, machine.id, seen[ident], node.id),
+                         elem=node.elem)
+            else:
+                seen[ident] = node.id
+            params, errors = meta.parse(node.body)
+            for line, message in errors:
+                ctx.emit("component-syntax",
+                         "%s (value line %d)" % (message, line + 1),
+                         elem=node.elem)
+            types = [p.value.strip() for p in params if p.name == "type"]
+            if not types or not types[0]:
+                ctx.emit("component-syntax",
+                         "component %r has no non-empty type parameter" % ident,
+                         elem=node.elem)
 
 
 @rule("behaviour-syntax", "CGML-6.8-1", 3, ERROR,

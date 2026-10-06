@@ -41,6 +41,7 @@ POSITIVE_DIRS = ("fixtures/core", "fixtures/ext", "fixtures/field",
 UNREACHABLE = frozenset((
     "X-5.5-4-duplicate-data",       # at most one data key per tag (7.4)
     "X-5.9-4-duplicate-id",         # identity
+    "X-5.9-4-duplicate-component-node",  # identity
     "X-6.3-2-dangling-target",      # reference resolution
     "X-6.7-2-dangling-link",        # reference resolution
     "X-6.7-4-self-loop",            # identity of two attributes
@@ -53,6 +54,7 @@ UNREACHABLE = frozenset((
     "X-6.9-2-repeated-param",       # CGML_META parameter grammar
     "X-6.9-4-5-bad-propagation",    # CGML_META parameter grammar
     "X-10.3-1-no-type",             # CGML_COMPONENT parameter grammar
+    "X-10.3-1-duplicate",           # identity of two comment names
     "X-6.8-3-1-two-entry",          # dData behaviour grammar
     "X-6.8-4-1-reserved-event",     # dData behaviour grammar
     "X-6.8-5-1-defer-on-transition",  # dData behaviour grammar

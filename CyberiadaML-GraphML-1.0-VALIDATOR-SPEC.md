@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.7) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.7 (2026-09-24)
+**Document version:** 1.8 (2026-10-06)
 
 ## 1. Purpose
 
@@ -180,7 +180,9 @@ closing `/`, none is required.
 each chunk is `name/ value` — the name up to the first `/`, spaces and tabs around the `/`
 trimmed (§6.9.2), the rest of the chunk (including continuation lines) is the value. The same
 grammar parses `CGML_COMPONENT` bodies (§10.3): the comment name is `CGML_COMPONENT`, one space
-and a formal identifier unique among the components; the `type` parameter is mandatory.
+and a formal identifier unique among the components of its state machine (the same component may
+be defined in several machines; the ids of the comment nodes are unique in the whole document,
+§5.9); the `type` parameter is mandatory.
 Parameter order is preserved in the model; a non-Latin or repeated parameter name is an error at
 L3.
 

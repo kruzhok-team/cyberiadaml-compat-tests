@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.9 (2026-09-25)
+**Document version:** 1.10 (2026-10-06)
 
 ## 1. Testing layers
 
@@ -87,6 +87,7 @@ respect, named in its test row.
 | `F-EXT-D` | EXT-DISPLAY features: colors, markup |
 | `F-EXT-D-NAMED` | EXT-DISPLAY: CSS colour names `red`, `SteelBlue` (CGML-9.2-3) |
 | `F-EXT-P` | EXT-PLATFORM features: formal names, `CGML_COMPONENT` |
+| `F-EXT-P-MULTI` | EXT-PLATFORM: the same component `timer1` defined in two state machines by two nodes with their own ids (CGML-10.3-1, CGML-10.3-2) |
 | `F-CMT` | comments (informal + formal) with subject links (`dPivot`/`dChunk`) |
 | `F-FIELD-*` | real-world documents collected from the ecosystem (converted legacy diagrams, IDE-produced files, generator examples) — admitted after passing L1–L4 |
 
@@ -225,7 +226,8 @@ respect, named in its test row.
 | T-9.3-1.1 | CGML-9.3-1 | A | `dMarkup` = `markdown` on informal comment; absent → default `plain` |
 | T-9.3-2.1 | CGML-9.3-2 | X | `dMarkup` on a state; on a formal comment; empty on an informal comment (3 variants) → rejected |
 | T-9.3-4.1 | CGML-9.3-4 | A | `markupLanguage/ markdown` with a comment carrying `dMarkup` = `plain` → the comment's own value wins |
-| T-10.3-1.2 | CGML-10.3-1 | X | `CGML_COMPONENT` comment without `type`; name without the identifier; two comments with the same identifier (3 variants) → rejected |
+| T-10.3-1.2 | CGML-10.3-1 | X | `CGML_COMPONENT` comment without `type`; name without the identifier; two comments with the same identifier in one state machine (3 variants) → rejected |
+| T-10.3-1.3 | CGML-10.3-1 | A | the same component identifier in two state machines, the comment nodes having different ids → accepted |
 | T-10.1-2.1 | CGML-10.1-2 | A | formal names `_x`, `Scan9`, `A_b_1` → accepted |
 | T-10.1-2.2 | CGML-10.1-2 | X | formal name starting with digit; containing dash; Cyrillic; empty (4 variants) → rejected |
 | T-B-1.1 | CGML-appendix-B-1 | X | standard key redeclared with different `for`/`attr.name` → rejected |
@@ -239,6 +241,7 @@ respect, named in its test row.
 | T-5.6-2.2 | CGML-5.6-2 | X | document with zero top-level graphs → rejected |
 | T-5.9-4.1 | CGML-5.9-4 | X | same id on two nodes in different SMs; node id equal to region graph id (2 variants) → rejected |
 | T-5.9-4.2 | CGML-5.9-4 | X | duplicate edge id → rejected |
+| T-5.9-4.3 | CGML-5.9-4 | X | the same component defined in two state machines under one node id → rejected |
 | T-6.1-1.1 | CGML-6.1-1 | X | top-level graph without `dStateMachine` → rejected |
 | T-6.1-2.1 | CGML-6.1-2 | X | SM without `dName`; with empty `dName`; two SMs with equal names (3 variants) → rejected |
 | T-6.2-3.1 | CGML-6.2-3 | X | two sibling states named `A` → rejected |

@@ -21,7 +21,7 @@
 # -----------------------------------------------------------------------------
 
 from cgmlval import rules
-from docbuilder import META_NODE, minimal
+from docbuilder import MACHINE, META_NODE, minimal
 
 
 def run(data):
@@ -354,3 +354,57 @@ def test_l3_errors_stop_the_pipeline():
     ctx = run(doc)
     assert ctx.report.layers_run == [1, 2, 3]
     assert ctx.report.verdict() == "invalid"
+
+
+COMPONENT = """\
+    <node id="%s">
+      <data key="dNote">formal</data>
+      <data key="dName">CGML_COMPONENT %s</data>
+      <data key="dData">type/ Timer</data>
+    </node>
+"""
+
+SECOND_MACHINE = """\
+  <graph id="G2" edgedefault="directed">
+    <data key="dStateMachine"/>
+    <data key="dName">Second machine</data>
+%s\
+    <node id="init2">
+      <data key="dVertex">initial</data>
+    </node>
+    <node id="m0">
+      <data key="dName">Idle</data>
+    </node>
+    <edge id="init2-m0#1" source="init2" target="m0"/>
+  </graph>
+"""
+
+
+def with_components(first, second=None):
+    """The minimal document with components in the first machine and, when
+    given, a second machine with its own."""
+    machines = MACHINE.replace(META_NODE, META_NODE + first)
+    if second is not None:
+        machines += SECOND_MACHINE % second
+    return minimal(machines=machines)
+
+
+def test_the_same_component_in_two_machines_is_accepted():
+    ctx = run(with_components(COMPONENT % ("cA", "timer1"),
+                              COMPONENT % ("cB", "timer1")))
+    assert errors(ctx) == []
+    assert 4 in ctx.report.layers_run
+
+
+def test_a_component_twice_in_one_machine_is_rejected():
+    ctx = run(with_components(COMPONENT % ("cA", "timer1") +
+                              COMPONENT % ("cB", "timer1")))
+    assert errors(ctx) == ["component-syntax"]
+    message = ctx.report.findings[0].message
+    assert "'G'" in message and "'cA'" in message and "'cB'" in message
+
+
+def test_a_component_node_id_is_unique_in_the_document():
+    ctx = run(with_components(COMPONENT % ("cA", "timer1"),
+                              COMPONENT % ("cA", "timer1")))
+    assert errors(ctx) == ["unique-ids"]

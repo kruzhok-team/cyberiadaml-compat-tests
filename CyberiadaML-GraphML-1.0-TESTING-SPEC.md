@@ -10,7 +10,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.7 (2026-09-24)
+**Document version:** 1.8 (2026-10-06)
 
 ## 1. Purpose
 
@@ -311,7 +311,7 @@ Inherits base format (2.4).
 
 **10.3 Dynamic components** (`CGML-10.3-*`)
 
-- `CGML-10.3-1` MUST: a dynamic component is a formal comment whose `dName` is the string `CGML_COMPONENT`, one space, and the component identifier — unique among the components of the document and satisfying the formal-name rules of `CGML-10.1-2` (e.g. `CGML_COMPONENT LED1`); its `dData` body is a parameter list in the document metadata syntax (`name/ value`, blank-line separated, whitespace around `/` trimmed) with the mandatory parameter `type` (component type, e.g. `LED`); further platform-defined parameters (`name`, `description`, …) are optional. [R/W/X]
+- `CGML-10.3-1` MUST: a dynamic component is a formal comment whose `dName` is the string `CGML_COMPONENT`, one space, and the component identifier — unique among the components of its state machine and satisfying the formal-name rules of `CGML-10.1-2` (e.g. `CGML_COMPONENT LED1`); the same identifier may be defined in several state machines (`CGML-10.3-2`), each definition being a node with its own document-wide unique `id` (`CGML-5.9-4`); its `dData` body is a parameter list in the document metadata syntax (`name/ value`, blank-line separated, whitespace around `/` trimmed) with the mandatory parameter `type` (component type, e.g. `LED`); further platform-defined parameters (`name`, `description`, …) are optional. [R/W/X]
 - `CGML-10.3-2` MUST: when a platform supports dynamic components and a diagram uses them, every state machine of the document that uses a component defines it (a `CGML_COMPONENT` comment in that state machine). [R/W]
 
 ### 2.8 Additional machine-checkable artefacts (Appendices A & B) 
