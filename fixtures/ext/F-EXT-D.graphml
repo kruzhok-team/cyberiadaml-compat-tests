@@ -51,6 +51,12 @@ markupLanguage/ html</data>
       <data key="dNote">informal</data>
       <data key="dData">Uses the &lt;b&gt;default&lt;/b&gt; markup.</data>
     </node>
+    <node id="cPrompt">
+      <data key="dNote">formal</data>
+      <data key="dName">PROMPT idle</data>
+      <data key="dMarkup">markdown</data>
+      <data key="dData">Stay *idle*.</data>
+    </node>
     <edge id="init-n0#1" source="init" target="n0"/>
     <edge id="n0-n0#1" source="n0" target="n0">
       <data key="dData">PING/</data>

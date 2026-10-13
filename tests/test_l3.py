@@ -236,6 +236,15 @@ def test_markup_on_state_reported():
     assert "markup-usage" in errors(run(doc))
 
 
+def test_markup_on_a_formal_comment_accepted():
+    doc = minimal().replace(b'      <data key="dName">CGML_META</data>',
+                            b'      <data key="dName">CGML_META</data>\n'
+                            b'      <data key="dMarkup">markdown</data>')
+    assert "markup-usage" not in errors(run(doc))
+    empty = doc.replace(b'<data key="dMarkup">markdown</data>', b'<data key="dMarkup"></data>')
+    assert "markup-usage" in errors(run(empty))
+
+
 def test_formal_names():
     for name in (b"_x", b"Scan9", b"A_b_1"):
         doc = minimal().replace(b'      <data key="dName">Idle</data>',

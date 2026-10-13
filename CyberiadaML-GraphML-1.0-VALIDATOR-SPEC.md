@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.7) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.8 (2026-10-06)
+**Document version:** 1.9 (2026-10-13)
 
 ## 1. Purpose
 
@@ -203,8 +203,9 @@ bytes.
 - Key declarations and data-key order are not dumped: a document relying on the appendix Б
   defaults and its explicitly-declared twin produce identical dumps.
 - Absent optional values are omitted. The resolved values of `geometry`, `transitionOrder`,
-  `eventPropagation` and comment markup are materialized in the header/element lines; the raw
-  metadata parameters are also listed.
+  `eventPropagation` and comment markup are materialized in the header/element lines (an informal
+  comment shows the resolved default, a formal one only its own key); the raw metadata parameters
+  are also listed.
 - Formal comment bodies dump verbatim as one quoted string, except the `CGML_META` body whose
   parameters are already listed under `meta:`; state and transition behaviour dumps as parsed
   blocks.

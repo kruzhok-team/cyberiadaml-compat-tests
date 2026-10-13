@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.10 (2026-10-06)
+**Document version:** 1.11 (2026-10-13)
 
 ## 1. Testing layers
 
@@ -224,7 +224,8 @@ respect, named in its test row.
 | T-9.2-3.1 | CGML-9.2-3 | A | named colour `red` → accepted |
 | T-9.2-4.1 | CGML-9.2-4 | X | `dColor` on the SM graph → rejected |
 | T-9.3-1.1 | CGML-9.3-1 | A | `dMarkup` = `markdown` on informal comment; absent → default `plain` |
-| T-9.3-2.1 | CGML-9.3-2 | X | `dMarkup` on a state; on a formal comment; empty on an informal comment (3 variants) → rejected |
+| T-9.3-1.2 | CGML-9.3-1 | A | `dMarkup` = `markdown` on a formal comment → accepted, dumped as `markup:`; absent → no markup line |
+| T-9.3-2.1 | CGML-9.3-2 | X | `dMarkup` on a state; empty on an informal comment (2 variants) → rejected |
 | T-9.3-4.1 | CGML-9.3-4 | A | `markupLanguage/ markdown` with a comment carrying `dMarkup` = `plain` → the comment's own value wins |
 | T-10.3-1.2 | CGML-10.3-1 | X | `CGML_COMPONENT` comment without `type`; name without the identifier; two comments with the same identifier in one state machine (3 variants) → rejected |
 | T-10.3-1.3 | CGML-10.3-1 | A | the same component identifier in two state machines, the comment nodes having different ids → accepted |

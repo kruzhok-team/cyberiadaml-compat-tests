@@ -317,17 +317,16 @@ def color_value(ctx):
 
 
 @rule("markup-usage", "CGML-9.3-2", 3, ERROR,
-      "dMarkup appears on informal comments with a non-empty value",
+      "dMarkup appears on comments only, with a non-empty value",
       also=("CGML-9.3-1",))
 def markup_usage(ctx):
     for node in model_mod.iter_nodes(ctx.model):
         markup = model_mod.data_value(node.elem, "dMarkup")
         if markup is None:
             continue
-        if not isinstance(node, model_mod.Comment) \
-                or (node.kind or "").strip() != "informal":
+        if not isinstance(node, model_mod.Comment):
             ctx.emit("markup-usage",
-                     "dMarkup on a node that is not an informal comment",
+                     "dMarkup on a node that is not a comment",
                      elem=node.elem)
         elif not markup.strip():
             ctx.emit("markup-usage", "empty dMarkup value", elem=node.elem)

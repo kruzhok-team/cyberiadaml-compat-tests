@@ -4,7 +4,7 @@ A RELAX NG schema of the CGML document structure, transcribed from ПНСТ 1044
 (`../docs/PNST_1044-2025.md`), and the measurement of how much of the standard a schema can
 carry.
 
-**Document version:** 1.3 (2026-09-25) — follows the testing specification 1.7.
+**Document version:** 1.4 (2026-10-13) — follows the testing specification 1.9.
 
 ## Files
 

@@ -266,11 +266,12 @@ cgml.node.plain =
 
 cgml.node.vertex  = d.dVertex, cgml.node.key.other*, cgml.node.regions
 
-# 9.3-2: dMarkup belongs to an informal comment only, with a non-empty value.
+# 9.3-2: dMarkup belongs to a comment only, with a non-empty value.
 cgml.node.comment =
     ( d.dNote.informal, ( cgml.node.key.other | d.dMarkup )*,
       cgml.node.regions )
-  | ( d.dNote.formal, cgml.node.key.other*, cgml.node.regions )
+  | ( d.dNote.formal, ( cgml.node.key.other | d.dMarkup )*,
+      cgml.node.regions )
 
 # 8.1-1, 8.1-2: dSubmachineState comes first; the only subgraph holds the
 # entry and exit points and carries no data key.

@@ -10,7 +10,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.8 (2026-10-06)
+**Document version:** 1.9 (2026-10-13)
 
 ## 1. Purpose
 
@@ -290,9 +290,9 @@ Inherits base format (2.4).
 
 **9.3 Comment markup** (`CGML-9.3-*`)
 
-- `CGML-9.3-1` MAY: `dMarkup` on an informal comment node (`dNote` = `informal`) selects the markup language of its `dData`; value is a non-empty string; `plain` (default when absent) and `markdown` are standard values, editors may add their own. [R/W]
-- `CGML-9.3-2` MUST: `dMarkup` on any node other than an informal comment, or with an empty value, is invalid. [R/W/X]
-- `CGML-9.3-3` MAY: document-wide default is set via `markupLanguage` metadata (6.9). [R/W]
+- `CGML-9.3-1` MAY: `dMarkup` on a comment node (`dNote` = `informal` or `formal`) selects the markup language of its `dData`; value is a non-empty string; `plain` (default when absent) and `markdown` are standard values, editors may add their own. [R/W]
+- `CGML-9.3-2` MUST: `dMarkup` on any node other than a comment, or with an empty value, is invalid. [R/W/X]
+- `CGML-9.3-3` MAY: document-wide default of the informal comments is set via `markupLanguage` metadata (6.9); a formal comment has no default. [R/W]
 - `CGML-9.3-4` MUST: `dMarkup` key overrides the document-wide `markupLanguage` for the comment. [R/W/X]
 
 ### 2.7 §10 — EXT-PLATFORM extensions

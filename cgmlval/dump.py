@@ -131,6 +131,8 @@ def _put_node(out, depth, document, node):
         if node.kind == "informal":
             out.put(depth + 1, "markup: %s" %
                     _quote(node.markup or document.markup_language()))
+        elif node.markup:              # a formal comment has no default
+            out.put(depth + 1, "markup: %s" % _quote(node.markup))
         if node.body is not None and \
                 not (node.kind == "formal" and node.name == META_NAME):
             # the metadata parameters are rendered by the meta section

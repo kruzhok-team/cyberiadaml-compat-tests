@@ -83,7 +83,8 @@ include "cgml-1.0.rnc" {
   cgml.node.comment =
       ( d.dNote.informal, ( cgml.node.key.rect.other | d.dMarkup )*,
         cgml.node.regions )
-    | ( d.dNote.formal, cgml.node.key.rect.other*, cgml.node.regions )
+    | ( d.dNote.formal, ( cgml.node.key.rect.other | d.dMarkup )*,
+        cgml.node.regions )
 
   cgml.node.submachine =
     d.dSubmachineState, cgml.node.key.rect.other*, cgml.submachine.graph?
