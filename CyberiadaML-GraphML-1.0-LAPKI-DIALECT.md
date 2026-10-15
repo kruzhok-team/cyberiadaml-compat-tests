@@ -1,13 +1,13 @@
 # CyberiadaML-GraphML 1.0 — Lapki Dialect Specification
 
 Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.9) and
-`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.9). Informative: it describes the pre-standard
+`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.10). Informative: it describes the pre-standard
 dialect written by the Lapki IDE (lapki-client through cyberiadaml-js 1.x) and read by
 lapki-compiler (through cyberiadaml-py 1.x), and the normalisation a non-strict reader applies to
 bring such a document to the standard model. It adds no requirement to the standard and changes no
 verdict of `cgmlval`: a dialect document stays invalid.
 
-**Document version:** 0.1 (2026-10-15)
+**Document version:** 0.2 (2026-10-15)
 
 ## 1. Purpose
 
@@ -41,6 +41,11 @@ One definition and one corpus keep the readers normalising the same way:
 - each pattern is a violation of the standard, so the pass changes nothing in a valid document and
   is safe to run on every non-strict read.
 
+The reference implementation is `cgmlval/dialect.py`, run by `python3 -m cgmlval validate|dump
+--dialect lapki FILE`. Its order: D-6, D-5, D-9, D-1 with the meta edges of D-2, D-2, D-7f, D-3,
+D-7a, D-4 / D-7b / D-7d per node, D-7e / D-8b per machine — removals before renames, so no
+finding names an element removed later.
+
 ## 3. Detection
 
 The dialect has no marker: its `gFormat` is `Cyberiada-GraphML-1.0` or `Cyberiada-GraphML`. A
@@ -52,13 +57,13 @@ never written: writers emit `Cyberiada-GraphML-1.0`.
 
 | D | pattern | repair | libcyberiadaml 91bc761 |
 |---|---|---|---|
-| 1 | several `CGML_META` nodes, or one outside the first machine | one document meta; the others become machine parameters | drops the others |
+| 1 | several `CGML_META` nodes, or one outside the first machine; repeated, `undefined` or empty-version parameters | one document meta; the others become machine parameters | drops the others |
 | 2 | component comment named `CGML_COMPONENT` with `id/` in the body; meta→component edges | `CGML_COMPONENT <id>`, edges removed | — |
 | 3 | region graph id equal to a node id | `<node id>::region` | ✓ |
 | 4 | `-1 × -1` rect on a point node; point on a rect node | point; loose rect | ✓ |
 | 5 | undeclared `dLapki*` keys, a point inside them | implicit declaration, text value | — |
 | 6 | `gFormat` without the version; not the first child | read as 1.0 | — |
-| 7 | duplicate edge ids, `dNote` not first, obsolete keys, empty `dNote`, no `edgedefault` | `#N` ids, accepted | — |
+| 7 | duplicate edge ids, `dNote` not first, empty `dNote`, no `edgedefault`, node ids repeated in a later machine | `#N` ids, reordered, `<graph id>::<id>` | — |
 | 8 | `transitionOrder/transitionFirst`; machine without `dName` | `actionFirst`; graph id as name | — |
 | 9 | top-level `dFunction` graphs (cyberiadaml-py 1.4+) | removed from the standard model | — |
 
@@ -71,8 +76,10 @@ never written: writers emit `Cyberiada-GraphML-1.0`.
 - **Repair:** the first `CGML_META` of the first machine — or, if that machine has none, the first
   one in document order — becomes the document metadata at the top level of the first machine.
   Every other `CGML_META` node is removed with the edges touching it; its parameters become the
-  *machine parameters* of the machine it was in. Parameters whose value is `undefined` are
-  dropped. If the document metadata lacks `standardVersion`, `1.0` is assumed.
+  *machine parameters* of the machine it was in. In the document metadata a repeated parameter
+  keeps its first occurrence (the reading rule of §6.9), parameters whose value is `undefined`
+  are dropped, and a missing or empty `standardVersion` becomes `1.0` — lapki-client fills these
+  from platform data that may be absent.
 - **Machine parameters** are a reader-side notion: a reader exposes, per machine, its own
   parameters over the document ones (lapki-compiler takes `platform` and `platformVersion` per
   machine). A standard writer does not write them; a multi-platform project is several documents
@@ -81,8 +88,9 @@ never written: writers emit `Cyberiada-GraphML-1.0`.
 ### D-2 Old component comments
 
 - **Pattern:** a formal comment whose `dName`, with the surrounding blanks removed, is exactly
-  `CGML_COMPONENT` and whose body has an `id` parameter; edges whose source is a `CGML_META` node
-  (the older component attachment).
+  `CGML_COMPONENT` and whose body has an `id` parameter; edges whose source is the id of a
+  `CGML_META` node of any machine (the older component attachment — hand-copied machines keep
+  the edges of the first one).
 - **Repair:** the name becomes `CGML_COMPONENT <id>` (the trimmed `id` value); the `id` parameter
   is removed from the body, the other parameters keep their order; the meta→component edges are
   removed. A comment without `id` is left as it is and reported by the standard checks
@@ -129,16 +137,19 @@ never written: writers emit `Cyberiada-GraphML-1.0`.
   - (a) a duplicate edge id inside a machine — the later edge gets `<id>#<N>`, the smallest free
     `N` from 1 (the template of §5.8.1);
   - (b) `dNote` not the first `data` of a comment — accepted; writers put it first;
-  - (c) obsolete key declarations (`dInitial`) and declarations without `attr.name` — ignored,
-    the declarations of appendix Б apply;
+  - (c) obsolete key declarations (`dInitial`) and declarations without `attr.name` — no repair:
+    a declared non-standard key and a standard key without `attr.name` break no rule;
   - (d) an empty `dNote` — `informal`;
-  - (e) a graph without `edgedefault` — `directed`.
+  - (e) a state machine graph without `edgedefault` — `directed`;
+  - (f) a node id already used by an earlier machine (a component node `c<id>` of every machine,
+    a hand-copied machine) — `<graph id>::<id>`, or `<graph id>::<id>-<N>` with the smallest
+    free `N` from 2, the edges of that machine follow.
 
 ### D-8 Values
 
 - **Pattern / repair:**
   - (a) `transitionOrder/transitionFirst` — `actionFirst`;
-  - (b) a state machine without `dName` — the graph id becomes its name.
+  - (b) a state machine without `dName`, or with an empty one — the graph id becomes its name.
 
 ### D-9 Function graphs
 
@@ -154,7 +165,7 @@ specification):
 
 | field | value |
 |---|---|
-| rule | `lapki-d<n>` (`lapki-d4a`, … for the lettered cases) |
+| rule | `lapki-d<n>`, `lapki-d<n><letter>` for the lettered cases: d1, d2, d3, d4a, d4b, d5a, d5b, d6, d7a, d7b, d7d, d7e, d7f, d8a, d8b, d9 |
 | req | `LAPKI-D<n>` |
 | layer | 0 (before L2) |
 | severity | WARNING |

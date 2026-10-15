@@ -25,16 +25,22 @@ import pathlib
 
 from cgmlval import rules
 from cgmlval.findings import ERROR, INFO, WARNING
-from cgmlval.requirements import REQUIREMENTS, VALIDATOR
+from cgmlval.requirements import DIALECT_REQUIREMENTS, REQUIREMENTS, VALIDATOR
 
 rules.load_checks()
 
 # the L1 preconditions that have no clause of their own
 REQLESS = ("xml-not-empty", "xml-well-formed")
 
+# the dialect rules sit outside the standard and its audits
+STANDARD_RULES = [r for r in rules.REGISTRY.values()
+                  if r.req not in DIALECT_REQUIREMENTS]
+DIALECT_RULES = [r for r in rules.REGISTRY.values()
+                 if r.req in DIALECT_REQUIREMENTS]
+
 
 def test_every_rule_cites_a_known_requirement():
-    for rule_obj in rules.REGISTRY.values():
+    for rule_obj in STANDARD_RULES:
         if rule_obj.name in REQLESS:
             assert rule_obj.req is None
         else:
@@ -44,7 +50,7 @@ def test_every_rule_cites_a_known_requirement():
 
 
 def test_no_rule_cites_an_out_of_scope_requirement():
-    for rule_obj in rules.REGISTRY.values():
+    for rule_obj in STANDARD_RULES:
         for req in (rule_obj.req,) + rule_obj.also:
             if req is None:
                 continue
@@ -61,10 +67,19 @@ def test_every_validator_requirement_has_a_rule():
 
 
 def test_rule_metadata_is_well_formed():
-    for rule_obj in rules.REGISTRY.values():
+    for rule_obj in STANDARD_RULES:
         assert rule_obj.layer in (1, 2, 3, 4), rule_obj.name
         assert rule_obj.severity in (ERROR, WARNING, INFO), rule_obj.name
         assert rule_obj.title, rule_obj.name
+
+
+def test_dialect_rules_are_layer_zero_warnings():
+    assert DIALECT_RULES
+    for rule_obj in DIALECT_RULES:
+        assert rule_obj.layer == 0, rule_obj.name
+        assert rule_obj.severity == WARNING, rule_obj.name
+        assert rule_obj.name.startswith("lapki-"), rule_obj.name
+    assert {r.req for r in DIALECT_RULES} == set(DIALECT_REQUIREMENTS)
 
 
 def test_every_validator_requirement_has_a_fixture():

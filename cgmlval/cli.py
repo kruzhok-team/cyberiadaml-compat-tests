@@ -25,6 +25,7 @@ import json
 import sys
 
 from cgmlval import VERSION, rules
+from cgmlval.dialect import DIALECTS
 from cgmlval.requirements import REQUIREMENTS
 
 EXIT_OK = 0
@@ -48,7 +49,7 @@ def _cmd_validate(args):
         data = _read(path)
         if data is None:
             return EXIT_USAGE
-        ctx = rules.run_document(data, path)
+        ctx = rules.run_document(data, path, args.dialect)
         report = ctx.report
         if args.json:
             results.append(report.to_json(path, args.strict))
@@ -68,7 +69,7 @@ def _cmd_dump(args):
     data = _read(args.file)
     if data is None:
         return EXIT_USAGE
-    ctx = rules.run_document(data, args.file)
+    ctx = rules.run_document(data, args.file, args.dialect)
     report = ctx.report
     if report.has_errors() or ctx.model is None:
         if args.json:
@@ -128,6 +129,8 @@ def main(argv=None):
                             help="fail on warnings as well as errors")
     p_validate.add_argument("--json", action="store_true",
                             help="emit the reports as JSON")
+    p_validate.add_argument("--dialect", choices=DIALECTS,
+                            help="repair a pre-standard dialect first")
     p_validate.set_defaults(func=_cmd_validate)
 
     p_dump = sub.add_parser(
@@ -135,6 +138,8 @@ def main(argv=None):
     p_dump.add_argument("file", metavar="FILE")
     p_dump.add_argument("--json", action="store_true",
                         help="emit the failure report as JSON")
+    p_dump.add_argument("--dialect", choices=DIALECTS,
+                        help="repair a pre-standard dialect first")
     p_dump.set_defaults(func=_cmd_dump)
 
     p_rules = sub.add_parser("rules", help="list the registered checks")

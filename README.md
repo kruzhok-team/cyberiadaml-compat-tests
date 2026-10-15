@@ -26,8 +26,8 @@ details. The standard document are stated in the `docs/PNST_984-2024.md` and the
 
 The `cgmlval` validator runs on Python 3 (stdlib only) from the repository root:
 
-    python3 -m cgmlval validate [--strict] [--json] FILE...
-    python3 -m cgmlval dump [--json] FILE
+    python3 -m cgmlval validate [--strict] [--json] [--dialect lapki] FILE...
+    python3 -m cgmlval dump [--json] [--dialect lapki] FILE
     python3 -m cgmlval rules [--json]
 
 `validate` checks documents through the layers L1 (XML), L2 (tag tree),
@@ -35,7 +35,9 @@ L3 (attributes and values) and L4 (document integrity); an error at a layer
 stops the layers above it. Exit code 0 means no errors; `--strict` also fails
 on warnings. `dump` prints the canonical dump of a valid document (the golden
 file format of the test catalog); `rules` lists the registered checks with
-their requirement identifiers.
+their requirement identifiers. `--dialect lapki` repairs the pre-standard Lapki
+dialect before L2 and reports each repair as a `LAPKI-D<n>` finding (see the
+dialect specification).
 
 ## The compatibility harness
 

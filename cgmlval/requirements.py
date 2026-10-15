@@ -228,3 +228,18 @@ REQUIREMENTS = {
     # Appendix Standard key declarations
     "CGML-appendix-B-1": Req(MUST, "RWX", CORE, VALIDATOR),
 }
+
+
+# the informative Lapki dialect (CyberiadaML-GraphML-1.0-LAPKI-DIALECT.md):
+# outside the standard, kept apart from REQUIREMENTS and its audits
+DIALECT_REQUIREMENTS = {
+    "LAPKI-D1": "several metadata nodes",
+    "LAPKI-D2": "old component comments",
+    "LAPKI-D3": "region graph id equal to a node id",
+    "LAPKI-D4": "geometry kinds",
+    "LAPKI-D5": "private keys of the Lapki IDE",
+    "LAPKI-D6": "format label",
+    "LAPKI-D7": "structural leniency",
+    "LAPKI-D8": "values",
+    "LAPKI-D9": "function graphs",
+}

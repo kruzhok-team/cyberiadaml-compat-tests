@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from typing import Callable, Optional
 
 from cgmlval.findings import Finding, Report
-from cgmlval.requirements import REQUIREMENTS
+from cgmlval.requirements import DIALECT_REQUIREMENTS, REQUIREMENTS
 
 
 @dataclass
@@ -46,7 +46,8 @@ def _register(rule_obj):
     if rule_obj.name in REGISTRY:
         raise ValueError("duplicate rule name: %s" % rule_obj.name)
     for req in (rule_obj.req,) + tuple(rule_obj.also):
-        if req is not None and req not in REQUIREMENTS:
+        if req is not None and req not in REQUIREMENTS \
+                and req not in DIALECT_REQUIREMENTS:
             raise ValueError("unknown requirement: %s" % req)
     REGISTRY[rule_obj.name] = rule_obj
 
@@ -85,6 +86,7 @@ class Context:
         self.layer = 0
         self.parsed = None   # xmlload.ParsedDocument after L1
         self.model = None    # model.Document after the model build
+        self.dialect = None  # dialect.Result when a dialect pass ran
 
     def emit(self, name, message, elem=None, line=None, column=None, path=None):
         rule_obj = REGISTRY[name]
@@ -100,7 +102,8 @@ class Context:
 
 def load_checks():
     """Import the check modules so that their rules register."""
-    from cgmlval import checks_l3, checks_l4, tagtree, xmlload  # noqa: F401
+    from cgmlval import (checks_l3, checks_l4, dialect,  # noqa: F401
+                         tagtree, xmlload)
 
 
 def run_layer(ctx, layer):
@@ -111,8 +114,12 @@ def run_layer(ctx, layer):
     ctx.report.layers_run.append(layer)
 
 
-def run_document(data, filename="<data>"):
-    """Run the validation layers over the document bytes; return the context."""
+def run_document(data, filename="<data>", dialect=None):
+    """Run the validation layers over the document bytes; return the context.
+
+    A dialect name runs its repair pass between L1 and L2 (layer 0).
+    """
+    from cgmlval import dialect as dialect_pass
     from cgmlval import model, tagtree, xmlload
 
     load_checks()
@@ -122,6 +129,9 @@ def run_document(data, filename="<data>"):
     ctx.report.layers_run.append(1)
     if ctx.report.has_errors(layer=1) or ctx.parsed is None:
         return ctx
+    if dialect is not None:
+        ctx.layer = 0
+        ctx.dialect = dialect_pass.apply(ctx, dialect)
     ctx.layer = 2
     tagtree.check(ctx)
     ctx.report.layers_run.append(2)

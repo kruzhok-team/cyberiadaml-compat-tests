@@ -5,7 +5,7 @@ Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.7) and
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.9 (2026-10-13)
+**Document version:** 1.10 (2026-10-15)
 
 ## 1. Purpose
 
@@ -75,8 +75,8 @@ integration harness and implementation drivers, per-profile certification report
 
 ## 3. Command line interface
 
-    python3 -m cgmlval validate [--strict] [--json] FILE...
-    python3 -m cgmlval dump [--json] FILE
+    python3 -m cgmlval validate [--strict] [--json] [--dialect lapki] FILE...
+    python3 -m cgmlval dump [--json] [--dialect lapki] FILE
     python3 -m cgmlval rules [--json]
 
 Exit codes: `0` — no errors (dump emitted); `1` — errors found (with `--strict`: errors or
@@ -93,6 +93,11 @@ the registry: check name, requirement, layer, level, profile, severity, title.
 
 When source positions are unavailable the `line:column` part is omitted and only the element
 path locates the finding.
+
+`--dialect lapki` runs the repair pass of `CyberiadaML-GraphML-1.0-LAPKI-DIALECT.md` between L1
+and L2 (`cgmlval/dialect.py`). Its findings are layer `0` WARNINGs under the ids `LAPKI-D<n>`,
+kept in a table of their own (`DIALECT_REQUIREMENTS`) outside the requirement audits; the
+pass does not appear in `layers_run`, and the harness never uses it.
 
 ## 4. Validation pipeline
 
