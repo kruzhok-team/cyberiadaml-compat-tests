@@ -7,7 +7,7 @@ lapki-compiler (through cyberiadaml-py 1.x), and the normalisation a non-strict 
 bring such a document to the standard model. It adds no requirement to the standard and changes no
 verdict of `cgmlval`: a dialect document stays invalid.
 
-**Document version:** 0.2 (2026-10-15)
+**Document version:** 0.3 (2026-10-15)
 
 ## 1. Purpose
 
@@ -178,11 +178,17 @@ repairs leave (e.g. the WARNING `CGML-7.2-1-5` on transition geometry in a `none
 
 ```
 fixtures/dialect/lapki/
-  manifest.json            source repository, path, revision, writer, patterns per document
-  <name>.graphml           the document as the IDE wrote it, byte for byte
-  <name>.expected.txt      canonical dump (validator §7) of the normalised model
-  <name>.repairs.txt       the expected LAPKI-D<n> findings: id and count, one per line
+  manifest.json            {"documents": {name: {repository, path, revision, also[],
+                                                 status, errors[]}}}
+  <name>.graphml           the document as its writer left it, byte for byte
+  <name>.repairs.txt       the expected repairs: `LAPKI-D<n> <count>`, one id per line, sorted
+  <name>.expected.txt      canonical dump (validator §7) of the repaired document — valid only
+  README.md                the sources and their licences
 ```
+
+`also` lists further sources with the same content; `status` is `valid`, or `invalid` for a
+document that still breaks the standard after the repairs, with the requirement ids in
+`errors`. The manifest is not the harness manifest and never joins `fixtures/manifest.json`.
 
 Sources (39 unique documents written by the Lapki tools plus one synthetic, duplicates by
 content removed; the legacy yEd files of `lapki-compiler/examples/old/` and `авто.graphml` are
@@ -196,17 +202,23 @@ out of scope):
 | cyberiadaml-js `demos/` (Lapki-written only) | 5 | LGPL-3 |
 | libcyberiadaml `tests/diagrams/lapki-js.graphml` (synthetic) | 1 | LGPL-3 |
 
-The expected files are produced by the reference implementation, `cgmlval` with the dialect pass
-(`python3 -m cgmlval dump --dialect lapki FILE`), and reviewed by hand when recorded. Library test
-suites take a snapshot of the corpus with its revision; the documents keep their licence there.
+The 40 documents: 36 valid, 4 invalid — `compiler-test-cyberbear` (`CGML-6.2-3`, two sibling
+states share a name) and three hand-made demos with `entry propagate/` (`CGML-6.8-4-1`): content
+errors, not dialect habits, so no repair touches them.
+
+`tools/dialect_corpus.py collect` copies the documents from the sibling checkouts, `record` writes
+the expected files with the reference implementation; a recorded change is reviewed by hand.
+Library test suites take a snapshot of the corpus with its revision; the documents keep their
+licence there.
 
 ## 7. Reader conformance
 
 A reader supports the dialect when, for every corpus document:
 
-1. non-strict reading succeeds, the canonical dump equals `<name>.expected.txt`, and the repair
-   findings equal `<name>.repairs.txt`;
-2. writing the model gives a document `cgmlval` validates;
+1. non-strict reading succeeds and the repair findings equal `<name>.repairs.txt`;
+2. a valid document: the canonical dump equals `<name>.expected.txt`, and writing the model gives
+   a document `cgmlval` validates; an invalid one: the reader reports the `errors` of the
+   manifest;
 3. strict reading rejects it.
 
 The dialect is not a profile of the testing specification: the harness report does not score it,

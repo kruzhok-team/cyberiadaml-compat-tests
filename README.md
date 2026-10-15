@@ -37,7 +37,8 @@ on warnings. `dump` prints the canonical dump of a valid document (the golden
 file format of the test catalog); `rules` lists the registered checks with
 their requirement identifiers. `--dialect lapki` repairs the pre-standard Lapki
 dialect before L2 and reports each repair as a `LAPKI-D<n>` finding (see the
-dialect specification).
+dialect specification). The dialect corpus `fixtures/dialect/lapki/` is collected
+and recorded with `tools/dialect_corpus.py collect|record`.
 
 ## The compatibility harness
 
