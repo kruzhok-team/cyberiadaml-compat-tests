@@ -89,7 +89,7 @@ class Context:
     def emit(self, name, message, elem=None, line=None, column=None, path=None):
         rule_obj = REGISTRY[name]
         if elem is not None and self.parsed is not None:
-            info = self.parsed.info.get(id(elem))
+            info = self.parsed.info.get(elem)
             if info is not None:
                 line = info[0] if line is None else line
                 column = info[1] if column is None else column

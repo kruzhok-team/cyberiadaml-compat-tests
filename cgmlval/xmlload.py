@@ -59,9 +59,15 @@ _BOMS = (
 @dataclass
 class ParsedDocument:
     root: ET.Element
-    # id(element) -> (line, column, element path)
+    # element -> (line, column, element path); keyed by the element itself,
+    # an id() key would outlive an element removed by the dialect pass
     info: dict = field(default_factory=dict)
     declaration: Optional[tuple] = None  # (version, encoding, standalone)
+
+    def inherit(self, elem, donor):
+        """Give an element created after the parse the position of donor."""
+        if donor in self.info:
+            self.info[elem] = self.info[donor]
 
 
 class _TreeLoader:
@@ -80,7 +86,7 @@ class _TreeLoader:
         self.declaration = None
 
     def _path(self, tag, attrs):
-        base = self.info[id(self.stack[-1])][2] if self.stack else ""
+        base = self.info[self.stack[-1]][2] if self.stack else ""
         if tag == "data" and "key" in attrs:
             seg = "data[key=%s]" % attrs["key"]
         elif "id" in attrs:
@@ -91,7 +97,7 @@ class _TreeLoader:
 
     def _start(self, tag, attrs):
         elem = ET.Element(tag, attrs)
-        self.info[id(elem)] = (self.parser.CurrentLineNumber,
+        self.info[elem] = (self.parser.CurrentLineNumber,
                                self.parser.CurrentColumnNumber + 1,
                                self._path(tag, attrs))
         if self.stack:
