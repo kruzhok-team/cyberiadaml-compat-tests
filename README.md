@@ -17,6 +17,8 @@ details. The standard document are stated in the `docs/PNST_984-2024.md` and the
   the `cgmlval` tool and the canonical dump format;
 * `CyberiadaML-GraphML-1.0-HARNESS-SPEC.md` - the compatibility harness specification:
   the fixture corpus, the library driver contract and the conformance report.
+* `CyberiadaML-GraphML-1.0-LAPKI-DIALECT.md` - the pre-standard Lapki dialect (informative):
+  its patterns, the repairs of a non-strict reader and the dialect corpus.
 * `schema/README.md` - the RELAX NG schema of the document structure and the
   measurement of how much of the standard a schema can carry.
 
