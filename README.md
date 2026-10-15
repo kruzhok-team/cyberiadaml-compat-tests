@@ -70,4 +70,6 @@ sibling repositories (skipped when absent).
 Copyright (c) Alexey Fedoseev aleksey@fedoseev.net, 2026.
 
 The code is distributed under the GNU Public License (version 3), the documentation -- under
-the GNU Free Documentation License (version 1.3).
+the GNU Free Documentation License (version 1.3). The `cgmlval` validator is also
+distributed under the GNU Lesser General Public License (version 3) as the standard-compliant
+cores of cyberiadaml-py (`cyberiadaml_py/core`) and cyberiadaml-js (`src/core`).

@@ -45,11 +45,14 @@ function info() {
         version = JSON.parse(
             fs.readFileSync(path.join(LIB, "package.json"), "utf8")).version;
     } catch (err) {}
+    const profiles = ["CORE"];
     if (lib.core !== undefined) {
+        // the core reads and writes the extension profiles as well
         version += "+core";
+        profiles.push("EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM");
     }
     process.stdout.write(JSON.stringify(
-        {name: "cyberiadaml-js", version: version, profiles: ["CORE"]}) + "\n");
+        {name: "cyberiadaml-js", version: version, profiles: profiles}) + "\n");
     return 0;
 }
 

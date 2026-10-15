@@ -54,10 +54,13 @@ def info():
         version = pyproject["tool"]["poetry"]["version"]
     except Exception:
         pass
+    profiles = ["CORE"]
     if _core() is not None:
+        # the core reads and writes the extension profiles as well
         version += "+core"
+        profiles += ["EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM"]
     print(json.dumps({"name": "cyberiadaml-py", "version": version,
-                      "profiles": ["CORE"]}))
+                      "profiles": profiles}))
     return 0
 
 
