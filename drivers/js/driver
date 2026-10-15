@@ -45,6 +45,9 @@ function info() {
         version = JSON.parse(
             fs.readFileSync(path.join(LIB, "package.json"), "utf8")).version;
     } catch (err) {}
+    if (lib.core !== undefined) {
+        version += "+core";
+    }
     process.stdout.write(JSON.stringify(
         {name: "cyberiadaml-js", version: version, profiles: ["CORE"]}) + "\n");
     return 0;
@@ -52,10 +55,15 @@ function info() {
 
 function convert(src, dst) {
     const lib = loadLibrary();
-    const text = fs.readFileSync(src, "utf8");
     let output;
     try {
-        output = lib.exportGraphml(lib.parseCGML(text));
+        if (lib.core !== undefined) {
+            // the standard core of 2.0 reads strictly, as the c and py drivers do
+            const data = new Uint8Array(fs.readFileSync(src));
+            output = lib.core.write(lib.core.read(data, {strict: true}));
+        } else {
+            output = lib.exportGraphml(lib.parseCGML(fs.readFileSync(src, "utf8")));
+        }
     } catch (err) {
         process.stderr.write("rejected by cyberiadaml-js: " +
             err.message + "\n");
