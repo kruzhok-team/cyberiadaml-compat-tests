@@ -7,12 +7,13 @@ lapki-compiler (through cyberiadaml-py 1.x), and the normalisation a non-strict 
 bring such a document to the standard model. It adds no requirement to the standard and changes no
 verdict of `cgmlval`: a dialect document stays invalid.
 
-**Document version:** 0.3 (2026-10-15)
+**Document version:** 0.4 (2026-10-16)
 
 ## 1. Purpose
 
-Three readers accept the dialect — libcyberiadaml (non-strict mode, partial), cyberiadaml-py and
+Three readers accept the dialect — libcyberiadaml (non-strict mode), cyberiadaml-py and
 cyberiadaml-js — and lapki-client keeps writing it until its library moves to the standard writer.
+libcyberiadaml also writes it for the 1.x readers (§7.1).
 One definition and one corpus keep the readers normalising the same way:
 
 - the patterns D-1…D-9 below, each a violation of the standard, with the repair;
@@ -55,16 +56,16 @@ never written: writers emit `Cyberiada-GraphML-1.0`.
 
 ## 4. Patterns and repairs
 
-| D | pattern | repair | libcyberiadaml 91bc761 |
+| D | pattern | repair | libcyberiadaml e6854a2 |
 |---|---|---|---|
-| 1 | several `CGML_META` nodes, or one outside the first machine; repeated, `undefined` or empty-version parameters | one document meta; the others become machine parameters | drops the others |
-| 2 | component comment named `CGML_COMPONENT` with `id/` in the body; meta→component edges | `CGML_COMPONENT <id>`, edges removed | — |
+| 1 | several `CGML_META` nodes, or one outside the first machine; repeated, `undefined` or empty-version parameters | one document meta; the others become machine parameters | ✓, the machine parameters dropped |
+| 2 | component comment named `CGML_COMPONENT` with `id/` in the body; meta→component edges | `CGML_COMPONENT <id>`, edges removed | ✓ |
 | 3 | region graph id equal to a node id | `<node id>::region` | ✓ |
 | 4 | `-1 × -1` rect on a point node; point on a rect node | point; loose rect | ✓ |
-| 5 | undeclared `dLapki*` keys, a point inside them | implicit declaration, text value | — |
-| 6 | `gFormat` without the version; not the first child | read as 1.0 | — |
-| 7 | duplicate edge ids, `dNote` not first, empty `dNote`, no `edgedefault`, node ids repeated in a later machine | `#N` ids, reordered, `<graph id>::<id>` | — |
-| 8 | `transitionOrder/transitionFirst`; machine without `dName` | `actionFirst`; graph id as name | — |
+| 5 | undeclared `dLapki*` keys, a point inside them | implicit declaration, text value | the data dropped |
+| 6 | `gFormat` without the version; not the first child | read as 1.0 | ✓ |
+| 7 | duplicate edge ids, `dNote` not first, empty `dNote`, no `edgedefault`, node ids repeated in a later machine | `#N` ids, reordered, `<graph id>::<id>` | ✓, the repeated node ids kept |
+| 8 | `transitionOrder/transitionFirst`; machine without `dName` | `actionFirst`; graph id as name | ✓ |
 | 9 | top-level `dFunction` graphs (cyberiadaml-py 1.4+) | removed from the standard model | — |
 
 ### D-1 Several metadata nodes
@@ -224,11 +225,32 @@ A reader supports the dialect when, for every corpus document:
 The dialect is not a profile of the testing specification: the harness report does not score it,
 the library test suites and the `cgmlval` tests do.
 
+### 7.1 Writing for the 1.x readers
+
+lapki-client reads through cyberiadaml-js 1.x and lapki-compiler through cyberiadaml-py 1.x;
+both reject parts of the standard (registry JS-5, JS-6, JS-12, JS-14, PY-1). A writer serving
+them (libcyberiadaml `cybxmlLapki`) keeps `gFormat` `Cyberiada-GraphML-1.0` and inverts the
+repairs the readers need:
+
+| W | the standard model | written |
+|---|---|---|
+| 1 | one document metadata node | a `CGML_META` in every machine (the 1.x readers take the platform per machine) |
+| 2 | `CGML_COMPONENT <id>` | `CGML_COMPONENT` with `id/ <id>` as the first parameter |
+| 3 | a label rect | a label point at its corner |
+| 4 | a comment rect; an element without geometry | a comment point; a laid-out position |
+| 5 | an initial transition with behavior only | the behavior without `/` |
+| 6 | no `platform`; a formal comment other than metadata or a component; a transition with behavior but no trigger | refused |
+
+Verified on the corpus: the 39 documents with a platform, read non-strictly and written so, are
+read by cyberiadaml-js 1.2.4 and cyberiadaml-py 1.4.1; lapki-compiler generates byte-identical
+code for 19 of its 20 examples and whitespace-only differences for the hand-formatted one.
+
 ## 8. Open items
 
 - the text form of `dLapkiSchemePosition` (D-5) — to be confirmed with lapki-client, which is
   expected to write it directly once it moves to the standard writer;
 - per-machine platforms of multi-machine Lapki projects (D-1) — the standard way is one document
   per platform;
-- libcyberiadaml covers D-3, D-4 and part of D-1 (machine parameters dropped); the rest is a
-  follow-up there.
+- libcyberiadaml drops the machine parameters (D-1) and the `dLapki*` data (D-5: the component
+  positions of the scheme screen), keeps node ids repeated in a later machine (D-7f) and does
+  not handle D-9; a written copy places the components at the lapki-client default.
