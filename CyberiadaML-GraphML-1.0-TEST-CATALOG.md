@@ -84,6 +84,7 @@ respect, named in its test row.
 | `F-GEO-F` | `F-GEO-S` with `geometry/ full`, edge polylines, source/target points, label rects, a self-loop with polyline |
 | `F-FLAT` | flattened-hierarchy document: states whose ids encode former nesting (`n0::n1`), no composite nodes |
 | `F-EXT-C` | EXT-COMPLETENESS features: submachine, histories, entry/exit points, collapsed composite, comment link to transition |
+| `F-EXT-LINK-GEO` | `geometry/ full` comment links with geometry: to a node (source and target points), to a transition (the target point on its path, relative to the transition's source), to a fragment (the source point only) |
 | `F-EXT-D` | EXT-DISPLAY features: colors, markup |
 | `F-EXT-D-NAMED` | EXT-DISPLAY: CSS colour names `red`, `SteelBlue` (CGML-9.2-3) |
 | `F-EXT-P` | EXT-PLATFORM features: formal names, `CGML_COMPONENT` |
@@ -331,7 +332,7 @@ that pass L1–L4.
 | T-9.1-1.1 | CGML-9.1-1 | A | `F-GEO-F`: edge polyline points, `dSourcePoint`, `dTargetPoint`, label rect → parsed |
 | T-9.1-1-1.1 | CGML-9.1-1-1 | A | polyline with one intermediate point, relative to the source's top-left → coordinates in model |
 | T-9.1-1-2.1 | CGML-9.1-1-2 | A | `dSourcePoint` on every full-mode edge → parsed relative to the source |
-| T-9.1-1-3.1 | CGML-9.1-1-3-1…3 | A | `dTargetPoint` on a transition, a link to a node, a link to a transition → parsed relative to the target / the transition's source (3 fixtures) |
+| T-9.1-1-3.1 | CGML-9.1-1-3-1…3 | A | `F-EXT-LINK-GEO`: `dTargetPoint` on a transition, a link to a node, a link to a transition → parsed relative to the target / the transition's source |
 | T-9.1-1-4.1 | CGML-9.1-1-4 | A | label geometry as a rect → parsed |
 | T-9.1-1-5.1 | CGML-9.1-1-5 | X | label rect with zero `width` in a full document → rejected or reported |
 | T-9.1-2.1 | CGML-9.1-2 | W | full-mode writer output contains complete geometry (L1–L4 check) |
