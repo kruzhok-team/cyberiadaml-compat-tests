@@ -16,7 +16,7 @@ state-machine "G":
     name: "B"
     action entry:
       do: "run()"
-    geometry: rect 360.00 100.00 100.00 50.00
+    geometry: rect 360.00 100.00 140.00 50.00
   comment "c" informal:
     markup: "plain"
     body: "A note"
