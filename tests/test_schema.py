@@ -61,6 +61,14 @@ UNREACHABLE = frozenset((
     "X-6.8-5-1-defer-with-behaviour", # dData behaviour grammar
     "X-6.8-5-2-propagate-no-event", # dData behaviour grammar
     "X-6.7-3-chunk-not-found",      # text containment
+    "X-6.7-3-chunk-not-in-data",    # text containment
+    "X-6.7-3-data-on-vertex",       # text containment (no body)
+    "X-8.5-4-name-on-transition",   # text containment (no name)
+    "X-6.7-2-other-machine",        # reference resolution
+    "X-6.7-2-sm-target",            # reference resolution
+    "X-6.7-2-region-target",        # reference resolution
+    "X-8.5-1-other-machine-transition",  # reference resolution
+    "X-6.7-4-state-source",         # the source node kind
     "X-8.1-1-1-self-reference",     # reference identity
     "X-8.1-3-submachine-data",      # key admissibility per node kind
     "X-8.1-4-point-name-mismatch",  # cross-graph name resolution

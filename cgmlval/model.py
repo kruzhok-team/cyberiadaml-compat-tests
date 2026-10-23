@@ -125,6 +125,9 @@ class CommentLink:
     target: Optional[str] = None
     pivot: Optional[str] = None
     chunk: Optional[str] = None
+    polyline: list = field(default_factory=list)
+    source_point: object = None
+    target_point: object = None
 
 
 @dataclass
@@ -317,20 +320,22 @@ def _build_edge(edge):
         "source": edge.get("source"),
         "target": edge.get("target"),
     }
-    if items and items[0][0] == "dPivot":
-        return CommentLink(pivot=data_value(edge, "dPivot"),
-                           chunk=data_value(edge, "dChunk"), **common)
-    text = data_value(edge, "dData")
-    blocks, errors = actions.parse(text, transition=True)
-    label = _geometry(edge, "dLabelGeometry")
     source_points = _points(edge, "dSourcePoint")
     target_points = _points(edge, "dTargetPoint")
+    geometry = {
+        "polyline": _points(edge, "dGeometry"),
+        "source_point": source_points[0] if source_points else None,
+        "target_point": target_points[0] if target_points else None,
+    }
+    if items and items[0][0] == "dPivot":
+        return CommentLink(pivot=data_value(edge, "dPivot"),
+                           chunk=data_value(edge, "dChunk"),
+                           **geometry, **common)
+    text = data_value(edge, "dData")
+    blocks, errors = actions.parse(text, transition=True)
     return Transition(blocks=blocks, block_errors=errors, data=text,
-                      polyline=_points(edge, "dGeometry"),
-                      source_point=source_points[0] if source_points else None,
-                      target_point=target_points[0] if target_points else None,
-                      label_geometry=label,
-                      color=data_value(edge, "dColor"), **common)
+                      label_geometry=_geometry(edge, "dLabelGeometry"),
+                      color=data_value(edge, "dColor"), **geometry, **common)
 
 
 def _build_machine(graph):

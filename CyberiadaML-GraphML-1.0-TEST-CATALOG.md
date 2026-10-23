@@ -5,7 +5,7 @@ check every requirement of the testing specification and organizes the testing p
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.11 (2026-10-13)
+**Document version:** 1.12 (2026-10-23)
 
 ## 1. Testing layers
 
@@ -84,12 +84,13 @@ respect, named in its test row.
 | `F-GEO-F` | `F-GEO-S` with `geometry/ full`, edge polylines, source/target points, label rects, a self-loop with polyline |
 | `F-FLAT` | flattened-hierarchy document: states whose ids encode former nesting (`n0::n1`), no composite nodes |
 | `F-EXT-C` | EXT-COMPLETENESS features: submachine, histories, entry/exit points, collapsed composite, comment link to transition |
-| `F-EXT-LINK-GEO` | `geometry/ full` comment links with geometry: to a node (source and target points), to a transition (the target point on its path, relative to the transition's source), to a fragment (the source point only) |
+| `F-EXT-LINK-GEO` | `geometry/ full` comment links with geometry: to a node (source and target points, one with a polyline), to a transition (the target point on its path, relative to the transition's source), to fragments of a state body and of the transition label — an event, a guard, an action (the source point only) |
 | `F-EXT-D` | EXT-DISPLAY features: colors, markup |
 | `F-EXT-D-NAMED` | EXT-DISPLAY: CSS colour names `red`, `SteelBlue` (CGML-9.2-3) |
 | `F-EXT-P` | EXT-PLATFORM features: formal names, `CGML_COMPONENT` |
 | `F-EXT-P-MULTI` | EXT-PLATFORM: the same component `timer1` defined in two state machines by two nodes with their own ids (CGML-10.3-1, CGML-10.3-2) |
 | `F-CMT` | comments (informal + formal) with subject links (`dPivot`/`dChunk`) |
+| `F-LINKS` | the link subjects of 6.7.2: a state name, a state body fragment, another comment's body, the initial pseudostate and a composite state (whole), a comment inside a region linking a state outside it, the same subject linked twice |
 | `F-FIELD-*` | real-world documents collected from the ecosystem (converted legacy diagrams, IDE-produced files, generator examples) — admitted after passing L1–L4 |
 
 **Cross-cutting suites** (run automatically, not listed per requirement):
@@ -177,7 +178,7 @@ respect, named in its test row.
 | T-6.4-2.2 | CGML-6.4-2 | X | `dVertex` value `banana` → rejected |
 | T-6.6-1.2b | CGML-6.6-1 | X | `dNote` value `casual` → rejected |
 | T-6.7-1.3 | CGML-6.7-1 | X | `dPivot` value `dColor` → rejected |
-| T-6.7-3.2 | CGML-6.7-3 | X | `dPivot` = `dName` without `dChunk`; with empty `dChunk` (2 variants) → rejected |
+| T-6.7-3.2 | CGML-6.7-3 | X | `dPivot` = `dName` without `dChunk` (`X-6.7-3-no-chunk`); with empty `dChunk` (`X-6.7-3-empty-chunk`) → rejected |
 | T-6.8-1.1 | CGML-6.8-1 | A | transition `Trigger [Guard]/ behavior` → trigger/guard/behavior separated correctly |
 | T-6.8-1.2 | CGML-6.8-1 | A | empty `dData` → no behavior, no error |
 | T-6.8-1.3 | CGML-6.8-1 | A | trigger with guard and empty behavior list; `entry/` with empty body (2 fixtures) → accepted |
@@ -258,12 +259,15 @@ respect, named in its test row.
 | T-6.4-4-2.1 | CGML-6.4-4-2 | I | state machine without any `initial` (`F-EMPTY-SM`) → valid, INFO reported |
 | T-6.2-3.3 | CGML-6.2-3 | A | two sibling comments with the same name → accepted |
 | T-6.7-3.3 | CGML-6.7-3 | X | `dChunk` not a substring of the subject's `dName` → rejected |
+| T-6.7-3.4 | CGML-6.7-3 | X | `dData` chunk absent from the state's behaviour (`X-6.7-3-chunk-not-in-data`); `dData` link to a pseudostate, which has no body (`X-6.7-3-data-on-vertex`) → rejected |
 | T-8.1-1.5 | CGML-8.1-1-1 | X | `dSubmachineState` naming the containing machine → rejected |
 | T-8.1-4.1 | CGML-8.1-4 | X | submachine point named `Begin` while the referenced machine defines `Start`/`Done` → rejected |
 | T-8.3-5.1 | CGML-8.3-5 | X | entry point inside the second region of a two-region state → rejected |
 | T-8.3-5.2 | CGML-8.3-5 | A | `F-REGIONS`: entry point inside the first region of a two-region state → accepted |
 | T-6.7-2.1 | CGML-6.7-2 | X | comment link to nonexistent node → rejected |
-| T-6.7-4.1 | CGML-6.7-4 | X | link whose `source` is a state; link with `source` = `target` (2 variants) → rejected |
+| T-6.7-2.2 | CGML-6.7-2 | X | link to a node of the other state machine (`X-6.7-2-other-machine`); to the state-machine graph id (`X-6.7-2-sm-target`); to a region graph id (`X-6.7-2-region-target`) → rejected |
+| T-6.7-4.1 | CGML-6.7-4 | X | link whose `source` is a state (`X-6.7-4-state-source`); link with `source` = `target` (`X-6.7-4-self-loop`) → rejected |
+| T-6.7-6.1 | CGML-6.7-6 | X | link geometry while the comment, the subject node or the commented transition's source has none → reported |
 | T-6.9-1.1 | CGML-6.9-1 | X | no `CGML_META` node; meta only in second SM (2 variants) → rejected |
 | T-6.9-1.3 | CGML-6.9-1 | X | a second `CGML_META` comment; a comment link attached to `CGML_META` (2 variants) → rejected |
 | T-7.1-1.1 | CGML-7.1-1 | A | `F-MIN` (none), `F-GEO-S` (short), `F-GEO-F` (full) → mode detected correctly |
@@ -272,6 +276,9 @@ respect, named in its test row.
 | T-8.4-2.1 | CGML-8.4-2 | X | `dCollapsed` state without a region subgraph → rejected |
 | T-8.5-2.2 | CGML-8.5-2 | X | comment link targeting another comment link → rejected |
 | T-8.5-3.1 | CGML-8.5-3 | X | plain transition (no `dPivot`) targeting an edge id → rejected |
+| T-8.5-1.2 | CGML-6.7-2 | X | comment link to a transition of the other state machine (`X-8.5-1-other-machine-transition`) → rejected |
+| T-8.5-4.1 | CGML-8.5-4 | X | `dPivot` = `dName` on a link to a transition (`X-8.5-4-name-on-transition`) → rejected |
+| T-9.1-2.2 | CGML-9.1-2 | X | `geometry/ full` link without `dSourcePoint`; whole-element link without `dTargetPoint` → reported |
 | T-10.1-3.1 | CGML-10.1-3 | X | duplicate SM formal names; duplicate sibling-state formal names (2 variants) → rejected |
 
 ### 3.5 Integration tests (implementations under test)
@@ -312,6 +319,8 @@ that pass L1–L4.
 | T-6.9-6.1 | CGML-6.9-6 | I | metadata parameters apply to every state machine of the document |
 | T-6.7-1.1 | CGML-6.7-1 | A | comment link with `dPivot` = `dName` / `dData` → parsed as link, not transition |
 | T-6.7-3.1 | CGML-6.7-3 | A | link with `dChunk` substring → parsed |
+| T-6.7-2.3 | CGML-6.7-2 | A | `F-LINKS`: links to a pseudostate, a composite state, another comment, across a region boundary → parsed and preserved |
+| T-6.7-5.1 | CGML-6.7-5 | A | `F-LINKS`: the same subject linked twice from one comment, several links per comment → all preserved |
 | T-6.8-2.2 | CGML-6.8-2 | RT | multi-block `dData` with multi-line behaviors → block structure preserved |
 | T-6.9-1.2 | CGML-6.9-1 | A | meta on an otherwise empty SM (`F-EMPTY-SM`) → all parameters readable |
 | T-7.2-1.1 | CGML-7.2-1-1…4,6 | A | `F-GEO-S`: rect on SM/state/choice/comment/region; point on initial/final; label point and rect → all parsed with correct object kinds |
@@ -329,10 +338,12 @@ that pass L1–L4.
 | T-8.3-3.1 | CGML-8.3-3 | A/RT | `F-EXT-SUB-GEO`: named entry/exit points of a submachine state carrying point geometry on the parent border (appendix В) → parsed; the point geometry survives round-trip within the §2.1 tolerance |
 | T-8.4-1.1 | CGML-8.4-1 | A/RT | `dCollapsed` composite with region → parsed; flag survives round-trip |
 | T-8.5-1.1 | CGML-8.5-1 | A | comment link (`dPivot` present) targeting an edge id → parsed as link-to-transition |
+| T-8.5-4.2 | CGML-8.5-4 | A | `F-EXT-LINK-GEO`: `dData` chunks naming the event, the guard and the action of the transition label → parsed |
 | T-9.1-1.1 | CGML-9.1-1 | A | `F-GEO-F`: edge polyline points, `dSourcePoint`, `dTargetPoint`, label rect → parsed |
 | T-9.1-1-1.1 | CGML-9.1-1-1 | A | polyline with one intermediate point, relative to the source's top-left → coordinates in model |
+| T-9.1-1-1.2 | CGML-9.1-1-1 | A | `F-EXT-LINK-GEO`: a comment link with a polyline → the point preserved in the canonical dump |
 | T-9.1-1-2.1 | CGML-9.1-1-2 | A | `dSourcePoint` on every full-mode edge → parsed relative to the source |
-| T-9.1-1-3.1 | CGML-9.1-1-3-1…3 | A | `F-EXT-LINK-GEO`: `dTargetPoint` on a transition, a link to a node, a link to a transition → parsed relative to the target / the transition's source |
+| T-9.1-1-3.1 | CGML-9.1-1-3-1…3 | A | `F-EXT-LINK-GEO`: `dTargetPoint` on a transition, a link to a node, a link to a transition → parsed and preserved in the canonical dump (the frame interpretation is a rendering semantic covered by the implementations' own geometry tests, not by the fixtures) |
 | T-9.1-1-4.1 | CGML-9.1-1-4 | A | label geometry as a rect → parsed |
 | T-9.1-1-5.1 | CGML-9.1-1-5 | X | label rect with zero `width` in a full document → rejected or reported |
 | T-9.1-2.1 | CGML-9.1-2 | W | full-mode writer output contains complete geometry (L1–L4 check) |
@@ -346,9 +357,9 @@ Plus the cross-cutting suites of §2.2 (`RT-ALL`, `VAL-OUT`, `TOL-EXT`, `GEO-AGN
 
 ## 4. Coverage summary
 
-- Requirements in the testing spec: **149** (all covered; sub-groups covered via their parent or item tests).
-- Test rows: **207**, ≈ 220 concrete cases counting multi-variant rows.
-- By layer: L1 = 10, L2 = 30, L3 = 76, L4 = 32, INT = 59 rows (+5 cross-cutting suites).
+- Requirements in the testing spec: **152** (all covered; sub-groups covered via their parent or item tests).
+- Test rows: **223**, ≈ 240 concrete cases counting multi-variant rows.
+- By layer: L1 = 10, L2 = 31, L3 = 78, L4 = 40, INT = 64 rows (+5 cross-cutting suites).
 - Every MUST with an [X] sense has at least one rejection test at exactly one layer; the
   `fixtures/negative` corpus carries one document per rejection rule of `cgmlval`.
 - Requirements checked at two layers get split ids (`T-6.1-1.2a` structure / `T-6.1-1.2b` value).
