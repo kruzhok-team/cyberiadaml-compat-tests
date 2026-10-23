@@ -10,7 +10,7 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.9 (2026-10-13)
+**Document version:** 1.10 (2026-10-23)
 
 ## 1. Purpose
 
@@ -109,7 +109,7 @@ The CyberiadaML GraphML standard extends the GraphML format specification. This 
 
 ### 2.3 §6 — Document elements
 
-Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateMachine`; region = nested `graph` + `dRegion`; simple/composite state = `node` (default); final state & pseudostates = `node` + `dVertex`; comment = `node` + `dNote`; transition = `edge`; comment link = `edge` + `dPivot`.
+Element ↔ encoding map (Table 2): state machine = top-level `graph` + `dStateMachine`; region = nested `graph` + `dRegion`; simple/composite state = `node` (default); final state & pseudostates = `node` + `dVertex`; comment = `node` + `dNote`; transition = `edge`; comment link = `edge` + `dPivot` (its target is a node or, under 8.5, the edge id of a transition).
 
 **6.1 State machine** (`CGML-6.1-*`)
 
@@ -167,10 +167,12 @@ Composite states admit all simple-state requirements (see 6.2).
 
 **6.7 Comment-subject links** (`CGML-6.7-*`)
 
-- `CGML-6.7-1` MUST: link = `edge` from comment node to subject node with mandatory first key `dPivot` naming the commented aspect from the closed set: {`dName`, `dData`, empty}, reject others. [R/W/X]
-- `CGML-6.7-2` MUST: `source` and `target` nodes exist and belong to the **same state-machine graph**. [R/W/X] **Extension hook:** under EXT-COMPLETENESS (8.5) `target` may reference an edge id (comment link to a transition). A state-machine graph is never a link target (an edge targets nodes; 6.7.2).
-- `CGML-6.7-3` MUST: `dChunk` — a non-empty substring of the subject's aspect being commented: the `dName` value, or the `dData` text including the names of events, guards and actions (6.7.1). Must be present and non-empty when `dPivot` is `dName` or `dData`. [R/W/X]
-- `CGML-6.7-4` MUST: the link's `source` is a comment node (`dNote` present); `source` ≠ `target` (no self-loops); the geometry condition of `CGML-6.3-5` applies. [R/W/X]
+- `CGML-6.7-1` MUST: link = `edge` whose source is a comment node, with the mandatory **first** key `dPivot` naming the commented aspect from the closed set {`dName`, `dData`, empty}; any other value is rejected. [R/W/X]
+- `CGML-6.7-2` MUST: `source` and `target` exist and belong to the **same state-machine graph**. The target may be **any node** of that graph: a state (simple or composite), a pseudostate or final state, **another comment**. A graph is never a target — neither the state machine (6.7.2, an explicit narrowing of ПНСТ 984-2024 7.8.5) nor a region. [R/W/X] **Extension hook:** under EXT-COMPLETENESS (8.5) `target` may name the edge id of a transition of the same graph.
+- `CGML-6.7-3` MUST: `dChunk` — the commented fragment, a non-empty substring of the subject's aspect named by `dPivot`: `dName` → the subject's name; `dData` → the subject's body text — a state's behaviour blocks, a comment's body or (8.5) the transition label including event names, guards and actions (6.7.1). Present and non-empty whenever `dPivot` is `dName` or `dData`; absent with an empty `dPivot`. A subject without the named aspect — `dName` on a transition or an unnamed vertex, `dData` on a vertex — admits no such link. [R/W/X]
+- `CGML-6.7-4` MUST: the link's `source` is a comment node (`dNote` present, informal or formal); `source` ≠ `target` (no self-loops: a comment cannot comment itself, 6.7.2). [R/W/X]
+- `CGML-6.7-5` MAY: a comment carries any number of links, also several to one subject; a subject may be linked from several comments (6.7.2). Links are edges of the top-level state-machine graph like transitions (`CGML-6.5-8`), in any order among them. [R/W]
+- `CGML-6.7-6` MUST: a link carries geometry (9.1) only when the comment and the subject are drawn — the geometry condition of `CGML-6.3-5` applies to links (6.7.2); in the base geometry format a link carries no geometry (`CGML-7.2-1-5`). [R/W]
 
 **6.8 Events, guards, behaviour** (`CGML-6.8-*`)
 
@@ -259,9 +261,10 @@ Composite states admit all simple-state requirements (see 6.2).
 
 **8.5 Comment link to a transition** (`CGML-8.5-*`)
 
-- `CGML-8.5-1` MAY: An edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present). [R/W]
-- `CGML-8.5-2` MUST: The `target` edge must be a transition, not a comment link. [R/W/X]
-- `CGML-8.5-3` MUST: Non-comment link edges targeting edges remain invalid. [X]
+- `CGML-8.5-1` MAY: an edge's `target` may name an **edge id** (the commented transition) instead of a node id; only valid for comment-subject links (`dPivot` present). The transition belongs to the same state-machine graph (`CGML-6.7-2`). [R/W]
+- `CGML-8.5-2` MUST: the `target` edge is a transition, not a comment link. [R/W/X]
+- `CGML-8.5-3` MUST: non-link edges (no `dPivot`) targeting an edge id remain invalid. [X]
+- `CGML-8.5-4` MUST: `dChunk` of a link to a transition is a fragment of the transition's label (`dData`): an event name, a guard or an action; `dPivot` = `dName` is not admissible for a transition, which has no name (`CGML-6.7-3`). [R/W/X]
 
 ### 2.6 §9 — EXT-DISPLAY extensions
 
@@ -270,16 +273,19 @@ Composite states admit all simple-state requirements (see 6.2).
 Inherits base format (2.4).
 
 - `CGML-9.1-1` MUST: additionally (Table 6) transitions get geometry:
-  - `CGML-9.1-1-1` MUST: non-empty `dGeometry` on polyline edges with 1+ intermediate point; coordinates relative to the left-top point of the source element. [R/W]
+  - `CGML-9.1-1-1` MUST: non-empty `dGeometry` on polyline edges with 1+ intermediate point; coordinates relative to the left-top point of the source element; a comment link may carry a polyline the same way. [R/W]
   - `CGML-9.1-1-2` MUST: `dSourcePoint` keys for all edge endpoint attachment; coordinates relative to the left-top point of the source element; [R/W]
   - `CGML-9.1-1-3` `dTargetPoint` keys for all edge endpoint attachment:
     - `CGML-9.1-1-3-1` MUST: if transition edges - coordinates relative to the left-top point of the target element; [R/W]
     - `CGML-9.1-1-3-2` MUST: if comment link to an element edges - coordinates relative to the left-top point of the target element; [R/W]
-    - `CGML-9.1-1-3-3` MUST: if comment link to a transision edges - coordinates relative to the left-top point of the source element of the transition; [R/W]
+    - `CGML-9.1-1-3-3` MUST: if comment link to a transition edges - coordinates relative to the left-top point of the source element of the transition; [R/W]
     - `CGML-9.1-1-3-4` MUST: if comment link to a subject aspect's (`dChunk`) - **no target point** allowed; [R/W/X]
+
+The frame of a target point (the target node, or the source node of the commented transition) is a rendering semantic: the conformance channels preserve the recorded coordinates unchanged, so the frame interpretation of `CGML-9.1-1-3-1…3` is established by an implementation's own geometry tests, not by the fixtures.
+
 - `CGML-9.1-1-4` MAY: label geometry may be a rect. [R/W]
 - `CGML-9.1-1-5` MUST: if label geometry described as a rect it must have valid `width` and `height`. [R/W]
-- `CGML-9.1-2` MUST: the recorded geometry is sufficient for unambiguous rendering — no geometry reconstruction allowed. [W]
+- `CGML-9.1-2` MUST: the recorded geometry is sufficient for unambiguous rendering — no geometry reconstruction allowed; for the links (9.1.2): `dSourcePoint` on every link, `dTargetPoint` on every link to a node or a transition, none on a fragment link. A full-mode document missing a link end is **reported** by the validator — the implementations reconstruct the ends rather than refuse the document. [W]
 
 **9.2 Color marking** (`CGML-9.2-*`)
 
