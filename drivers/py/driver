@@ -58,7 +58,8 @@ def info():
     if _core() is not None:
         # the core reads and writes the extension profiles as well
         version += "+core"
-        profiles += ["EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM"]
+        profiles += ["EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM",
+                     "EXT-FA"]
     print(json.dumps({"name": "cyberiadaml-py", "version": version,
                       "profiles": profiles}))
     return 0

@@ -49,7 +49,8 @@ function info() {
     if (lib.core !== undefined) {
         // the core reads and writes the extension profiles as well
         version += "+core";
-        profiles.push("EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM");
+        profiles.push("EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM",
+                      "EXT-FA");
     }
     process.stdout.write(JSON.stringify(
         {name: "cyberiadaml-js", version: version, profiles: profiles}) + "\n");

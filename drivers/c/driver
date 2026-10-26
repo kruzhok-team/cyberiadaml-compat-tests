@@ -31,7 +31,7 @@ info)
     }
     VERSION=$(git -C "$(dirname "$CYBPARSER")/../.." \
         describe --tags --always 2>/dev/null || echo unknown)
-    printf '{"name": "libcyberiadaml", "version": "%s", "profiles": ["CORE", "EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM"]}\n' \
+    printf '{"name": "libcyberiadaml", "version": "%s", "profiles": ["CORE", "EXT-COMPLETENESS", "EXT-DISPLAY", "EXT-PLATFORM", "EXT-FA"]}\n' \
         "$VERSION"
     ;;
 convert)
