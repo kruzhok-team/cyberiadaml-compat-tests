@@ -297,7 +297,7 @@ respect, named in its test row.
 | T-9.1-2.2 | CGML-9.1-2 | X | `geometry/ full` link without `dSourcePoint`; whole-element link without `dTargetPoint` → reported |
 | T-10.1-3.1 | CGML-10.1-3 | X | duplicate SM formal names; duplicate sibling-state formal names (2 variants) → rejected |
 | T-FA-5-2.1 | CGML-FA-5-2 | X | two state machines in an FA document (`X-FA-5-2-two-machines`) → rejected |
-| T-FA-3-1.1 | CGML-FA-3-1 | X | a `choice` pseudostate (`X-FA-3-1-choice`); a submachine state (`X-FA-3-1-submachine`) → rejected |
+| T-FA-3-1.1 | CGML-FA-3-1 | X | a `choice` pseudostate (`X-FA-3-1-choice`); a collapsed composite state (`X-FA-3-1-collapsed`) → rejected |
 | T-FA-3.1.1-1.1 | CGML-FA-3.1.1-1 | A | a composite state with one region (`F-FA-NESTED`) → accepted |
 | T-FA-3.1.1-1.2 | CGML-FA-3.1.1-1 | X | a composite state with two regions (`X-FA-3.1.1-1-two-regions`) → rejected |
 | T-FA-3.1.1-2.1 | CGML-FA-3.1.1-2 | X | a transition into a composite state without an initial (`X-FA-3.1.1-2-composite-no-initial`) → rejected |

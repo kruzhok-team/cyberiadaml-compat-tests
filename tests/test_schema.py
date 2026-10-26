@@ -33,8 +33,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = ROOT / "schema/cgml-1.0.rnc"
 STRICT = ROOT / "schema/cgml-1.0-strict.rnc"
 
-POSITIVE_DIRS = ("fixtures/core", "fixtures/ext", "fixtures/field",
-                 "fixtures/geometry", "fixtures/standard", "tests/examples")
+POSITIVE_DIRS = ("fixtures/core", "fixtures/ext", "fixtures/fa",
+                 "fixtures/field", "fixtures/geometry", "fixtures/standard",
+                 "tests/examples")
 
 # The invalid documents the base profile cannot reject: an identity or a
 # reference constraint, or a grammar over element text.  See schema/README.md.
@@ -74,6 +75,30 @@ UNREACHABLE = frozenset((
     "X-8.1-4-point-name-mismatch",  # cross-graph name resolution
     "X-8.3-4-unnamed-point",        # dName presence per vertex kind
     "X-8.3-5-point-in-second-region",  # region order
+    # EXT-FA: constraints over the metadata, the label text and the element
+    # counts of a type/ fa document, all valid CGML
+    "X-FA-5-2-two-machines",
+    "X-FA-5-3-propagate",
+    "X-FA-3-1-choice",
+    "X-FA-3-1-collapsed",
+    "X-FA-3.1-1-exit-action",
+    "X-FA-3.1-1-two-line-entry",
+    "X-FA-3.1.1-1-two-regions",
+    "X-FA-3.1.1-2-composite-no-initial",
+    "X-FA-3.1.1-3-two-transitions-same-symbol",
+    "X-FA-3.2-1-no-initial",
+    "X-FA-3.2-2-initial-with-event",
+    "X-FA-3.3-1-nested-final",
+    "X-FA-3.3-2-eof-to-state",
+    "X-FA-3.3-2-symbol-to-final",
+    "X-FA-3.4-1-guard",
+    "X-FA-3.4-1-two-events",
+    "X-FA-3.4-1-empty-event",
+    "X-FA-3.4-2-two-line-action",
+    "X-FA-3.4-3-reserved-symbol",
+    "X-FA-4-1-two-input-alphabets",
+    "X-FA-4-2-star-in-regex",
+    "X-FA-4-3-symbol-not-in-alphabet",
 ))
 
 # schema/examples: the strict profile rejects each, the base profile accepts it.
