@@ -10,7 +10,9 @@
 - GraphML — http://graphml.graphdrawing.org/specification.html;
 - XML 1.0 standard.
 
-**Document version:** 1.10 (2026-10-23)
+**Extension under test:** ПРИМС:КА — `docs/FA-extension.md` 0.3 (2026-10-26), the deterministic finite automaton extension of ПРИМС and CGML; its rows (§2.9) cite the clause numbers of that document.
+
+**Document version:** 1.11 (2026-10-26)
 
 ## 1. Purpose
 
@@ -40,6 +42,7 @@ The standard itself separates a mandatory base from optional extensions; compati
 | **EXT-COMPLETENESS** | §8: submachine states, history pseudostates, entry/exit points, collapsed composites, comment links to transitions | declared per implementation |
 | **EXT-DISPLAY** | §9: full geometry, color marking, comment markup | declared per implementation |
 | **EXT-PLATFORM** | §10: formal names, initialization comments, dynamic components | declared per implementation |
+| **EXT-FA** | ПРИМС:КА (`docs/FA-extension.md` 0.3): deterministic finite automaton diagrams, selected by `type/ fa` in the document metadata (§2.9) | declared per implementation |
 
 An implementation not claiming an extension profile must still not mis-parse core content of documents that contain extension keys (unknown-but-declared keys are GraphML data and must be tolerated on read).
 
@@ -394,6 +397,59 @@ The frame of a target point (the target node, or the source node of the commente
 | `dColor` | `node`, `edge` | `color` | string | EXT-DISPLAY |
 | `dFormalName` | `graph`, `node` | `formalName` | string | EXT-PLATFORM |
 
+### 2.9 ПРИМС:КА — EXT-FA extension (`docs/FA-extension.md` 0.3)
+
+A deterministic finite automaton (FA) diagram is a CGML document restricted to a subset of
+the ПРИМС elements and labelled by the metadata parameter `type/ fa`. The rows below apply
+only to such documents; a document without `type/ fa` is never judged by them. Clause
+numbers are those of `docs/FA-extension.md`. Terms: a *symbol* is an event name (an input
+symbol) or an action line (an output symbol); the *top level* of the state machine is the
+set of its direct children.
+
+**FA 5 The document** (`CGML-FA-5-*`)
+
+- `CGML-FA-5-1` MUST: an FA document carries the parameter `type` with the value `fa` in `CGML_META` (6.9 grammar: `type/ fa`); the value selects the FA rule set of this section and is preserved on write. [R/W/X]
+- `CGML-FA-5-2` MUST: an FA document contains exactly one state machine. [R/W/X]
+- `CGML-FA-5-3` MUST: the parameter `eventPropagation` is absent or has the value `block`. [R/W/X]
+
+**FA 3 The element set** (`CGML-FA-3-*`)
+
+- `CGML-FA-3-1` MUST: the elements of an FA diagram are simple and composite states, the `initial` pseudostate, the `final` state, transitions, comments and comment links; every other vertex kind (`choice`, `terminate`, the histories, entry and exit points), submachine states and the collapsed decomposition block (`dCollapsed`) are not admissible. [R/W/X]
+
+**FA 3.1 States** (`CGML-FA-3.1-*`)
+
+- `CGML-FA-3.1-1` MUST: the behaviour text of a state holds at most one block, an `entry/` block whose behaviour is exactly one line — the output symbol of the state; `exit/`, `do/` and event blocks (internal transitions) are not admissible. [R/W/X]
+- `CGML-FA-3.1.1-1` MUST: a composite state has exactly one region and no `entry/` block. [R/W/X]
+- `CGML-FA-3.1.1-2` MUST: a composite state that is the target of a transition contains an `initial` pseudostate in its region. [R/W/X]
+- `CGML-FA-3.1.1-3` MUST: determinism — a state has at most one own outgoing transition per event name, `EOF` included; a transition of a nested state shadows the transition of its parent by the same event. [R/W/X]
+
+**FA 3.2 Initial pseudostate** (`CGML-FA-3.2-*`)
+
+- `CGML-FA-3.2-1` MUST: the top level of the state machine holds exactly one `initial` pseudostate (a narrowing of `CGML-6.4-4-2` to an error). [R/W/X]
+- `CGML-FA-3.2-2` MUST: the transition from an `initial` pseudostate has no event, no guard and no action (an empty `dData`). [R/W/X]
+
+**FA 3.3 Final states** (`CGML-FA-3.3-*`)
+
+- `CGML-FA-3.3-1` MUST: `final` states are placed at the top level of the state machine only. [R/W/X]
+- `CGML-FA-3.3-2` MUST: every transition into a `final` state carries the event `EOF`, and every transition with the event `EOF` targets a `final` state. [R/W/X]
+
+**FA 3.4 Transitions** (`CGML-FA-3.4-*`)
+
+- `CGML-FA-3.4-1` MUST: a transition from a state carries exactly one event block with a non-empty event name — an input symbol or `EOF`; a guard and the parameters `propagate`, `block`, `defer` are not admissible. [R/W/X]
+- `CGML-FA-3.4-2` MUST: the behaviour of a transition is absent or exactly one line — the output symbol. [R/W/X]
+- `CGML-FA-3.4-3` MUST: a symbol — an event name other than `EOF`, an action line, an `entry/` line, a member of a declared alphabet — is none of the reserved words `do`, `else`, `entry`, `exit`, `propagate`, `block`, `defer` and none of the reserved event names `ANY`, `UNKNOWN`, `EOF`. [R/W/X]
+
+**FA 4 Alphabets** (`CGML-FA-4-*`)
+
+- `CGML-FA-4-1` MUST: the input alphabet is declared by at most one formal comment named `FA_INPUT` or `FA_INPUT_RE`, the output alphabet by at most one named `FA_OUTPUT` or `FA_OUTPUT_RE`; such comments are placed at the top level of the state machine. [R/W/X]
+- `CGML-FA-4-2` MUST: the body of an alphabet comment is one symbol per line, no line empty; in a `_RE` comment every line is a restricted regular expression over the constructs `.` (any single printable non-space character), `[a-z]` (a range), `{n}` and `{n,m}` (repetition counts, no spaces), `?`, `(a|b)` (a group with alternatives) and the escapes `\.` `\[` `\]` `\-` `\{` `\}` `\,` `\?` `\(` `\)` `\|` `\\`; the constructs `*`, `+`, `^`, `$` are not admissible (the set stays finite); an expression matches a whole symbol; the reserved strings of `CGML-FA-3.4-3` are excluded from the set. [R/W/X]
+- `CGML-FA-4-3` MUST: when the input alphabet is declared, every event name other than `EOF` is a member of it; when the output alphabet is declared, every action line and every `entry/` line is a member of it. [R/W/X]
+- `CGML-FA-4-4` MAY: an alphabet comment may have no geometry; its body is preserved verbatim (`CGML-10.2-1`). [R/W]
+
+**FA 2.4 Execution** (`CGML-FA-2.4-*`)
+
+- `CGML-FA-2.4-1` MAY: an executor runs an FA document with one active state, selects the transition by the event of the active state or, failing that, of its nearest ancestor, rejects the tape on a symbol with no transition, and issues `EOF` once after the last symbol; outside the scope of the document validator. [X]
+
 ## 3. Compatibility statement
 
-An implementation is **CORE-compatible** when it satisfies every MUST of §2.2–§2.4 in each conformance sense ([R]/[W]/[X]) applicable to its capabilities (read-only tools are exempt from [W]; write-only generators from [R]). Extension-profile compatibility is claimed and tested per profile (§2.5–§2.7). SHOULD-level deviations do not break compatibility but must be reported. Verdicts per requirement: `pass` / `fail` / `not-applicable` / `not-supported` (unclaimed profile).
+An implementation is **CORE-compatible** when it satisfies every MUST of §2.2–§2.4 in each conformance sense ([R]/[W]/[X]) applicable to its capabilities (read-only tools are exempt from [W]; write-only generators from [R]). Extension-profile compatibility is claimed and tested per profile (§2.5–§2.7, §2.9). SHOULD-level deviations do not break compatibility but must be reported. Verdicts per requirement: `pass` / `fail` / `not-applicable` / `not-supported` (unclaimed profile).

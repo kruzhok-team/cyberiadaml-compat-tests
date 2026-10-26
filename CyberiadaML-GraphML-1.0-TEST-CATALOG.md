@@ -1,11 +1,11 @@
 # CyberiadaML-GraphML 1.0 — Conformance Test Catalog
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6). Enumerates the tests required to
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.11). Enumerates the tests required to
 check every requirement of the testing specification and organizes the testing procedure into
 validation layers built on widely available tools. Implementation of these tests on the
 available libraries is planned separately.
 
-**Document version:** 1.12 (2026-10-23)
+**Document version:** 1.13 (2026-10-26)
 
 ## 1. Testing layers
 
@@ -91,6 +91,11 @@ respect, named in its test row.
 | `F-EXT-P-MULTI` | EXT-PLATFORM: the same component `timer1` defined in two state machines by two nodes with their own ids (CGML-10.3-1, CGML-10.3-2) |
 | `F-CMT` | comments (informal + formal) with subject links (`dPivot`/`dChunk`) |
 | `F-LINKS` | the link subjects of 6.7.2: a state name, a state body fragment, another comment's body, the initial pseudostate and a composite state (whole), a comment inside a region linking a state outside it, the same subject linked twice |
+| `F-FA-EXAMPLE` | EXT-FA: the acceptor of `docs/FA-extension.md` figure 2 — `type/ fa`, three states, symbol transitions, an `EOF` transition to the final state |
+| `F-FA-MEALY` | EXT-FA: the Mealy inverter (figure 3) — one state, two self-loops with one-line actions, `EOF` |
+| `F-FA-MOORE` | EXT-FA: the Moore inverter (figure 4) — states with one-line `entry/` output symbols, two `EOF` transitions |
+| `F-FA-ALPHABET` | EXT-FA: the Mealy inverter with the declared alphabets — `FA_INPUT` (plain) and `FA_OUTPUT_RE` (restricted regular expressions), both without geometry |
+| `F-FA-NESTED` | EXT-FA: a composite state with one region and an initial inside, a parent transition shadowed by a child's transition by the same symbol, an `EOF` transition from a nested state to the top-level final state |
 | `F-FIELD-*` | real-world documents collected from the ecosystem (converted legacy diagrams, IDE-produced files, generator examples) — admitted after passing L1–L4 |
 
 **Cross-cutting suites** (run automatically, not listed per requirement):
@@ -235,6 +240,17 @@ respect, named in its test row.
 | T-10.1-2.2 | CGML-10.1-2 | X | formal name starting with digit; containing dash; Cyrillic; empty (4 variants) → rejected |
 | T-B-1.1 | CGML-appendix-B-1 | X | standard key redeclared with different `for`/`attr.name` → rejected |
 | T-B-1.2 | CGML-appendix-B-1 | A | document declaring only the subset of keys it uses → accepted |
+| T-FA-5-1.1 | CGML-FA-5-1 | A | `type/ fa` in `CGML_META` (`F-FA-*`) → the FA rules apply; a document without it → no FA finding |
+| T-FA-5-3.1 | CGML-FA-5-3 | X | `eventPropagation/ propagate` in an FA document (`X-FA-5-3-propagate`) → rejected |
+| T-FA-3.1-1.1 | CGML-FA-3.1-1 | A | one-line `entry/` output symbols (`F-FA-MOORE`) → accepted |
+| T-FA-3.1-1.2 | CGML-FA-3.1-1 | X | a state with an `exit/` block (`X-FA-3.1-1-exit-action`); an `entry/` block with two lines (`X-FA-3.1-1-two-line-entry`) → rejected |
+| T-FA-3.2-2.1 | CGML-FA-3.2-2 | X | the initial transition carrying an event (`X-FA-3.2-2-initial-with-event`) → rejected |
+| T-FA-3.4-1.1 | CGML-FA-3.4-1 | A | one symbol per transition, `EOF` transitions (`F-FA-EXAMPLE`) → accepted |
+| T-FA-3.4-1.2 | CGML-FA-3.4-1 | X | a transition with a guard (`X-FA-3.4-1-guard`); two event blocks (`X-FA-3.4-1-two-events`); an empty event (`X-FA-3.4-1-empty-event`) → rejected |
+| T-FA-3.4-2.1 | CGML-FA-3.4-2 | X | a two-line transition action (`X-FA-3.4-2-two-line-action`) → rejected |
+| T-FA-3.4-3.1 | CGML-FA-3.4-3 | X | the symbol `ANY` as an event (`X-FA-3.4-3-reserved-symbol`) → rejected |
+| T-FA-4-2.1 | CGML-FA-4-2 | A | `FA_OUTPUT_RE` with ranges, counts, a group and an escape (`F-FA-ALPHABET`) → accepted |
+| T-FA-4-2.2 | CGML-FA-4-2 | X | `*` in an `FA_INPUT_RE` line (`X-FA-4-2-star-in-regex`) → rejected |
 
 ### 3.4 Layer L4 — Document integrity
 
@@ -280,6 +296,19 @@ respect, named in its test row.
 | T-8.5-4.1 | CGML-8.5-4 | X | `dPivot` = `dName` on a link to a transition (`X-8.5-4-name-on-transition`) → rejected |
 | T-9.1-2.2 | CGML-9.1-2 | X | `geometry/ full` link without `dSourcePoint`; whole-element link without `dTargetPoint` → reported |
 | T-10.1-3.1 | CGML-10.1-3 | X | duplicate SM formal names; duplicate sibling-state formal names (2 variants) → rejected |
+| T-FA-5-2.1 | CGML-FA-5-2 | X | two state machines in an FA document (`X-FA-5-2-two-machines`) → rejected |
+| T-FA-3-1.1 | CGML-FA-3-1 | X | a `choice` pseudostate (`X-FA-3-1-choice`); a submachine state (`X-FA-3-1-submachine`) → rejected |
+| T-FA-3.1.1-1.1 | CGML-FA-3.1.1-1 | A | a composite state with one region (`F-FA-NESTED`) → accepted |
+| T-FA-3.1.1-1.2 | CGML-FA-3.1.1-1 | X | a composite state with two regions (`X-FA-3.1.1-1-two-regions`) → rejected |
+| T-FA-3.1.1-2.1 | CGML-FA-3.1.1-2 | X | a transition into a composite state without an initial (`X-FA-3.1.1-2-composite-no-initial`) → rejected |
+| T-FA-3.1.1-3.1 | CGML-FA-3.1.1-3 | A | a child transition shadowing the parent's by the same symbol (`F-FA-NESTED`) → accepted |
+| T-FA-3.1.1-3.2 | CGML-FA-3.1.1-3 | X | two transitions from one state by the same symbol (`X-FA-3.1.1-3-two-transitions-same-symbol`) → rejected |
+| T-FA-3.2-1.1 | CGML-FA-3.2-1 | X | no initial at the top level (`X-FA-3.2-1-no-initial`) → rejected |
+| T-FA-3.3-1.1 | CGML-FA-3.3-1 | X | a final state inside a composite state (`X-FA-3.3-1-nested-final`) → rejected |
+| T-FA-3.3-2.1 | CGML-FA-3.3-2 | X | `EOF` into a plain state (`X-FA-3.3-2-eof-to-state`); a symbol transition into the final state (`X-FA-3.3-2-symbol-to-final`) → rejected |
+| T-FA-4-1.1 | CGML-FA-4-1 | X | `FA_INPUT` and `FA_INPUT_RE` in one document (`X-FA-4-1-two-input-alphabets`) → rejected |
+| T-FA-4-3.1 | CGML-FA-4-3 | A | every symbol in its declared alphabet (`F-FA-ALPHABET`) → accepted |
+| T-FA-4-3.2 | CGML-FA-4-3 | X | a transition symbol outside the declared `FA_INPUT` (`X-FA-4-3-symbol-not-in-alphabet`) → rejected |
 
 ### 3.5 Integration tests (implementations under test)
 
@@ -352,14 +381,16 @@ that pass L1–L4.
 | T-10.2-1.1 | CGML-10.2-1 | RT | formal comment body (init data) preserved verbatim |
 | T-10.3-1.1 | CGML-10.3-1 | A | `CGML_COMPONENT LED1` comment with `type/ LED` and `name/` params → parsed to component description |
 | T-10.3-2.1 | CGML-10.3-2 | I | every SM using a component defines it → informational (platform semantics) |
+| T-FA-4-4.1 | CGML-FA-4-4 | RT | alphabet comments without geometry round-trip with their bodies verbatim (`F-FA-ALPHABET`) |
+| T-FA-2.4-1.1 | CGML-FA-2.4-1 | I | execution semantics of an FA document → informational (executor behaviour) |
 
 Plus the cross-cutting suites of §2.2 (`RT-ALL`, `VAL-OUT`, `TOL-EXT`, `GEO-AGNOSTIC`, `FIELD`).
 
 ## 4. Coverage summary
 
-- Requirements in the testing spec: **152** (all covered; sub-groups covered via their parent or item tests).
-- Test rows: **223**, ≈ 240 concrete cases counting multi-variant rows.
-- By layer: L1 = 10, L2 = 31, L3 = 78, L4 = 40, INT = 64 rows (+5 cross-cutting suites).
+- Requirements in the testing spec: **172** (all covered; sub-groups covered via their parent or item tests; 20 of them EXT-FA).
+- Test rows: **250**, ≈ 270 concrete cases counting multi-variant rows.
+- By layer: L1 = 10, L2 = 31, L3 = 89, L4 = 53, INT = 66 rows (+5 cross-cutting suites).
 - Every MUST with an [X] sense has at least one rejection test at exactly one layer; the
   `fixtures/negative` corpus carries one document per rejection rule of `cgmlval`.
 - Requirements checked at two layers get split ids (`T-6.1-1.2a` structure / `T-6.1-1.2b` value).

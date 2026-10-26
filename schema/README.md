@@ -40,18 +40,20 @@ checks and cgmlval does not*.
 ## What the schema carries
 
 Measured on the repository corpus with `jing` 20241231 (OpenJDK 25); `cgmlval` registers
-107 rules (76 ERROR, 11 WARNING, 20 INFO).
+128 standard rules (95 ERROR, 13 WARNING, 20 INFO).
 
 | Corpus | Documents | Base profile | Strict profile |
 |---|---|---|---|
-| positive fixtures (`fixtures/core`, `ext`, `field`, `geometry`, `standard`, `tests/examples`) | 35 | 35 accepted | 35 accepted |
+| positive fixtures (`fixtures/core`, `ext`, `fa`, `field`, `geometry`, `standard`, `tests/examples`) | 40 | 40 accepted | 40 accepted |
 | appendix Г documents of the standard | 4 | 4 accepted | 4 accepted |
-| negative fixtures (`fixtures/negative`) | 54 | 29 rejected | 29 rejected |
+| negative fixtures (`fixtures/negative`) | 87 | 30 rejected | 30 rejected |
 | `examples/S-*` (strict only) | 4 | 4 accepted | 4 rejected |
 | `examples/L1-*` (below the schema) | 2 | 2 accepted | 2 accepted |
 
-The 25 negatives neither profile rejects are the identity, reference and text-grammar cases
-listed as `UNREACHABLE` in `tests/test_schema.py`: duplicate ids and data keys, dangling
+The 57 negatives neither profile rejects are the identity, reference and text-grammar cases
+listed as `UNREACHABLE` in `tests/test_schema.py` — the 22 EXT-FA negatives (`X-FA-*`) among
+them, since every EXT-FA rule is a constraint over the metadata, the label text or the
+element counts of a `type/ fa` document: duplicate ids and data keys, dangling
 endpoints, self-loops, links targeting links, a second `CGML_META`, the `dData` /
 `CGML_META` / `CGML_COMPONENT` grammars (incl. the 6.8.1/6.8.2 constraints on blocks, reserved
 names, `defer` and `propagate`/`block`), `dChunk` containment, submachine references and point

@@ -1,11 +1,11 @@
 # CyberiadaML-GraphML 1.0 — Document Validator Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.7) and
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.8). Specifies `cgmlval` — the standalone validator
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.11) and
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.13). Specifies `cgmlval` — the standalone validator
 implementing the catalog's document layers L1–L4 and the canonical dump used as the reference
 output format by the later test harness.
 
-**Document version:** 1.10 (2026-10-15)
+**Document version:** 1.11 (2026-10-26)
 
 ## 1. Purpose
 
@@ -49,10 +49,11 @@ integration harness and implementation drivers, per-profile certification report
     +----------------+        +----------------+        +----------------+
     |    rules.py    |        |    model.py    | -model>|  checks_l3.py  |
     |   registry +   | -----> |    builder     |        |  checks_l4.py  |
-    |     gating     |        | (actions, meta)|        +----------------+
-    +----------------+        +----------------+                |
-            |                         |                         | findings
-            | verdict                 | model                   v
+    |     gating     |        | (actions, meta)|        |  checks_fa.py  |
+    +----------------+        +----------------+        | (alphabet.py)  |
+            |                         |                 +----------------+
+            | verdict                 | model                   | findings
+            |                         |                         v
             v                         v                 +----------------+
     +----------------+        +----------------+        |  findings.py   |
     |  requirements  |        |    dump.py     |        |  text / JSON   |
@@ -69,6 +70,10 @@ integration harness and implementation drivers, per-profile certification report
 - `model.py` — builds the document model from an L2-clean tree; uses `actions.py` (§6.8 behaviour
   text) and `meta.py` (§6.9 parameter text). Building records, it does not judge — rules do.
 - `checks_l3.py`, `checks_l4.py` — value rules over the tree and integrity rules over the model.
+- `checks_fa.py` — the EXT-FA rules (testing spec §2.9), L3 and L4; every rule returns at once
+  unless the model is an FA document (`Document.is_fa`: the metadata parameter `type` is `fa`).
+  `alphabet.py` parses the `FA_INPUT*`/`FA_OUTPUT*` bodies and translates the restricted regular
+  expressions of `CGML-FA-4-2` into Python patterns for the membership rule.
 - `rules.py`, `requirements.py`, `findings.py` — the rule registry with layer gating, the
   requirement table, and finding collection/rendering.
 - `dump.py` — the canonical dump writer; runs only on a document with no L1–L4 errors.
@@ -118,7 +123,8 @@ not in a trailing block, non-empty `dRegion`/`dCollapsed` marker values, reserve
 vertices, `transitionOrder` values, and the geometry-kind and geometry-mode consistency rows of
 §7.2. INFO-level rows include the edge-id template and the absence of an initial pseudostate in a
 state machine (`CGML-6.4-4-2`: the standard admits intermediate documents, §1). The registry holds
-107 rules: 76 ERROR, 11 WARNING, 20 INFO (L1 7, L2 27, L3 45, L4 28).
+128 standard rules: 95 ERROR, 13 WARNING, 20 INFO (L1 7, L2 27, L3 53, L4 41), 18 of them the
+EXT-FA rules, plus the 16 Lapki dialect rules of L0.
 
 ## 5. Rules and requirement mapping
 
@@ -144,6 +150,14 @@ Every check registers with the rule registry:
   asserts that the table lists exactly those rows with the same level and senses, that every
   `validator`-scoped requirement has at least one rule and one fixture, and that no rule cites a
   requirement outside the validator scope.
+- The EXT-FA rules (`fa-*`, testing spec §2.9) are ordinary L3/L4 ERROR rules gated by the
+  document itself: they report nothing unless `CGML_META` carries `type/ fa`. The gate rule
+  `fa-type` (`CGML-FA-5-1`) registers without a callable — the recognition is the model's.
+  L3: `fa-event-propagation`, `fa-state-behaviour`, `fa-initial-transition`,
+  `fa-transition-label`, `fa-transition-action`, `fa-symbol-reserved`, `fa-alphabet-syntax`.
+  L4: `fa-single-machine`, `fa-element-set`, `fa-composite`, `fa-composite-initial`,
+  `fa-deterministic`, `fa-top-initial` (also `CGML-6.4-4-1`, `CGML-6.4-4-2`),
+  `fa-final-top-level`, `fa-eof-final`, `fa-alphabet-comments`, `fa-alphabet-membership`.
 
 ## 6. Document model
 
@@ -190,6 +204,16 @@ be defined in several machines; the ids of the comment nodes are unique in the w
 §5.9); the `type` parameter is mandatory.
 Parameter order is preserved in the model; a non-Latin or repeated parameter name is an error at
 L3.
+
+**Alphabet text (EXT-FA §4).** The body of a formal comment named `FA_INPUT`, `FA_OUTPUT`,
+`FA_INPUT_RE` or `FA_OUTPUT_RE` splits into lines; each line is one symbol (plain comments) or
+one restricted regular expression (`_RE` comments). The restricted grammar is translated to a
+Python pattern applied with `fullmatch`: a literal character, an escape `\c` for one of
+`. [ ] - { } , ? ( ) | \`, `.` (any printable non-space character), a range class `[a-z]`
+(ranges and single characters, escapes inside), a group `( … | … )`, and the quantifiers `?`,
+`{n}`, `{n,m}` (no spaces) after an atom; `*`, `+`, `^`, `$` and any other construct are errors
+(`CGML-FA-4-2`). Membership of a symbol (`CGML-FA-4-3`) is a match of any line; the reserved
+strings of `CGML-FA-3.4-3` are never members. Blank lines and lines of spaces are errors.
 
 ## 7. Canonical dump format
 

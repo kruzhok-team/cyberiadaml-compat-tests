@@ -1,12 +1,12 @@
 # CyberiadaML-GraphML 1.0 — Compatibility Harness Specification
 
-Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.6),
-`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.7) and
-`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.6). Specifies the conformance fixture corpus,
+Companion to `CyberiadaML-GraphML-1.0-TESTING-SPEC.md` (v1.11),
+`CyberiadaML-GraphML-1.0-TEST-CATALOG.md` (v1.13) and
+`CyberiadaML-GraphML-1.0-VALIDATOR-SPEC.md` (v1.11). Specifies the conformance fixture corpus,
 the implementation driver contract and the `intharness` runner that compares the CGML libraries
 against the standard and against each other.
 
-**Document version:** 1.2 (2026-08-30)
+**Document version:** 1.3 (2026-10-26)
 
 ## 1. Purpose
 
@@ -51,8 +51,8 @@ they only convert.
 
 The positive fixtures transcribe the catalog's fixture table: `F-MIN`, `F-EMPTY-SM`, `F-TWO`,
 `F-HIER`, `F-MULTI`, `F-FLAT`, `F-CMT` (core), `F-GEO-S`, `F-GEO-F` (geometry), `F-EXT-C`,
-`F-EXT-D`, `F-EXT-D-NAMED`, `F-EXT-P` (extensions), `F-FIELD-*` (real-world documents
-admitted after passing L1–L4). Every positive fixture ships with its frozen golden dump `<name>.expected.txt`.
+`F-EXT-D`, `F-EXT-D-NAMED`, `F-EXT-P` (extensions), `F-FA-*` (the EXT-FA finite automaton
+documents, `fixtures/fa`), `F-FIELD-*` (real-world documents admitted after passing L1–L4). Every positive fixture ships with its frozen golden dump `<name>.expected.txt`.
 
 Golden dump policy: a dump is produced by `cgmlval dump`, reviewed line by line against the
 standard, then committed and **frozen** — it is never regenerated to make a test pass; a
@@ -84,7 +84,10 @@ A driver is one executable `drivers/<name>/driver` (any language). Commands:
     driver convert IN.graphml OUT.graphml
 
 - `info` prints one JSON object to stdout: `{"name": "...", "version": "...",
-  "profiles": ["CORE", ...]}` — the profiles the library claims. Exit 0. A driver whose
+  "profiles": ["CORE", ...]}` — the profiles the library claims, from the vocabulary `CORE`,
+  `EXT-COMPLETENESS`, `EXT-DISPLAY`, `EXT-PLATFORM`, `EXT-FA` (testing spec §2.1; for a
+  read/write library `EXT-FA` means preserving the `type` parameter, the `FA_*` comments and
+  the label text of an FA document). Exit 0. A driver whose
   library is not built or importable exits non-zero from `info`; the harness records the
   library as **unavailable** and skips it.
 - `convert` reads `IN.graphml` with the library, writes the loaded model back to

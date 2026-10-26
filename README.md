@@ -5,7 +5,8 @@ CyberiadaML GraphML standard compatibilty of libraries and tools.
 
 See the and PNST 984-2024 and PNST 1044-2025 Russian national standard documents for
 details. The standard document are stated in the `docs/PNST_984-2024.md` and the
-`docs/PNST_1044-2025.md` files.
+`docs/PNST_1044-2025.md` files. The deterministic finite automaton extension of the
+standards (ПРИМС:КА, the `EXT-FA` profile) is stated in `docs/FA-extension.md`.
 
 ## Documentation
 
