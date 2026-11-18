@@ -7,6 +7,9 @@ See the and PNST 984-2024 and PNST 1044-2025 Russian national standard documents
 details. The standard document are stated in the `docs/PNST_984-2024.md` and the
 `docs/PNST_1044-2025.md` files. The deterministic finite automaton extension of the
 standards (ПРИМС:КА, the `EXT-FA` profile) is stated in `docs/FA-extension.md`.
+The base standards of the platform, PNST 982-2024 (general principles) and PNST 983-2024
+(terms and definitions), are stated in the `docs/PNST_982-2024.md` and the
+`docs/PNST_983-2024.md` files (first drafts).
 
 ## Documentation
 
