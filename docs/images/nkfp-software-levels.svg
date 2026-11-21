@@ -1,26 +1,374 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="489.8pt" height="173.4pt" viewBox="3.12 -6.00 489.80 173.40">
-  <title>nkfp-software-levels</title>
-  <rect x="3.12" y="-6.00" width="489.80" height="173.40" fill="#ffffff"/>
-  <image x="9.12" y="0" width="477.80" height="161.40" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
-  <g font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" fill="#000000">
-    <text x="284.43" y="17.04" font-size="8.0" text-anchor="middle">Киберсфера</text>
-    <text x="15.90" y="142.15" font-size="9.0" font-weight="bold">Архитектура: набор инструкций, регистров и т. п.</text>
-    <text x="15.90" y="114.54" font-size="9.0" font-weight="bold">Операционные системы, драйверы, HAL</text>
-    <text x="15.90" y="91.14" font-size="9.0" font-weight="bold">Генерация и компиляция кода</text>
-    <text x="15.90" y="64.14" font-size="9.0" font-weight="bold">Разработка программного обеспечения</text>
-    <text x="15.90" y="39.55" font-size="9.0" font-weight="bold">Управление процессом разработки и производства</text>
-    <text x="444.32" y="32.04" font-size="8.0" text-anchor="middle">Среда</text>
-    <text x="444.32" y="41.24" font-size="8.0" text-anchor="middle">управления</text>
-    <text x="444.32" y="50.44" font-size="8.0" text-anchor="middle">производством</text>
-    <text x="364.23" y="84.84" font-size="8.0" text-anchor="middle">Открытые</text>
-    <text x="364.23" y="94.04" font-size="8.0" text-anchor="middle">библиотеки</text>
-    <text x="284.42" y="63.24" font-size="8.0" text-anchor="middle">Интегрированная</text>
-    <text x="284.42" y="72.44" font-size="8.0" text-anchor="middle">среда</text>
-    <text x="284.42" y="81.64" font-size="8.0" text-anchor="middle">разработки (IDE)</text>
-    <text x="15.90" y="13.14" font-size="9.0" font-weight="bold">Работа с данными, онтологиями, моделями</text>
-    <text x="365.42" y="10.84" font-size="8.0" text-anchor="middle">Среда работы с</text>
-    <text x="365.42" y="20.04" font-size="8.0" text-anchor="middle">моделями и</text>
-    <text x="365.42" y="29.24" font-size="8.0" text-anchor="middle">онтологиями</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="181.20107mm"
+   height="58.437305mm"
+   viewBox="0 0 181.20107 58.437305"
+   version="1.1"
+   id="svg6841"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="nkfp-software-levels.svg"
+   inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/НКФП/Стандарты/Стандарт-рисунки/ОП/рисунок-3.png"
+   inkscape:export-xdpi="299"
+   inkscape:export-ydpi="299">
+  <defs
+     id="defs6835" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-57.918618"
+     inkscape:cy="-59.197336"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="2452"
+     inkscape:window-height="1486"
+     inkscape:window-x="108"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata6838">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-14.911806,-15.64055)">
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="15.74055"
+       x="107.34848"
+       height="12.733991"
+       width="26.65786"
+       id="rect1603"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1605"
+       width="26.65786"
+       height="12.733991"
+       x="138.35175"
+       y="15.74055" />
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="23.932873"
+       x="169.35501"
+       height="12.733991"
+       width="26.65786"
+       id="rect1607"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1615"
+       y="27.42828"
+       x="182.68704"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan1609"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="27.42828"
+         x="182.68704"
+         sodipodi:role="line">Среда</tspan><tspan
+         id="tspan1611"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="31.140121"
+         x="182.68704"
+         sodipodi:role="line">управления</tspan><tspan
+         id="tspan1613"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="34.851963"
+         x="182.68704"
+         sodipodi:role="line">производством</tspan></text>
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="151.68146"
+       y="19.5406"
+       id="text1623"><tspan
+         sodipodi:role="line"
+         x="151.68146"
+         y="19.5406"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1617">Среда работы</tspan><tspan
+         id="tspan1619"
+         sodipodi:role="line"
+         x="152.12251"
+         y="23.252441"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">с моделями </tspan><tspan
+         id="tspan1621"
+         sodipodi:role="line"
+         x="151.68146"
+         y="26.964285"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">и онтологиями</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1626"
+       width="26.657852"
+       height="25.295662"
+       x="107.34848"
+       y="32.160839" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="120.69059"
+       y="40.043179"
+       id="text1635"><tspan
+         sodipodi:role="line"
+         x="120.69059"
+         y="40.043179"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1629">Интегриров.</tspan><tspan
+         sodipodi:role="line"
+         x="120.69059"
+         y="43.75502"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1772">среда</tspan><tspan
+         id="tspan1631"
+         sodipodi:role="line"
+         x="120.69059"
+         y="47.466862"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">разработки</tspan><tspan
+         id="tspan1633"
+         sodipodi:role="line"
+         x="120.69059"
+         y="51.178703"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">(IDE)</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       y="39.52264"
+       x="138.35175"
+       height="22.088411"
+       width="26.657852"
+       id="rect1637"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1643"
+       y="49.848843"
+       x="151.71555"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan1639"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="49.848843"
+         x="151.71555"
+         sodipodi:role="line">Открытые</tspan><tspan
+         id="tspan1641"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="53.560684"
+         x="151.71555"
+         sodipodi:role="line">библиотеки</tspan></text>
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"
+       id="text1647"
+       y="22.903103"
+       x="120.62003"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="22.903103"
+         x="120.62003"
+         sodipodi:role="line"
+         id="tspan1645">Киберсфера</tspan></text>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect14084"
+       width="86.516304"
+       height="9.7062197"
+       x="15.011806"
+       y="44.859215"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="54.565426"
+       x="15.011806"
+       height="9.7062197"
+       width="86.516304"
+       id="rect14086"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect14088"
+       width="86.516304"
+       height="9.7062197"
+       x="15.011806"
+       y="64.271637"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <text
+       id="text14104"
+       y="50.562706"
+       x="16.614147"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="50.562706"
+         x="16.614147"
+         sodipodi:role="line"
+         id="tspan14102">Генерация и компиляция кода</tspan></text>
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="16.614147"
+       y="60.244225"
+       id="text14110"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         id="tspan14108"
+         sodipodi:role="line"
+         x="16.614147"
+         y="60.244225"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px">Операционные системы, драйверы, HAL<tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan14371" /></tspan></text>
+    <text
+       id="text14114"
+       y="69.931183"
+       x="16.614147"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="69.931183"
+         x="16.614147"
+         sodipodi:role="line"
+         id="tspan14112">Архитектура:<tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan14369"> набор инструкций, регистров и т.п.</tspan></tspan></text>
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="35.152996"
+       x="15.011806"
+       height="9.7062197"
+       width="86.516304"
+       id="rect1696"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="16.614147"
+       y="40.85482"
+       id="text1700"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         id="tspan1698"
+         sodipodi:role="line"
+         x="16.614147"
+         y="40.85482"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px">Разработка программного обеспечения</tspan></text>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1706"
+       width="86.516304"
+       height="9.7062197"
+       x="15.011806"
+       y="25.446758"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <text
+       id="text1712"
+       y="31.146938"
+       x="16.614147"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="31.146938"
+         x="16.614147"
+         sodipodi:role="line"
+         id="tspan1710">Управление процессом разработки и производства</tspan></text>
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="15.74055"
+       x="15.011806"
+       height="9.7062197"
+       width="86.516304"
+       id="rect1716"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="16.614147"
+       y="21.439068"
+       id="text1722"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-3.png"><tspan
+         id="tspan1720"
+         sodipodi:role="line"
+         x="16.614147"
+         y="21.439068"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"><tspan
+           style="font-weight:bold;stroke-width:0.26458332px"
+           id="tspan1728">Работа с данными, онтологиями и моделями</tspan></tspan></text>
   </g>
 </svg>

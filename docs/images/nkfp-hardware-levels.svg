@@ -1,25 +1,354 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="426.4pt" height="198.0pt" viewBox="52.55 -6.00 426.35 198.00">
-  <title>nkfp-hardware-levels</title>
-  <rect x="52.55" y="-6.00" width="426.35" height="198.00" fill="#ffffff"/>
-  <image x="58.55" y="0" width="414.35" height="186.00" preserveAspectRatio="none" xlink:href="data:image/png;base64,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"/>
-  <g font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" fill="#000000">
-    <text x="332.42" y="120.79" font-size="8.0" text-anchor="middle">Универсальные</text>
-    <text x="332.42" y="129.99" font-size="8.0" text-anchor="middle">микроконтроллеры</text>
-    <text x="66.90" y="163.69" font-size="9.0" font-weight="bold">Физический уровень</text>
-    <text x="66.90" y="136.09" font-size="9.0" font-weight="bold">Архитектуры микроконтроллеров</text>
-    <text x="66.90" y="106.09" font-size="9.0" font-weight="bold">Реализации семейств микроконтроллеров</text>
-    <text x="65.70" y="76.09" font-size="9.0" font-weight="bold">КФ-модули и макросхемы</text>
-    <text x="65.70" y="45.50" font-size="9.0" font-weight="bold">КФ-приборы и устройства</text>
-    <text x="65.70" y="16.70" font-size="9.0" font-weight="bold">КФ-системы и приборные среды</text>
-    <text x="426.62" y="27.79" font-size="8.0" text-anchor="middle">Проектируемые</text>
-    <text x="426.62" y="36.99" font-size="8.0" text-anchor="middle">КФ-приборы и</text>
-    <text x="426.62" y="46.19" font-size="8.0" text-anchor="middle">системы</text>
-    <text x="332.42" y="58.99" font-size="8.0" text-anchor="middle">Специализи-</text>
-    <text x="332.42" y="68.19" font-size="8.0" text-anchor="middle">рованные модули</text>
-    <text x="332.42" y="77.39" font-size="8.0" text-anchor="middle">и расширения</text>
-    <text x="426.62" y="98.59" font-size="8.0" text-anchor="middle">Специализи-</text>
-    <text x="426.62" y="107.79" font-size="8.0" text-anchor="middle">рованные</text>
-    <text x="426.62" y="116.99" font-size="8.0" text-anchor="middle">микроконтроллеры</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="135.64082mm"
+   height="58.466549mm"
+   viewBox="0 0 135.64082 58.466549"
+   version="1.1"
+   id="svg2722"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="nkfp-hardware-levels.svg"
+   inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/НКФП/Стандарты/Стандарт-рисунки/ОП/рисунок-2.png"
+   inkscape:export-xdpi="299"
+   inkscape:export-ydpi="299">
+  <defs
+     id="defs2716" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="185.20004"
+     inkscape:cy="39.402589"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="2452"
+     inkscape:window-height="1486"
+     inkscape:window-x="108"
+     inkscape:window-y="40"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata2719">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-40.290541,-33.989531)">
+    <rect
+       y="34.089531"
+       x="149.17351"
+       height="23.338625"
+       width="26.657852"
+       id="rect1045"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.60000001, 0.60000001;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1616"
+       width="26.65786"
+       height="14.652356"
+       x="117.76933"
+       y="67.998055" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1622"
+       y="72.433273"
+       x="131.1564"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="72.433273"
+         x="131.1564"
+         sodipodi:role="line"
+         id="tspan1618">Универсальные</tspan><tspan
+         id="tspan1620"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="76.145119"
+         x="131.1564"
+         sodipodi:role="line">микро-</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="79.856956"
+         x="131.1564"
+         sodipodi:role="line"
+         id="tspan3369">контроллеры</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="61.562237"
+       x="149.17351"
+       height="14.652356"
+       width="26.65786"
+       id="rect1624"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="162.56136"
+       y="66.01683"
+       id="text1630"><tspan
+         id="tspan1626"
+         sodipodi:role="line"
+         x="162.56136"
+         y="66.01683"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px">Специализиров.</tspan><tspan
+         sodipodi:role="line"
+         x="162.56136"
+         y="69.728676"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1628">микро-</tspan><tspan
+         sodipodi:role="line"
+         x="162.56136"
+         y="73.440514"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan3367">контроллеры</tspan></text>
+    <rect
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1632"
+       width="26.65786"
+       height="14.652356"
+       x="117.76933"
+       y="48.573711" />
+    <text
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       id="text1640"
+       y="53.028301"
+       x="131.15718"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan1634"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="53.028301"
+         x="131.15718"
+         sodipodi:role="line">Специализиров.</tspan><tspan
+         id="tspan1636"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="56.740143"
+         x="131.15718"
+         sodipodi:role="line">модули</tspan><tspan
+         id="tspan1638"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         y="60.451984"
+         x="131.15718"
+         sodipodi:role="line">и расширения</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="162.8286"
+       y="43.164761"
+       id="text1648"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         sodipodi:role="line"
+         x="162.8286"
+         y="43.164761"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1646">Проектируемые</tspan><tspan
+         sodipodi:role="line"
+         x="162.8286"
+         y="46.876602"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1655">КФ-приборы</tspan><tspan
+         sodipodi:role="line"
+         x="162.8286"
+         y="50.588444"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;stroke-width:0.26458332px"
+         id="tspan1657">и системы</tspan></text>
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="34.096031"
+       x="40.390541"
+       height="9.7100134"
+       width="70.899498"
+       id="rect4931"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4933"
+       width="70.899498"
+       height="9.7100134"
+       x="40.390541"
+       y="43.806038"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="53.516048"
+       x="40.390541"
+       height="9.7100134"
+       width="70.899498"
+       id="rect4935"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect4937"
+       width="70.899498"
+       height="9.7100134"
+       x="40.390541"
+       y="63.226055"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <rect
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       y="72.936058"
+       x="40.390541"
+       height="9.7100134"
+       width="70.899498"
+       id="rect4939"
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="42.569077"
+       y="40.081291"
+       id="text4945"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         id="tspan4943"
+         sodipodi:role="line"
+         x="42.569077"
+         y="40.081291"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px">КФ-системы<tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan4957"> и приборные среды</tspan></tspan></text>
+    <text
+       id="text4951"
+       y="49.787605"
+       x="42.569077"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="49.787605"
+         x="42.569077"
+         sodipodi:role="line"
+         id="tspan4949">КФ-приборы<tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan3744"> и устройства</tspan></tspan></text>
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="42.569077"
+       y="59.219521"
+       id="text4961"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         id="tspan4959"
+         sodipodi:role="line"
+         x="42.569077"
+         y="59.219521"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px">КФ-модули<tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan4969"> и макро-схемы</tspan></tspan></text>
+    <text
+       id="text4965"
+       y="68.901039"
+       x="42.569077"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="68.901039"
+         x="42.569077"
+         sodipodi:role="line"
+         id="tspan4963"><tspan
+   style="font-weight:normal;stroke-width:0.26458332px"
+   id="tspan4971">Реализации </tspan>семейств микроконтроллеров</tspan></text>
+    <text
+       inkscape:export-ydpi="299"
+       inkscape:export-xdpi="299"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="42.569077"
+       y="78.58799"
+       id="text4975"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         id="tspan4973"
+         sodipodi:role="line"
+         x="42.569077"
+         y="78.58799"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px">Архитектуры микроконтроллеров</tspan></text>
+    <rect
+       style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       id="rect1673"
+       width="70.899498"
+       height="9.7100134"
+       x="40.390541"
+       y="82.646065"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png" />
+    <text
+       id="text1677"
+       y="88.300163"
+       x="42.569077"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:20.0000003%;font-family:Jura;-inkscape-font-specification:Jura;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       inkscape:export-xdpi="299"
+       inkscape:export-ydpi="299"
+       inkscape:export-filename="/home/dralex/Disk/ЦИОТ/Кружки/Vostok/Стандарты/оп-2.png"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:20.0000003%;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;text-anchor:start;stroke-width:0.26458332px"
+         y="88.300163"
+         x="42.569077"
+         sodipodi:role="line"
+         id="tspan1675"><tspan
+   style="font-weight:bold;stroke-width:0.26458332px"
+   id="tspan1679">Физический</tspan> уровень</tspan></text>
   </g>
 </svg>
